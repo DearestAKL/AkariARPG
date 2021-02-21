@@ -1,0 +1,11 @@
+﻿#	资源路径配置表			
+#	Id		AssetPath	ResourceGroupIndexs
+#	int		string	string
+#	资源编号	策划备注	资源名称	资源组Id
+	101	启动场景	Assets/GameMain/Scenes/GameStart/GameStart.unity	0
+	102	菜单场景	Assets/GameMain/Scenes/Menu/Menu.unity	0
+	103	游戏场景	Assets/GameMain/Scenes/GameMain/GameMain.unity	0
+#UI				
+	1001	主菜单	Assets/GameMain/UI/UIForms/UIMainMenuForm.prefab	0
+	1002	主菜单	Assets/GameMain/UI/UIForms/UIMainGameForm.prefab	0
+	1003	主菜单	Assets/GameMain/UI/UIForms/UILoadingForm.prefab	0

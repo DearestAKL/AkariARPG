@@ -42,6 +42,14 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 获取数据表名称。
+        /// </summary>
+        public string DataTableName {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取数据表资源名称。
         /// </summary>
         public string DataTableAssetName

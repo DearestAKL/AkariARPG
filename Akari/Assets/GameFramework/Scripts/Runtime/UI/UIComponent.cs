@@ -73,6 +73,17 @@ namespace UnityGameFramework.Runtime
         [SerializeField]
         private UIGroup[] m_UIGroups = null;
 
+        [SerializeField]
+        private Camera m_UICamera = null;
+
+        public Camera UICamera
+        {
+            get
+            {
+                return m_UICamera;
+            }
+        }
+
         /// <summary>
         /// 获取界面组数量。
         /// </summary>
@@ -318,6 +329,8 @@ namespace UnityGameFramework.Runtime
             Transform transform = uiGroupHelper.transform;
             transform.SetParent(m_InstanceRoot);
             transform.localScale = Vector3.one;
+
+            uiGroupHelper.SetUICamera(UICamera);
 
             return m_UIManager.AddUIGroup(uiGroupName, depth, uiGroupHelper);
         }

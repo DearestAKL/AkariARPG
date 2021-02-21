@@ -98,6 +98,9 @@ namespace UnityGameFramework.Runtime
             {
                 return m_UIFormLogic;
             }
+            set {
+                m_UIFormLogic = value;
+            }
         }
 
         /// <summary>

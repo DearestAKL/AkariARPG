@@ -13,6 +13,19 @@ using UnityEngine;
 
 namespace UnityGameFramework.Runtime
 {
+    public class User
+    {
+        public string account;
+        public string password;
+        public string ServerId;
+        public User(string account, string password)
+        {
+            this.account = account;
+            this.password = password;
+
+        }
+    }
+
     /// <summary>
     /// 游戏配置组件。
     /// </summary>

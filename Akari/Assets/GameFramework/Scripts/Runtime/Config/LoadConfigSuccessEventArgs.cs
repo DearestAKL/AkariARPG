@@ -44,6 +44,14 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 获取全局配置资源名称。
         /// </summary>
+        public string ConfigName {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取全局配置资源名称。
+        /// </summary>
         public string ConfigAssetName
         {
             get;

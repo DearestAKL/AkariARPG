@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
@@ -850,7 +850,7 @@ namespace GameFramework.Resource
         {
             if (m_RefuseSetCurrentVariant)
             {
-                throw new GameFrameworkException("You can net set current variant at this time.");
+                throw new GameFrameworkException("You can not set current variant at this time.");
             }
 
             m_CurrentVariant = currentVariant;
@@ -1128,7 +1128,7 @@ namespace GameFramework.Resource
         }
 
         /// <summary>
-        /// 使用可更新模式并更新全部资源。
+        /// 使用可更新模式并更新所有资源。
         /// </summary>
         /// <param name="updateResourcesCompleteCallback">使用可更新模式并更新默认资源组完成时的回调函数。</param>
         public void UpdateResources(UpdateResourcesCompleteCallback updateResourcesCompleteCallback)
@@ -1266,7 +1266,8 @@ namespace GameFramework.Resource
         /// <param name="assetName">要加载资源的名称。</param>
         /// <param name="loadAssetCallbacks">加载资源回调函数集。</param>
         public void LoadAsset(string assetName, LoadAssetCallbacks loadAssetCallbacks)
-        {
+        {            
+
             if (string.IsNullOrEmpty(assetName))
             {
                 throw new GameFrameworkException("Asset name is invalid.");

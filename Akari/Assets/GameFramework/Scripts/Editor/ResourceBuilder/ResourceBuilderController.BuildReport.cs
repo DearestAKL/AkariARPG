@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using UnityEngine;
 
 namespace UnityGameFramework.Editor.ResourceTools
 {
@@ -20,6 +21,7 @@ namespace UnityGameFramework.Editor.ResourceTools
         {
             private const string BuildReportName = "BuildReport.xml";
             private const string BuildLogName = "BuildLog.txt";
+            private const string VersionName = "VersionInfo.txt";
 
             private string m_BuildReportName = null;
             private string m_BuildLogName = null;
@@ -239,6 +241,21 @@ namespace UnityGameFramework.Editor.ResourceTools
                 File.WriteAllText(m_BuildLogName, m_LogBuilder.ToString());
             }
 
+            public void SaveVersion(string buildReportPath, string url, int versionID, int length, int hashCode, int zipLength, int zipHashCode) {
+                var m_VersionName = Utility.Path.GetRegularPath(Path.Combine(buildReportPath, VersionName));
+                VersionInfo version = new VersionInfo();
+                version.ForceUpdateGame = false;
+                version.LatestGameVersion = "0.1.0";
+                version.InternalGameVersion = 1;
+                version.InternalResourceVersion = versionID;
+                version.UpdatePrefixUri = url;
+                version.VersionListLength = length;
+                version.VersionListHashCode = hashCode;
+                version.VersionListZipLength = zipLength;
+                version.VersionListZipHashCode = zipHashCode;
+                var str = JsonUtility.ToJson(version);
+                File.WriteAllText(m_VersionName, str);
+            }
             private void LogInternal(string type, string format, object[] args)
             {
                 m_LogBuilder.Append("[");

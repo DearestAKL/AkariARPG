@@ -5,6 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using UnityEngine;
+
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
@@ -18,6 +20,11 @@ namespace UnityGameFramework.Runtime
         /// <param name="depth">界面组深度。</param>
         public override void SetDepth(int depth)
         {
+        }
+
+        public override void SetUICamera(Camera uiCamera)
+        {
+
         }
     }
 }

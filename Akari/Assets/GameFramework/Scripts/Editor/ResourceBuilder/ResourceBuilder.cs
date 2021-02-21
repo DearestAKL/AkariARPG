@@ -20,7 +20,6 @@ namespace UnityGameFramework.Editor.ResourceTools
         private ResourceBuilderController m_Controller = null;
         private bool m_OrderBuildResources = false;
         private int m_BuildEventHandlerTypeNameIndex = 0;
-
         [MenuItem("Game Framework/Resource Tools/Resource Builder", false, 41)]
         private static void Open()
         {
@@ -305,6 +304,15 @@ namespace UnityGameFramework.Editor.ResourceTools
                         GUILayout.Label(m_Controller.BuildReportPath);
                     }
                     EditorGUILayout.EndHorizontal();
+                    //--YJL--
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        EditorGUILayout.LabelField("Build Version Url", GUILayout.Width(160f));
+                        //GUILayout.Label(m_Controller.BuildReportPath);
+                        m_Controller.VersionUrl = EditorGUILayout.TextField(m_Controller.VersionUrl);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                    //--YJL--
                 }
                 EditorGUILayout.EndVertical();
                 string buildMessage = string.Empty;

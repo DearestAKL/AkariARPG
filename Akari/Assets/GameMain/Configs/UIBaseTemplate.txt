@@ -4,7 +4,7 @@
 
 namespace __NAME_SPACE__
 {
-    public class __CLASS_NAME__ : UGuiFormEx
+    public class __CLASS_NAME__ : UGuiForm
     {
 		//---UI---
 		__MEMBER_VARIABLES__

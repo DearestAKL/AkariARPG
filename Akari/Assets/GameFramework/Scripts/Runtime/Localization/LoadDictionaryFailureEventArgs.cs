@@ -40,6 +40,13 @@ namespace UnityGameFramework.Runtime
                 return EventId;
             }
         }
+        /// <summary>
+        /// 获取字典名称。
+        /// </summary>
+        public string DictionaryName {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// 获取字典资源名称。

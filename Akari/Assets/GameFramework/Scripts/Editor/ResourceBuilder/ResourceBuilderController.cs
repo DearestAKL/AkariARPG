@@ -40,7 +40,7 @@ namespace UnityGameFramework.Editor.ResourceTools
 
         public ResourceBuilderController()
         {
-            m_ConfigurationPath = Type.GetConfigurationPath<ResourceBuilderConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "GameFramework/Configs/ResourceBuilder.xml"));
+            m_ConfigurationPath = Type.GetConfigurationPath<ResourceBuilderConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "Res/Configs/ResourceBuilder.xml"));
 
             m_ResourceCollection = new ResourceCollection();
             Utility.Zip.SetZipHelper(new DefaultZipHelper());
@@ -252,6 +252,11 @@ namespace UnityGameFramework.Editor.ResourceTools
             set;
         }
 
+        public string VersionUrl {
+            get;
+            set;
+        }
+
         public bool IsValidOutputDirectory
         {
             get
@@ -453,6 +458,11 @@ namespace UnityGameFramework.Editor.ResourceTools
                         case "OutputDirectory":
                             OutputDirectory = xmlNode.InnerText;
                             break;
+                        //--YJL--
+                        case "BuildVersionUrl":
+                            VersionUrl = xmlNode.InnerText;
+                            break;
+                        //--YJL--
                     }
                 }
             }
@@ -528,13 +538,17 @@ namespace UnityGameFramework.Editor.ResourceTools
                 xmlElement = xmlDocument.CreateElement("OutputDirectory");
                 xmlElement.InnerText = OutputDirectory;
                 xmlSettings.AppendChild(xmlElement);
-
+                //--YJL--
+                xmlElement = xmlDocument.CreateElement("BuildVersionUrl");
+                xmlElement.InnerText = VersionUrl;
+                xmlSettings.AppendChild(xmlElement);
+                //--YJL--
                 string configurationDirectoryName = Path.GetDirectoryName(m_ConfigurationPath);
                 if (!Directory.Exists(configurationDirectoryName))
                 {
                     Directory.CreateDirectory(configurationDirectoryName);
                 }
-
+           
                 xmlDocument.Save(m_ConfigurationPath);
                 AssetDatabase.Refresh();
                 return true;
@@ -991,6 +1005,7 @@ namespace UnityGameFramework.Editor.ResourceTools
                     m_BuildReport.LogInfo("Execute build event handler 'OnOutputUpdatableVersionListData' for '{0}'...", platformName);
                     m_BuildEventHandler.OnOutputUpdatableVersionListData(platform, versionListData.Path, versionListData.Length, versionListData.HashCode, versionListData.ZipLength, versionListData.ZipHashCode);
                 }
+                m_BuildReport.SaveVersion(OutputDirectory, OutputDirectory, InternalResourceVersion + 1, versionListData.Length, versionListData.HashCode, versionListData.ZipLength, versionListData.ZipHashCode);
             }
 
             if (OutputPackedSelected)

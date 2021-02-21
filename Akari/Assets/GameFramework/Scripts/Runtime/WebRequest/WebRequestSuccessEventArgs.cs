@@ -107,5 +107,36 @@ namespace UnityGameFramework.Runtime
             m_WebResponseBytes = null;
             UserData = null;
         }
+
+        //public void GetReturn()
+        //{
+        //    var bytes = GetWebResponseBytes();
+        //    var head = bytes.ReadFrom(0, 2);
+        //    var sign = bytes.ReadFrom(2, 2);
+
+        //    int result = (bytes[4] & 0xff);
+
+        //    if (result > 127)
+        //    {
+        //        result -= 256;
+        //    }
+
+        //    string errorMsg = "";
+        //    if (result < 0)
+        //    {
+        //        if (result != -128)
+        //        {
+        //            errorMsg = System.Text.Encoding.UTF8.GetString(bytes, 5, bytes.Length - 5);
+        //            Log.Error($"请求Http错误，错误信息：{errorMsg}");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var opcodeTypeComponent = ETHotfix.Game.Scene.GetComponent<ETHotfix.OpcodeTypeComponent>();
+        //        object instance = opcodeTypeComponent.GetInstanceBack(sign);
+        //        var ob = GameEntry.ETNetwork.MsgTest(bytes, 5, bytes.Length - 5, instance);
+        //        var data = ob as AccountLoginDown;
+        //    }
+        //}
     }
 }

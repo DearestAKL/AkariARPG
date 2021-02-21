@@ -44,6 +44,14 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 获取字典资源名称。
         /// </summary>
+        public string DictionaryName {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取字典资源名称。
+        /// </summary>
         public string DictionaryAssetName
         {
             get;

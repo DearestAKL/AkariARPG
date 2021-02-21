@@ -21,7 +21,9 @@ namespace UnityGameFramework.Editor
 #if UNITY_2017_3_OR_NEWER
             "UnityGameFramework.Runtime",
 #endif
-            "Assembly-CSharp"
+            "Assembly-CSharp",
+            "Akari.Runtime"
+
         };
 
         private static readonly string[] EditorAssemblyNames =
@@ -29,7 +31,8 @@ namespace UnityGameFramework.Editor
 #if UNITY_2017_3_OR_NEWER
             "UnityGameFramework.Editor",
 #endif
-            "Assembly-CSharp-Editor"
+            "Assembly-CSharp-Editor",
+            "Akari.Editor"
         };
 
         /// <summary>

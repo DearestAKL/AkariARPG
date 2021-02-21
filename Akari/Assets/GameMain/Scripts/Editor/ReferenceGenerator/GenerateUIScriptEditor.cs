@@ -51,10 +51,7 @@ public class GenerateUIScriptEditor
         var classStrPre = "";
         var tarTemplateFilePath = "";
 
-        if (uiCtrl.viewType == ViewType.Cell)
-            tarTemplateFilePath = templateUIBaseFile;
-        else
-            tarTemplateFilePath = templateUIBaseCellFile;
+        tarTemplateFilePath = templateUIBaseCellFile;
 
         if (File.Exists(tarTemplateFilePath))
         {
@@ -84,10 +81,9 @@ public class GenerateUIScriptEditor
             var memberName = t.key;
             var typeStr = t.gameObject.GetType();
 
-            memberStr += string.Format("public {0} {1} = null;\r\n\t\t", typeStr, memberName);
+            memberStr += string.Format("protected {0} {1} = null;\r\n\t\t", typeStr, memberName);
             initStr += string.Format("{0} = rc.Get<{1}>(\"{2}\");\r\n\t\t\t", memberName, typeStr, memberName);
         });
-
         classStr = classStr.Replace("__CREATE_TIME__", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
         classStr = classStr.Replace("__NAME_SPACE__", "Akari");
         classStr = classStr.Replace("__CLASS_NAME__", className);

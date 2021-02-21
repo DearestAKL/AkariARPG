@@ -20,5 +20,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="depth">界面组深度。</param>
         public abstract void SetDepth(int depth);
+
+        public abstract void SetUICamera(Camera uiCamera);
     }
 }

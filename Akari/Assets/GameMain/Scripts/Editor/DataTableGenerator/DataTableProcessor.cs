@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
@@ -53,9 +53,8 @@ namespace Akari.Editor.DataTableTools
             }
 
             string[] lines = File.ReadAllLines(dataTableFileName, encoding);
-            //行
             int rawRowCount = lines.Length;
-            //列
+
             int rawColumnCount = 0;
             List<string[]> rawValues = new List<string[]>();
             for (int i = 0; i < lines.Length; i++)

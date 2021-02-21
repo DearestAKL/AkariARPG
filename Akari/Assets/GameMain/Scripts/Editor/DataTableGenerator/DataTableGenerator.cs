@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
@@ -18,7 +18,7 @@ namespace Akari.Editor.DataTableTools
     public sealed class DataTableGenerator
     {
         private const string DataTablePath = "Assets/GameMain/DataTables";
-        private const string CSharpCodePath = "Assets/GameMain/Scripts/DataTable";
+        private const string CSharpCodePath = "Assets/GameMain/Scripts/Runtime/DataTable";
         private const string CSharpCodeTemplateFileName = "Assets/GameMain/Configs/DataTableCodeTemplate.txt";
         private static readonly Regex EndWithNumberRegex = new Regex(@"\d+$");
         private static readonly Regex NameRegex = new Regex(@"^[A-Z][A-Za-z0-9_]*$");
@@ -73,7 +73,7 @@ namespace Akari.Editor.DataTableTools
         {
             string dataTableName = (string)userData;
 
-            codeContent.Replace("__DATA_TABLE_CREATE_TIME__", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            codeContent.Replace("__DATA_TABLE_CREATE_TIME__", DateTime.UtcNow.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss.fff"));
             codeContent.Replace("__DATA_TABLE_NAME_SPACE__", "Akari");
             codeContent.Replace("__DATA_TABLE_CLASS_NAME__", "DR" + dataTableName);
             codeContent.Replace("__DATA_TABLE_COMMENT__", dataTableProcessor.GetValue(0, 1) + "。");
@@ -154,11 +154,9 @@ namespace Akari.Editor.DataTableTools
                     continue;
                 }
 
-                string languageKeyword = dataTableProcessor.GetLanguageKeyword(i);
-
                 if (dataTableProcessor.IsSystem(i))
                 {
-                
+                    string languageKeyword = dataTableProcessor.GetLanguageKeyword(i);
                     if (languageKeyword == "string")
                     {
                         stringBuilder.AppendFormat("            {0} = columnStrings[index++];", dataTableProcessor.GetName(i)).AppendLine();
@@ -167,11 +165,6 @@ namespace Akari.Editor.DataTableTools
                     {
                         stringBuilder.AppendFormat("            {0} = {1}.Parse(columnStrings[index++]);", dataTableProcessor.GetName(i), languageKeyword).AppendLine();
                     }
-                }
-                else if (languageKeyword.Contains("[]"))
-                {
-                    string readFunctionName = dataTableProcessor.GetType(i).Name.Replace("[]", "Array");
-                    stringBuilder.AppendFormat("                {0} = DataTableExtension.Parse{1}(columnStrings[index++]);", dataTableProcessor.GetName(i), readFunctionName).AppendLine();
                 }
                 else
                 {
@@ -210,11 +203,6 @@ namespace Akari.Editor.DataTableTools
                 if (languageKeyword == "int" || languageKeyword == "uint" || languageKeyword == "long" || languageKeyword == "ulong")
                 {
                     stringBuilder.AppendFormat("                    {0} = binaryReader.Read7BitEncoded{1}();", dataTableProcessor.GetName(i), dataTableProcessor.GetType(i).Name).AppendLine();
-                }
-                else if (languageKeyword.Contains("[]"))
-                {
-                    string readFunctionName = dataTableProcessor.GetType(i).Name.Replace("[]", "Array");
-                    stringBuilder.AppendFormat("                        {0} = binaryReader.Read{1}();", dataTableProcessor.GetName(i), readFunctionName).AppendLine();
                 }
                 else
                 {

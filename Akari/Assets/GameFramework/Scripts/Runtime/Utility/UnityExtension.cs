@@ -78,6 +78,30 @@ public static class UnityExtension
     }
 
     /// <summary>
+    /// 先判断是否是活动或者不活动的状态
+    /// </summary>
+    /// <param name="gameObject">对象</param>
+    /// <param name="isHide">是否隐藏</param>
+    public static void SetGoActive(this GameObject gameObject,bool isHide) {
+        if (gameObject.activeSelf == isHide) {
+            return;
+        }
+        gameObject.SetActive(isHide);
+    }
+
+    /// <summary>
+    /// 先判断是否是活动或者不活动的状态
+    /// </summary>
+    /// <param name="gameObject">对象</param>
+    /// <param name="isHide">是否隐藏</param>
+    public static void SetGoActive(this MonoBehaviour go, bool isHide) {
+        if (go.gameObject.activeSelf == isHide) {
+            return;
+        }
+        go.gameObject.SetActive(isHide);
+    }
+
+    /// <summary>
     /// 取 <see cref="Vector3" /> 的 (x, y, z) 转换为 <see cref="Vector2" /> 的 (x, z)。
     /// </summary>
     /// <param name="vector3">要转换的 Vector3。</param>

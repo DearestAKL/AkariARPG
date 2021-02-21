@@ -1,13 +1,9 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
-
-/*
- * in 修饰符 保证发送到方法当中的数据不被更改（值类型），当in 修饰符用于引用类型时，可以改变变量的内容，单不能更改变量本身
- */
 
 namespace GameFramework
 {

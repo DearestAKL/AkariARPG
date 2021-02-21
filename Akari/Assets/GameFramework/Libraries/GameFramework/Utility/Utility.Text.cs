@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
@@ -17,6 +17,8 @@ namespace GameFramework
         /// </summary>
         public static class Text
         {
+            private const int StringBuilderCapacity = 1024;
+
             [ThreadStatic]
             private static StringBuilder s_CachedStringBuilder = null;
 
@@ -108,7 +110,7 @@ namespace GameFramework
             {
                 if (s_CachedStringBuilder == null)
                 {
-                    s_CachedStringBuilder = new StringBuilder(1024);
+                    s_CachedStringBuilder = new StringBuilder(StringBuilderCapacity);
                 }
             }
         }

@@ -102,7 +102,14 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            m_UnityWebRequest = UnityWebRequest.Post(webRequestUri, Utility.Converter.GetString(postData));
+            m_UnityWebRequest = new UnityWebRequest(webRequestUri, "POST");
+            m_UnityWebRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(postData);
+            m_UnityWebRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            m_UnityWebRequest.SetRequestHeader("Content-Type", "text/html");
+            m_UnityWebRequest.SetRequestHeader("charset", "UTF-8");
+
+
+            //m_UnityWebRequest = UnityWebRequest.Post(webRequestUri, Utility.Converter.GetString(postData));
 #if UNITY_2017_2_OR_NEWER
             m_UnityWebRequest.SendWebRequest();
 #else

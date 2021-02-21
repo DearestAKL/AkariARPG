@@ -67,9 +67,6 @@
     <Compile Include="Assets\GameMain\Scripts\Runtime\Base\GameEntry.Custom.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Base\GameEntry.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\BuiltinData\BuiltinDataComponent.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Card\CardType.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Card\UserCard.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Card\UserDefinedCardHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\DataTable\BinaryReaderExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\DataTable\DRAircraft.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\DataTable\DRArmor.cs" />
@@ -93,38 +90,9 @@
     <Compile Include="Assets\GameMain\Scripts\Runtime\Definition\DataStruct\VersionInfo.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Definition\Enum\CampType.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Definition\Enum\RelationType.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\AccessoryObjectData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\AircraftData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\ArmorData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\AsteroidData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\BulletData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\EffectData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\EntityData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\MyAircraftData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\TargetableObjectData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\ThrusterData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityData\WeaponData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityExtension.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Aircraft.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Armor.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Asteroid.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Bullet.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Effect.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Entity.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\MyAircraft.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Player.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\PlayerData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\TargetableObject.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Thruster.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Entity\EntityLogic\Weapon.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Game\GameBase.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Game\GameData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Game\GameMap.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Game\GameMode.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Game\NormalGame.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\HPBar\HPBarComponent.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\HPBar\HPBarItem.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\HPBar\HPBarItemObject.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Helper\AtlasHelperComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Helper\UIEventHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Localization\XmlLocalizationHelper.cs" />
@@ -153,8 +121,6 @@
     <Compile Include="Assets\GameMain\Scripts\Runtime\Procedure\ProcedureUpdateResources.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Procedure\ProcedureUpdateVersion.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\ReferenceCollector.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Scene\HideByBoundary.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Scene\ScrollableBackground.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Sound\SoundExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\UI\AboutForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\UI\CommonButton.cs" />
@@ -167,7 +133,6 @@
     <Compile Include="Assets\GameMain\Scripts\Runtime\UI\UIExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\UI\UIFormId.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\UI\UpdateResourceForm.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Runtime\Utility\AIUtility.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Utility\AssetUtility.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Utility\LitJsonHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\Runtime\Utility\WebUtility.cs" />
@@ -379,23 +344,23 @@
     <Reference Include="protobuf-net">
       <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/GameMain/Libraries/protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="DOTweenEditor">
-      <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenProEditor">
-      <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
-    </Reference>
     <Reference Include="DemiLib">
       <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DemiEditor">
       <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+    </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenProEditor">
+      <HintPath>E:/Github/MyGithub/AkariARPG/Akari/Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Program/Unity/Unity2019/2019.4.0f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

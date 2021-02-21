@@ -222,7 +222,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
@@ -389,7 +389,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4703079951213324969}
   - component: {fileID: 3756116844349759948}
-  - component: {fileID: 3871403638149775980}
   m_Layer: 5
   m_Name: UILoadingForm
   m_TagString: Untagged
@@ -440,20 +439,6 @@ MonoBehaviour:
   - key: txtLoading
     gameObject: {fileID: 8038321975984460888}
     maskindex: 3
---- !u!114 &3871403638149775980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5611273882982831184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809be7b44e3a6aa4aa4f2a3f676aaa4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imgProgress: {fileID: 0}
-  txtLoading: {fileID: 0}
 --- !u!1 &7694215714960443905
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,13 +14,9 @@ public class GenerateUIScriptEditor
     [MenuItem("Assets/自动生成UI脚本", false, 1050)]
     static void GenerateUIScript()
     {
-        //var templateUIBaseFile = Application.dataPath + "/../ScriptMould/UIBaseTemplate.cs";
-        //var templateUIBaseCellFile = Application.dataPath + "/../ScriptMould/UIBaseCellTemplate.cs";
-
-        var templateUIBaseFile = "Assets/GameMain/Configs/UIBaseTemplate.txt";
         var templateUIBaseCellFile = "Assets/GameMain/Configs/UIBaseTemplate.txt";
 
-        var outputPath = Application.dataPath + "/GameMain/Scripts/UI/_GenerateScript/";
+        var outputPath = Application.dataPath + "/GameMain/Scripts/Runtime/UI/_GenerateScript/";
 
         var selectObj = Selection.activeGameObject;
         if (!selectObj)
@@ -102,24 +98,6 @@ public class GenerateUIScriptEditor
         Debug.Log("创建脚本 " + outputFileFullPath + "成功！"); 
 
         #endregion
-
-        //生成csproj配置文件引用
-        //if (!string.IsNullOrEmpty(csprojStr))
-        //{
-        //    if (!Regex.IsMatch(csprojStr, className + ".cs"))
-        //    {
-        //        var compileStr = string.Format("<!--UIView-->\r\n\t<Compile Include=\"Game\\UI\\_GenerateUIScript\\{0}\" />", className + ".cs");
-        //        stream = new FileStream(outputProCSProj, FileMode.Open, FileAccess.Write);
-        //        csprojStr = csprojStr.Replace("<!--UIView-->", compileStr);
-
-        //        fileW = new StreamWriter(stream);
-        //        fileW.Write(csprojStr);
-        //        fileW.Flush();
-        //        fileW.Close();
-        //        stream.Close();
-        //        Debug.Log("生成csproj配置文件引用成功！");
-        //    }
-        //}
     }
 
 }

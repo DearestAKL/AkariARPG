@@ -15,8 +15,6 @@ namespace Akari
     {
         private const float GameOverDelayedSeconds = 2f;
 
-        private readonly Dictionary<GameMode, GameBase> m_Games = new Dictionary<GameMode, GameBase>();
-        private GameBase m_CurrentGame = null;
         private bool m_GotoMenu = false;
         private float m_GotoMenuDelaySeconds = 0f;
 
@@ -37,14 +35,12 @@ namespace Akari
         {
             base.OnInit(procedureOwner);
 
-            m_Games.Add(GameMode.Normal, new NormalGame());
         }
 
         protected override void OnDestroy(ProcedureOwner procedureOwner)
         {
             base.OnDestroy(procedureOwner);
 
-            m_Games.Clear();
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
@@ -52,18 +48,10 @@ namespace Akari
             base.OnEnter(procedureOwner);
 
             m_GotoMenu = false;
-            GameMode gameMode = (GameMode)procedureOwner.GetData<VarByte>("GameMode").Value;
-            m_CurrentGame = m_Games[gameMode];
-            m_CurrentGame.Initialize();
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
-            if (m_CurrentGame != null)
-            {
-                m_CurrentGame.Shutdown();
-                m_CurrentGame = null;
-            }
 
             base.OnLeave(procedureOwner, isShutdown);
         }
@@ -71,12 +59,6 @@ namespace Akari
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-
-            if (m_CurrentGame != null && !m_CurrentGame.GameOver)
-            {
-                m_CurrentGame.Update(elapseSeconds, realElapseSeconds);
-                return;
-            }
 
             if (!m_GotoMenu)
             {

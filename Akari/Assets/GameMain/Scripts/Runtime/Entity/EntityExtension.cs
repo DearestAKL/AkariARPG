@@ -40,46 +40,6 @@ namespace Akari
             entityComponent.AttachEntity(entity.Entity, ownerId, parentTransformPath, userData);
         }
 
-        public static void ShowMyAircraft(this EntityComponent entityComponent, MyAircraftData data)
-        {
-            entityComponent.ShowEntity(typeof(MyAircraft), "Aircraft", Constant.AssetPriority.MyAircraftAsset, data);
-        }
-
-        public static void ShowAircraft(this EntityComponent entityComponent, AircraftData data)
-        {
-            entityComponent.ShowEntity(typeof(Aircraft), "Aircraft", Constant.AssetPriority.AircraftAsset, data);
-        }
-
-        public static void ShowThruster(this EntityComponent entityComponent, ThrusterData data)
-        {
-            entityComponent.ShowEntity(typeof(Thruster), "Thruster", Constant.AssetPriority.ThrusterAsset, data);
-        }
-
-        public static void ShowWeapon(this EntityComponent entityComponent, WeaponData data)
-        {
-            entityComponent.ShowEntity(typeof(Weapon), "Weapon", Constant.AssetPriority.WeaponAsset, data);
-        }
-
-        public static void ShowArmor(this EntityComponent entityComponent, ArmorData data)
-        {
-            entityComponent.ShowEntity(typeof(Armor), "Armor", Constant.AssetPriority.ArmorAsset, data);
-        }
-
-        public static void ShowBullet(this EntityComponent entityCompoennt, BulletData data)
-        {
-            entityCompoennt.ShowEntity(typeof(Bullet), "Bullet", Constant.AssetPriority.BulletAsset, data);
-        }
-
-        public static void ShowAsteroid(this EntityComponent entityCompoennt, AsteroidData data)
-        {
-            entityCompoennt.ShowEntity(typeof(Asteroid), "Asteroid", Constant.AssetPriority.AsteroiAsset, data);
-        }
-
-        public static void ShowEffect(this EntityComponent entityComponent, EffectData data)
-        {
-            entityComponent.ShowEntity(typeof(Effect), "Effect", Constant.AssetPriority.EffectAsset, data);
-        }
-
         private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
         {
             if (data == null)
@@ -104,10 +64,5 @@ namespace Akari
             return --s_SerialId;
         }
 
-
-        public static void ShowPlayer(this EntityComponent entityCompoennt, PlayerData data)
-        {
-            entityCompoennt.ShowEntity(typeof(Player), "Player", Constant.AssetPriority.PlayerAsset, data);
-        }
     }
 }

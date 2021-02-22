@@ -7,6 +7,8 @@
 
 using GameFramework.DataTable;
 using GameFramework.Event;
+using System;
+using System.Collections.Generic;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -14,11 +16,25 @@ namespace Akari
 {
     public class ProcedureChangeScene : ProcedureBase
     {
-        private const int MenuSceneId = 1;
-
-        private bool m_ChangeToMenu = false;
+        /// <summary>
+        /// 是否切换场景完毕
+        /// </summary>
         private bool m_IsChangeSceneComplete = false;
+
+        /// <summary>
+        /// 背景音乐ID
+        /// </summary>
         private int m_BackgroundMusicId = 0;
+
+        /// <summary>
+        /// 要切换目标场景ID
+        /// </summary>
+        private int m_TargetSceneId = 0;
+
+        /// <summary>
+        /// 场景ID-流程切换方法的字典
+        /// </summary>
+        private Dictionary<int, Action> m_TargetProcedureChange = new Dictionary<int, Action>();
 
         public override bool UseNativeDialog
         {
@@ -26,6 +42,15 @@ namespace Akari
             {
                 return false;
             }
+        }
+
+        protected override void OnInit(ProcedureOwner procedureOwner)
+        {
+            base.OnInit(procedureOwner);
+
+            //TODO:在这里配置场景ID与切换到对应流程的方法
+            m_TargetProcedureChange.Add((int)SceneId.Menu, () => ChangeState<ProcedureMenu>(procedureOwner));
+            m_TargetProcedureChange.Add((int)SceneId.Main, () => ChangeState<ProcedureMain>(procedureOwner));
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
@@ -47,6 +72,11 @@ namespace Akari
             GameEntry.Entity.HideAllLoadingEntities();
             GameEntry.Entity.HideAllLoadedEntities();
 
+            // 隐藏所有界面
+            //GameEntry.UI.CloseAllLoadingUIForms();
+            //GameEntry.UI.CloseAllLoadedUIForms();
+
+
             // 卸载所有场景
             string[] loadedSceneAssetNames = GameEntry.Scene.GetLoadedSceneAssetNames();
             for (int i = 0; i < loadedSceneAssetNames.Length; i++)
@@ -57,13 +87,12 @@ namespace Akari
             // 还原游戏速度
             GameEntry.Base.ResetNormalGameSpeed();
 
-            int sceneId = procedureOwner.GetData<VarInt32>("NextSceneId");
-            m_ChangeToMenu = sceneId == MenuSceneId;
+            m_TargetSceneId = procedureOwner.GetData<VarInt32>(Constant.ProcedureData.NextSceneId).Value;
             IDataTable<DRScene> dtScene = GameEntry.DataTable.GetDataTable<DRScene>();
-            DRScene drScene = dtScene.GetDataRow(sceneId);
+            DRScene drScene = dtScene.GetDataRow(m_TargetSceneId);
             if (drScene == null)
             {
-                Log.Warning("Can not load scene '{0}' from data table.", sceneId.ToString());
+                Log.Warning("Can not load scene '{0}' from data table.", m_TargetSceneId.ToString());
                 return;
             }
 
@@ -90,13 +119,10 @@ namespace Akari
                 return;
             }
 
-            if (m_ChangeToMenu)
+            //根据切换到的目标场景ID进行对应的流程切换
+            if (m_TargetProcedureChange.ContainsKey(m_TargetSceneId))
             {
-                ChangeState<ProcedureMenu>(procedureOwner);
-            }
-            else
-            {
-                ChangeState<ProcedureMain>(procedureOwner);
+                m_TargetProcedureChange[m_TargetSceneId]?.Invoke();
             }
         }
 

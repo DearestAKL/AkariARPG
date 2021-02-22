@@ -15,23 +15,33 @@ namespace Akari
         Undefined = 0,
 
         /// <summary>
-        /// 弹出框。
-        /// </summary>
-        DialogForm = 1,
-
-        /// <summary>
         /// 主菜单。
         /// </summary>
-        MenuForm = 100,
+        UIMainMenu = 100,
 
         /// <summary>
         /// 设置。
         /// </summary>
-        SettingForm = 101,
+        UISetting = 101,
 
         /// <summary>
         /// 关于。
         /// </summary>
-        AboutForm = 102,
+        UIAbout = 102,
+
+        /// <summary>
+        /// 加载界面。
+        /// </summary>
+        UILoading = 103,
+
+        /// <summary>
+        /// 弹出框。
+        /// </summary>
+        UIDialogForm = 104,
+
+        /// <summary>
+        /// 主游戏界面。
+        /// </summary>
+        UIMainGame = 105,
     }
 }

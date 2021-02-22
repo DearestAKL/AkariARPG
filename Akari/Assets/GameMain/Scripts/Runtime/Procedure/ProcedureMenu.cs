@@ -13,8 +13,8 @@ namespace Akari
 {
     public class ProcedureMenu : ProcedureBase
     {
+        private ProcedureOwner m_ProcedureOwner;
         private bool m_StartGame = false;
-        private MenuForm m_MenuForm = null;
 
         public override bool UseNativeDialog
         {
@@ -24,32 +24,23 @@ namespace Akari
             }
         }
 
-        public void StartGame()
-        {
-            m_StartGame = true;
-        }
-
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
+            Log.Debug("进入了主菜单流程");
+            this.m_ProcedureOwner = procedureOwner;
 
-            GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
+            GameEntry.Event.Subscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
 
             m_StartGame = false;
-            GameEntry.UI.OpenUIForm(UIFormId.MenuForm, this);
+            GameEntry.UI.OpenUIForm(UIFormId.UIMainMenu, this);
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
             base.OnLeave(procedureOwner, isShutdown);
 
-            GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-
-            if (m_MenuForm != null)
-            {
-                m_MenuForm.Close(isShutdown);
-                m_MenuForm = null;
-            }
+            GameEntry.Event.Unsubscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -58,20 +49,23 @@ namespace Akari
 
             if (m_StartGame)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }
 
-        private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
+        /// <summary>
+        /// 切换场景
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnChangeScene(object sender, GameEventArgs e)
         {
-            OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
-            if (ne.UserData != this)
-            {
+            ChangeSceneEventArgs ne = (ChangeSceneEventArgs)e;
+            if (ne == null)
                 return;
-            }
 
-            m_MenuForm = (MenuForm)ne.UIForm.Logic;
+            m_StartGame = true;
+            m_ProcedureOwner.SetData<VarInt32>(Constant.ProcedureData.NextSceneId, ne.SceneId);
         }
     }
 }

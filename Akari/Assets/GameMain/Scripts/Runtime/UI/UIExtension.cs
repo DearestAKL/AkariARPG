@@ -178,7 +178,7 @@ namespace Akari
             }
             else
             {
-                uiComponent.OpenUIForm(UIFormId.DialogForm, dialogParams);
+                uiComponent.OpenUIForm(UIFormId.UIDialogForm, dialogParams);
             }
         }
 

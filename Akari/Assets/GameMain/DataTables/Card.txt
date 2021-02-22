@@ -1,7 +1,0 @@
-﻿#	卡牌配置表				
-#	Id		Name	Content	TypeId
-#	int		string	string	int
-#	编号	策划备注	名称	内容	类型
-	1		命运	命运	1
-	2		机遇	机遇	2
-	3		特殊	特殊	3

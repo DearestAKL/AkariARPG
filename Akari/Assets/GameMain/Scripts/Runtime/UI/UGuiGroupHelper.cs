@@ -34,13 +34,20 @@ namespace Akari
 
         public override void SetUICamera(Camera uiCamera)
         {
-            throw new System.NotImplementedException();
+            m_CachedCanvas.worldCamera = uiCamera;
         }
 
         private void Awake()
         {
             m_CachedCanvas = gameObject.GetOrAddComponent<Canvas>();
+            m_CachedCanvas.renderMode = RenderMode.ScreenSpaceCamera;
             gameObject.GetOrAddComponent<GraphicRaycaster>();
+
+            Vector2 screenn = new Vector2(1920, 1080);
+            CanvasScaler m_CanvasScale = gameObject.GetOrAddComponent<CanvasScaler>();
+            m_CanvasScale.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            m_CanvasScale.referenceResolution = screenn;
+            m_CanvasScale.matchWidthOrHeight = 1;
         }
 
         private void Start()

@@ -19,19 +19,12 @@ namespace Akari
     {
         public static readonly string[] DataTableNames = new string[]
         {
-            "Aircraft",
-            "Armor",
-            "Asteroid",
             "Entity",
             "Music",
             "Scene",
             "Sound",
-            "Thruster",
             "UIForm",
             "UISound",
-            "Weapon",
-
-            "Card",
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
@@ -84,7 +77,7 @@ namespace Akari
                 }
             }
 
-            procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Menu"));
+            procedureOwner.SetData<VarInt32>(Constant.ProcedureData.NextSceneId, (int)SceneId.Menu);
             ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 
@@ -103,7 +96,7 @@ namespace Akari
             LoadDictionary("Default");
 
             // Preload fonts
-            LoadFont("MainFont");
+            LoadFont("Y_Font");
         }
 
         private void LoadConfig(string configName)

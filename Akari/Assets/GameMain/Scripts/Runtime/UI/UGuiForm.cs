@@ -89,6 +89,7 @@ namespace Akari
             transform.anchorMax = Vector2.one;
             transform.anchoredPosition = Vector2.zero;
             transform.sizeDelta = Vector2.zero;
+            transform.localPosition = Vector3.zero;
 
             gameObject.GetOrAddComponent<GraphicRaycaster>();
 

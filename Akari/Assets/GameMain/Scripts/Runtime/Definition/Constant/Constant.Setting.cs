@@ -20,9 +20,6 @@ namespace Akari
             public const string SoundVolume = "Setting.SoundVolume";
             public const string UISoundMuted = "Setting.UISoundMuted";
             public const string UISoundVolume = "Setting.UISoundVolume";
-
-            public const string UserCard = "UserCard";
-            public const string GameData = "GameData";
         }
     }
 }

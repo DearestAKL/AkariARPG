@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using GameFramework.Event;
 using System.Collections.Generic;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
@@ -13,10 +14,9 @@ namespace Akari
 {
     public class ProcedureMain : ProcedureBase
     {
-        private const float GameOverDelayedSeconds = 2f;
 
-        private bool m_GotoMenu = false;
-        private float m_GotoMenuDelaySeconds = 0f;
+        private ProcedureOwner procedureOwner;
+        private bool changeScene = false;
 
         public override bool UseNativeDialog
         {
@@ -24,17 +24,6 @@ namespace Akari
             {
                 return false;
             }
-        }
-
-        public void GotoMenu()
-        {
-            m_GotoMenu = true;
-        }
-
-        protected override void OnInit(ProcedureOwner procedureOwner)
-        {
-            base.OnInit(procedureOwner);
-
         }
 
         protected override void OnDestroy(ProcedureOwner procedureOwner)
@@ -46,32 +35,41 @@ namespace Akari
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
+            Log.Debug("进入了主游戏流程 ");
 
-            m_GotoMenu = false;
+            this.procedureOwner = procedureOwner;
+            this.changeScene = false;
+
+            GameEntry.Event.Subscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
+
+            //GameEntry.UI.OpenUIForm(UIFormId.UIMainGame, this);
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
 
             base.OnLeave(procedureOwner, isShutdown);
+
+            GameEntry.Event.Unsubscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-
-            if (!m_GotoMenu)
+            if (changeScene)
             {
-                m_GotoMenu = true;
-                m_GotoMenuDelaySeconds = 0;
-            }
-
-            m_GotoMenuDelaySeconds += elapseSeconds;
-            if (m_GotoMenuDelaySeconds >= GameOverDelayedSeconds)
-            {
-                procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Menu"));
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
+        }
+
+        private void OnChangeScene(object sender, GameEventArgs e)
+        {
+            ChangeSceneEventArgs ne = (ChangeSceneEventArgs)e;
+            if (ne == null)
+                return;
+
+            changeScene = true;
+            procedureOwner.SetData<VarInt32>(Constant.ProcedureData.NextSceneId, ne.SceneId);
         }
     }
 }

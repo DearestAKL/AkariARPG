@@ -20,9 +20,16 @@ namespace Akari
             private set;
         }
 
+        public static PlayerComponent Player
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
             BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
+            Player = UnityGameFramework.Runtime.GameEntry.GetComponent<PlayerComponent>();
         }
     }
 }

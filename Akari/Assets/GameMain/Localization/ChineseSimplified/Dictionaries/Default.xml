@@ -11,5 +11,8 @@
     <String Key="Music" Value="音乐：" />
     <String Key="Sound" Value="音效：" />
     <String Key="UISound" Value="按键音：" />
+    <String Key="ChineseSimplified" Value="简体中文" />
+    <String Key="ChineseTraditional" Value="繁体中文" />
+    <String Key="English" Value="英语" />
   </Dictionary>
 </Dictionaries>

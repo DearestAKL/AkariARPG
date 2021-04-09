@@ -50,6 +50,7 @@ namespace Akari
             slider.value = value;
         }
 
+
         /// <summary>
         /// 是否存在界面
         /// </summary>

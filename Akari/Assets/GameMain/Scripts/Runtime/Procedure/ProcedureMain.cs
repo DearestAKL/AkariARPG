@@ -43,6 +43,9 @@ namespace Akari
             GameEntry.Event.Subscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
 
             GameEntry.UI.OpenUIForm(UIFormId.UIMainGame, this);
+
+            //创建初始英雄
+            GameEntry.Player.CreatHero();
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -51,6 +54,9 @@ namespace Akari
             base.OnLeave(procedureOwner, isShutdown);
 
             GameEntry.Event.Unsubscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
+
+            //回收英雄
+            GameEntry.Player.RecycleHero();
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)

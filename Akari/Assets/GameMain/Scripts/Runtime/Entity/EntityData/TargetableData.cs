@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Akari
 {
     [Serializable]
-    public abstract class CreatureData : EntityData
+    public abstract class TargetableData : EntityData
     {
         [SerializeField]
         private int m_MaxHP = 0;
@@ -18,7 +18,7 @@ namespace Akari
         [SerializeField]
         private int m_HP = 0;
 
-        public CreatureData(int entityId, int typeId) : base(entityId, typeId)
+        public TargetableData(int entityId, int typeId) : base(entityId, typeId)
         {
             m_MaxHP = 100;
             m_HP = 100;
@@ -46,7 +46,7 @@ namespace Akari
             }
             set
             {
-                m_HP = value;
+                m_HP = Math.Min(value, m_MaxHP);
             }
         }
 

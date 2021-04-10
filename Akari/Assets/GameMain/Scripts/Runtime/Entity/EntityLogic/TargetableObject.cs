@@ -14,13 +14,13 @@ namespace Akari
     public abstract class TargetableObject : Entity
     {
         [SerializeField]
-        private CreatureData m_CreatureData = null;
+        private TargetableData m_TargetableData = null;
 
         public bool IsDead
         {
             get
             {
-                return m_CreatureData.HP <= 0;
+                return m_TargetableData.HP <= 0;
             }
         }
 
@@ -43,8 +43,8 @@ namespace Akari
         {
             base.OnShow(userData);
 
-            m_CreatureData = userData as CreatureData;
-            if (m_CreatureData == null)
+            m_TargetableData = userData as TargetableData;
+            if (m_TargetableData == null)
             {
                 Log.Error("Creature object data is invalid.");
                 return;

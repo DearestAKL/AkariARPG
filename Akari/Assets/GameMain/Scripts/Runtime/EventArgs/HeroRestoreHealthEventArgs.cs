@@ -4,13 +4,13 @@ using GameFramework.Event;
 namespace Akari
 {
     /// <summary>
-    /// 英雄受到伤害
+    /// 英雄恢复生命值
     /// </summary>
-    public class HeroApplyDamageEventArgs : GameEventArgs
+    public class HeroRestoreHealthEventArgs : GameEventArgs
     {
-        public static readonly int EventId = typeof(HeroApplyDamageEventArgs).GetHashCode();
+        public static readonly int EventId = typeof(HeroRestoreHealthEventArgs).GetHashCode();
 
-        public HeroApplyDamageEventArgs()
+        public HeroRestoreHealthEventArgs()
         {
             FromHPRatio = 0;
             ToHPRatio = 0;
@@ -36,9 +36,9 @@ namespace Akari
             private set;
         }
 
-        public static HeroApplyDamageEventArgs Create(float fromHPRatio,float toHPRatio)
+        public static HeroRestoreHealthEventArgs Create(float fromHPRatio,float toHPRatio)
         {
-            HeroApplyDamageEventArgs changeSceneEventArgs = ReferencePool.Acquire<HeroApplyDamageEventArgs>();
+            HeroRestoreHealthEventArgs changeSceneEventArgs = ReferencePool.Acquire<HeroRestoreHealthEventArgs>();
             changeSceneEventArgs.FromHPRatio = fromHPRatio;
             changeSceneEventArgs.ToHPRatio = toHPRatio;
 

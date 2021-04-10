@@ -93,10 +93,19 @@ namespace Akari
             m_CurValue = curValue;
             m_MaxValue = maxValue;
 
-            txtProgress.text = Utility.Text.Format("{0}/{1}", curValue, maxValue);
-            float percentage = (float)curValue / maxValue;
+            float percentage = (float)m_CurValue / m_MaxValue;
             imgProgress.fillAmount = percentage;
             imgTransition.fillAmount = percentage;
+
+            UpdateText();
+        }
+
+        /// <summary>
+        /// 更新文本
+        /// </summary>
+        private void UpdateText()
+        {
+            txtProgress.text = Utility.Text.Format("{0}/{1}", m_CurValue, m_MaxValue);
         }
 
         /// <summary>
@@ -106,6 +115,9 @@ namespace Akari
         /// <returns></returns>
         public IEnumerator MinusTransition(float fromHPRatio,float toHPRatio, float duration)
         {
+            m_CurValue = (int)(toHPRatio * m_MaxValue);
+            UpdateText();
+
             imgProgress.fillAmount = toHPRatio;
 
             float time = 0f;
@@ -126,6 +138,9 @@ namespace Akari
         /// <returns></returns>
         public IEnumerator AddTransition(float fromHPRatio, float toHPRatio, float duration)
         {
+            m_CurValue = (int)(toHPRatio * m_MaxValue);
+            UpdateText();
+
             imgTransition.fillAmount = toHPRatio;
 
             float time = 0f;

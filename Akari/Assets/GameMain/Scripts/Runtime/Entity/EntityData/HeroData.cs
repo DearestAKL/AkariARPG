@@ -7,7 +7,7 @@ namespace Akari
     /// 玩家数据类
     /// </summary>
     [Serializable]
-    public class HeroData : CreatureData
+    public class HeroData : TargetableData
     {
         [SerializeField]
         private int m_MaxCP = 0;

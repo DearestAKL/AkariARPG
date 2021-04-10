@@ -10,7 +10,7 @@ namespace Akari
     /// <summary>
     /// 怪物类
     /// </summary>
-    public abstract class Monter : TargetableObject
+    public class Monter : TargetableObject
     {
         [SerializeField]
         private HeroData m_PlayerData = null;

@@ -31,6 +31,9 @@ namespace Akari
                 Log.Error("Hero data is invalid.");
                 return;
             }
+
+            //英雄创建成功 赋值到PlayerCommpont
+            GameEntry.Player.Hero = this;
         }
 
         protected override void OnHide(bool isShutdown, object userData)
@@ -53,6 +56,11 @@ namespace Akari
             base.OnDead(attacker);
         }
 
+        /// <summary>
+        /// 受到伤害
+        /// </summary>
+        /// <param name="attacker">攻击者</param>
+        /// <param name="damageHP">伤害值</param>
         public override void ApplyDamage(Entity attacker, int damageHP)
         {
             float fromHPRatio = m_HeroData.HPRatio;
@@ -69,11 +77,33 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 恢复生命值
+        /// </summary>
+        /// <param name="curer">治疗者</param>
+        /// <param name="restoreHP">恢复值</param>
         public void RestoreHealth(Entity curer,int restoreHP)
         {
+            if(m_HeroData.HP == m_HeroData.MaxHP)
+            {
+                //todo:已满血
+                return;
+            }
+
             float fromHPRatio = m_HeroData.HPRatio;
             m_HeroData.HP += restoreHP;
             float toHPRatio = m_HeroData.HPRatio;
+            if(toHPRatio > fromHPRatio)
+            {
+                GameEntry.Event.Fire(HeroRestoreHealthEventArgs.EventId, HeroRestoreHealthEventArgs.Create(fromHPRatio, toHPRatio));
+            }
         }
+
+        #region 外部数据读取接口
+        public HeroData HeroData
+        {
+            get { return m_HeroData; }
+        }
+        #endregion
     }
 }

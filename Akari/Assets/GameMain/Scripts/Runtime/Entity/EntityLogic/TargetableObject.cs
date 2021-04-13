@@ -51,9 +51,13 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 死亡
+        /// </summary>
+        /// <param name="attacker">攻击者</param>
         protected virtual void OnDead(Entity attacker)
         {
-            //GameEntry.Entity.HideEntity(this);
+
         }
 
         private void OnTriggerEnter(Collider other)

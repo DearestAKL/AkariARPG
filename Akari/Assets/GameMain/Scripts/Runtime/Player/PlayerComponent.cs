@@ -5,7 +5,6 @@ namespace Akari
 {
     public class PlayerComponent : GameFrameworkComponent
     {
-        //private PlayerInput m_PlayerInput;
         [SerializeField]
         private Hero m_Hero;
         [SerializeField]
@@ -13,28 +12,198 @@ namespace Akari
         [SerializeField]
         private Camera m_Camera;
 
+        #region 移动相关数据
+
+        Rigidbody m_Rigidbody;
+
+        [SerializeField]
+        private Vector2 playerInput;
+        [SerializeField]
+        private Vector3 velocity;
+        [SerializeField]
+        private Vector3 desiredVelocity;
+
+        [SerializeField, Range(0f, 100f), Header("最大速度")]
+        private float maxSpeed = 10f;
+
+        [SerializeField, Range(0f, 100f), Header("最大加速度")]
+        private float maxAcceleration = 10f;
+
+        [SerializeField, Range(0f, 100f), Header("最大空中加速度")]
+        private float maxAirAcceleration = 1f;
+
+        [SerializeField, Range(0f, 10f), Header("跳跃高度")]
+        private float jumpHight = 2f;
+
+        [SerializeField, Range(0, 5), Header("空中跳跃")]
+        private int maxAirJumps = 0;
+
+        [SerializeField, Range(0F, 90F), Header("角度")]
+        private float maxGroundAngle = 25f;
+
+        bool desiredJump;
+        int jumpPhase;
+        float minGroundDotProduct;
+        int groundContactCount;
+        bool OnGround => groundContactCount > 0;
+        Vector3 contactNormal;
+
+        #endregion
+
         private void Start()
         {
-            //m_PlayerInput = new PlayerInput();
             m_HeroData = new HeroData(1, 1);
-        }
-
-        private void OnDestroy()
-        {
-            
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (m_Hero == null) { return; }
+
+            playerInput.x = Input.GetAxis("Horizontal");
+            playerInput.y = Input.GetAxis("Vertical");
+            playerInput = Vector2.ClampMagnitude(playerInput, 1f);
+
+            desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
+
+            desiredJump |= Input.GetButtonDown("Jump");
+        }
+
+        private void FixedUpdate()
+        {
+            if (m_Hero == null) { return; }
+
+            UpdateState();
+            AdjustVelocity();
+
+            if (desiredJump)
             {
-                m_Hero?.RestoreHealth(null, 5);
+                desiredJump = false;
+                Jump();
             }
 
-            if (Input.GetKeyDown(KeyCode.O))
+            m_Rigidbody.velocity = velocity;
+
+            //onGround = false;
+            ClearState();
+        }
+
+        /// <summary>
+        /// 更新状态
+        /// </summary>
+        private void UpdateState()
+        {
+            velocity = m_Rigidbody.velocity;
+            if (OnGround)
             {
-                m_Hero?.ApplyDamage(null, 5);
+                jumpPhase = 0;
+                if (groundContactCount > 1)
+                {
+                    contactNormal.Normalize();
+                }
             }
+            else
+            {
+                contactNormal = Vector3.up;
+            }
+        }
+
+        /// <summary>
+        /// 清空状态
+        /// </summary>
+        private void ClearState()
+        {
+            //onGround = false;
+            groundContactCount = 0;
+            contactNormal = Vector3.zero;
+        }
+
+
+        /// <summary>
+        /// 跳跃
+        /// </summary>
+        private void Jump()
+        {
+            if (OnGround || jumpPhase < maxAirJumps)
+            {
+                jumpPhase += 1;
+                float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHight);
+                float alignedSpeed = Vector3.Dot(velocity, contactNormal);
+                if (velocity.y > 0)
+                {
+                    jumpSpeed = Mathf.Max(jumpSpeed - alignedSpeed, 0f);
+                }
+                velocity += contactNormal * jumpSpeed;
+            }
+        }
+
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    EvaluateCollision(collision);
+        //}
+
+        //private void OnCollisionStay(Collision collision)
+        //{
+        //    EvaluateCollision(collision);
+        //}
+
+        /// <summary>
+        /// 碰撞检测
+        /// </summary>
+        /// <param name="collision"></param>
+        public void EvaluateCollision(Collision collision)
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                Vector3 normal = collision.GetContact(i).normal;
+                //onGround |= normal.y >= minGroundDotProduct;
+                if (normal.y >= minGroundDotProduct)
+                {
+                    //onGround = true;
+                    groundContactCount += 1;
+                    //累积法线
+                    contactNormal += normal;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 求沿斜面 斜边 方向速度
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        private Vector3 ProjectOnContactPlane(Vector3 vector)
+        {
+            //v - n*(|v|*cos角) 求斜边方向向量
+            return vector - contactNormal * Vector3.Dot(vector, contactNormal);
+        }
+
+        /// <summary>
+        /// 调整速度
+        /// </summary>
+        /// <returns></returns>
+        private void AdjustVelocity()
+        {
+            //获取映射的 相对斜边的 X 和 Z轴
+            //相对于斜边
+            Vector3 xAxis = ProjectOnContactPlane(Vector3.right).normalized;
+            Vector3 zAxis = ProjectOnContactPlane(Vector3.forward).normalized;
+
+            //求在在世界坐标中X轴和Z轴投影长度 也就是相对的X和Z的速度
+            //相对于地面
+            float currentX = Vector3.Dot(velocity, xAxis);
+            float currentZ = Vector3.Dot(velocity, zAxis);
+
+            //最大加速度
+            float acceleration = OnGround ? maxAcceleration : maxAirAcceleration;
+            //最大速度变化
+            float maxSpeedChange = acceleration * Time.deltaTime;
+
+            //新的方向速率
+            float newX = Mathf.MoveTowards(currentX, desiredVelocity.x, maxSpeedChange);
+            float newZ = Mathf.MoveTowards(currentZ, desiredVelocity.z, maxSpeedChange);
+
+            //新的速率
+            velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
         }
 
         private void LateUpdate()
@@ -71,8 +240,12 @@ namespace Akari
             set
             {
                 m_Hero = value;
+
+                m_Rigidbody = m_Hero.GetComponent<Rigidbody>();
+                minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
             }
         }
+
 
         /// <summary>
         /// 当前英雄数据

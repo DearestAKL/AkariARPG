@@ -15,10 +15,12 @@ namespace Akari
     {
         [SerializeField]
         private HeroData m_HeroData = null;
+        private PlayerComponent m_Player = null;
 
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
+            m_Player = GameEntry.Player;
         }
 
         protected override void OnShow(object userData)
@@ -33,7 +35,7 @@ namespace Akari
             }
 
             //英雄创建成功 赋值到PlayerCommpont
-            GameEntry.Player.Hero = this;
+            m_Player.Hero = this;
         }
 
         protected override void OnHide(bool isShutdown, object userData)
@@ -99,11 +101,18 @@ namespace Akari
             }
         }
 
-        #region 外部数据读取接口
-        public HeroData HeroData
+        private void OnCollisionEnter(Collision collision)
         {
-            get { return m_HeroData; }
+            m_Player.EvaluateCollision(collision);
         }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            m_Player.EvaluateCollision(collision);
+        }
+
+        #region 外部数据读取接口
+
         #endregion
     }
 }

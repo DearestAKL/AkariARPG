@@ -9,17 +9,32 @@ using UnityGameFramework.Runtime;
 namespace Akari
 {
     /// <summary>
-    /// 玩家类
+    /// 英雄类
     /// </summary>
     public class Hero : TargetableObject
     {
         [SerializeField]
         private HeroData m_HeroData = null;
+
+
+        [SerializeField]
+        private Animator m_Animator = null;
+        [SerializeField]
+        private Rigidbody m_Rigidbody = null;
+
+        private Transform m_LookAtPos = null;
+
         private PlayerComponent m_Player = null;
 
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
+
+            //查找组件
+            m_Rigidbody = CachedTransform.GetComponent<Rigidbody>();
+            m_Animator = CachedTransform.Find("HeroModel").GetComponent<Animator>();
+            m_LookAtPos = CachedTransform.Find("LookAt").GetComponent<Transform>();
+
             m_Player = GameEntry.Player;
         }
 
@@ -58,6 +73,23 @@ namespace Akari
             base.OnDead(attacker);
         }
 
+
+        #region 向PlayerComponent传递信息
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            m_Player.EvaluateCollision(collision);
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            m_Player.EvaluateCollision(collision);
+        }
+
+        #endregion
+
+        #region 外部行为接口
+
         /// <summary>
         /// 受到伤害
         /// </summary>
@@ -65,6 +97,8 @@ namespace Akari
         /// <param name="damageHP">伤害值</param>
         public override void ApplyDamage(Entity attacker, int damageHP)
         {
+            base.ApplyDamage(attacker, damageHP);
+
             float fromHPRatio = m_HeroData.HPRatio;
             m_HeroData.HP -= damageHP;
             float toHPRatio = m_HeroData.HPRatio;
@@ -84,9 +118,9 @@ namespace Akari
         /// </summary>
         /// <param name="curer">治疗者</param>
         /// <param name="restoreHP">恢复值</param>
-        public void RestoreHealth(Entity curer,int restoreHP)
+        public override void RestoreHealth(Entity curer, int restoreHP)
         {
-            if(m_HeroData.HP == m_HeroData.MaxHP)
+            if (m_HeroData.HP == m_HeroData.MaxHP)
             {
                 //todo:已满血
                 return;
@@ -95,24 +129,34 @@ namespace Akari
             float fromHPRatio = m_HeroData.HPRatio;
             m_HeroData.HP += restoreHP;
             float toHPRatio = m_HeroData.HPRatio;
-            if(toHPRatio > fromHPRatio)
+            if (toHPRatio > fromHPRatio)
             {
                 GameEntry.Event.Fire(HeroRestoreHealthEventArgs.EventId, HeroRestoreHealthEventArgs.Create(fromHPRatio, toHPRatio));
             }
         }
+        #endregion
 
-        private void OnCollisionEnter(Collision collision)
+        #region 外部引用接口
+        /// <summary>
+        /// 缓存的Animator
+        /// </summary>
+        public Animator CachedAnimator
         {
-            m_Player.EvaluateCollision(collision);
+            get { return m_Animator; }
         }
 
-        private void OnCollisionStay(Collision collision)
+        /// <summary>
+        /// 缓存的Rigidbody
+        /// </summary>
+        public Rigidbody CachedRigidbody
         {
-            m_Player.EvaluateCollision(collision);
+            get { return m_Rigidbody; }
         }
 
-        #region 外部数据读取接口
-
+        public Transform CachedLookAtPos
+        {
+            get { return m_LookAtPos; }
+        }
         #endregion
     }
 }

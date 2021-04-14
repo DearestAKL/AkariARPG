@@ -5,7 +5,8 @@
         "UnityGameFramework.Runtime",
         "UnityGameFramework.Editor",
         "Libraries",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Cinemachine"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

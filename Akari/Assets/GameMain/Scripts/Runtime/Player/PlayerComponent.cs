@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityGameFramework.Runtime;
 
+
 namespace Akari
 {
     public class PlayerComponent : GameFrameworkComponent
@@ -9,12 +10,18 @@ namespace Akari
         private Hero m_Hero;
         [SerializeField]
         private HeroData m_HeroData;
+
+        //---
         [SerializeField]
-        private Camera m_Camera;
+        private Transform m_MainCameraTransform;
+        [SerializeField]
+        private Rigidbody m_Rigidbody;
+        [SerializeField]
+        private Animator m_Animator;
+
 
         #region 移动相关数据
 
-        Rigidbody m_Rigidbody;
 
         [SerializeField]
         private Vector2 playerInput;
@@ -53,6 +60,8 @@ namespace Akari
         private void Start()
         {
             m_HeroData = new HeroData(1, 1);
+
+            m_MainCameraTransform = GameEntry.Camera.MainCamera.transform;
         }
 
         private void Update()
@@ -63,7 +72,20 @@ namespace Akari
             playerInput.y = Input.GetAxis("Vertical");
             playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-            desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
+            if (m_MainCameraTransform)
+            {
+                Vector3 forward = m_MainCameraTransform.forward;
+                forward.y = 0f;
+                forward.Normalize();
+                Vector3 right = m_MainCameraTransform.right;
+                right.y = 0f;
+                right.Normalize();
+                desiredVelocity = (forward * playerInput.y + right * playerInput.x) * maxSpeed;
+            }
+            else
+            {
+                desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
+            }
 
             desiredJump |= Input.GetButtonDown("Jump");
         }
@@ -83,7 +105,6 @@ namespace Akari
 
             m_Rigidbody.velocity = velocity;
 
-            //onGround = false;
             ClearState();
         }
 
@@ -135,16 +156,6 @@ namespace Akari
                 velocity += contactNormal * jumpSpeed;
             }
         }
-
-        //private void OnCollisionEnter(Collision collision)
-        //{
-        //    EvaluateCollision(collision);
-        //}
-
-        //private void OnCollisionStay(Collision collision)
-        //{
-        //    EvaluateCollision(collision);
-        //}
 
         /// <summary>
         /// 碰撞检测
@@ -241,8 +252,12 @@ namespace Akari
             {
                 m_Hero = value;
 
-                m_Rigidbody = m_Hero.GetComponent<Rigidbody>();
+                //刷新引用
+                m_Rigidbody = m_Hero.CachedRigidbody;
+                m_Animator = m_Hero.CachedAnimator;
                 minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
+
+                GameEntry.Camera.SetFreeLookFollowAndLookAt(m_Hero.CachedTransform, m_Hero.CachedLookAtPos);
             }
         }
 

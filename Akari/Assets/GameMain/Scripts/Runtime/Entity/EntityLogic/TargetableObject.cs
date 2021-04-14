@@ -34,6 +34,25 @@ namespace Akari
 
         }
 
+        /// <summary>
+        /// 恢复生命值
+        /// </summary>
+        /// <param name="curer">治疗者</param>
+        /// <param name="restoreHP">恢复值</param>
+        public virtual void RestoreHealth(Entity curer, int restoreHP) 
+        { 
+        
+        }
+
+        /// <summary>
+        /// 死亡
+        /// </summary>
+        /// <param name="attacker">攻击者</param>
+        protected virtual void OnDead(Entity attacker)
+        {
+
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -49,15 +68,6 @@ namespace Akari
                 Log.Error("Creature object data is invalid.");
                 return;
             }
-        }
-
-        /// <summary>
-        /// 死亡
-        /// </summary>
-        /// <param name="attacker">攻击者</param>
-        protected virtual void OnDead(Entity attacker)
-        {
-
         }
 
         private void OnTriggerEnter(Collider other)

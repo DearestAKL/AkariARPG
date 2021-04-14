@@ -20,6 +20,12 @@ namespace Akari
             private set;
         }
 
+        public static CameraComponent Camera
+        {
+            get;
+            private set;
+        }
+
         public static PlayerComponent Player
         {
             get;
@@ -29,6 +35,7 @@ namespace Akari
         private static void InitCustomComponents()
         {
             BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
+            Camera = UnityGameFramework.Runtime.GameEntry.GetComponent<CameraComponent>();
             Player = UnityGameFramework.Runtime.GameEntry.GetComponent<PlayerComponent>();
         }
     }

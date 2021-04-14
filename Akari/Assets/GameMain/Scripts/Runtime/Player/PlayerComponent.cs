@@ -30,6 +30,7 @@ namespace Akari
         [SerializeField]
         private Vector3 desiredVelocity;
 
+
         [SerializeField, Range(0f, 100f), Header("最大速度")]
         private float maxSpeed = 10f;
 
@@ -47,6 +48,9 @@ namespace Akari
 
         [SerializeField, Range(0F, 90F), Header("角度")]
         private float maxGroundAngle = 25f;
+
+        [SerializeField, Range(0F, 90F), Header("旋转速度")]
+        private float desiredRotationSpeed = 0.1f;
 
         bool desiredJump;
         int jumpPhase;
@@ -105,6 +109,11 @@ namespace Akari
 
             m_Rigidbody.velocity = velocity;
 
+            if (playerInput.magnitude > 0.1)
+            {
+                m_Hero.CachedTransform.rotation = Quaternion.Slerp(m_Hero.CachedTransform.rotation, Quaternion.LookRotation(desiredVelocity), desiredRotationSpeed);
+            }
+
             ClearState();
         }
 
@@ -133,7 +142,6 @@ namespace Akari
         /// </summary>
         private void ClearState()
         {
-            //onGround = false;
             groundContactCount = 0;
             contactNormal = Vector3.zero;
         }
@@ -155,37 +163,6 @@ namespace Akari
                 }
                 velocity += contactNormal * jumpSpeed;
             }
-        }
-
-        /// <summary>
-        /// 碰撞检测
-        /// </summary>
-        /// <param name="collision"></param>
-        public void EvaluateCollision(Collision collision)
-        {
-            for (int i = 0; i < collision.contactCount; i++)
-            {
-                Vector3 normal = collision.GetContact(i).normal;
-                //onGround |= normal.y >= minGroundDotProduct;
-                if (normal.y >= minGroundDotProduct)
-                {
-                    //onGround = true;
-                    groundContactCount += 1;
-                    //累积法线
-                    contactNormal += normal;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 求沿斜面 斜边 方向速度
-        /// </summary>
-        /// <param name="vector"></param>
-        /// <returns></returns>
-        private Vector3 ProjectOnContactPlane(Vector3 vector)
-        {
-            //v - n*(|v|*cos角) 求斜边方向向量
-            return vector - contactNormal * Vector3.Dot(vector, contactNormal);
         }
 
         /// <summary>
@@ -215,6 +192,36 @@ namespace Akari
 
             //新的速率
             velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
+        }
+
+        /// <summary>
+        /// 求沿斜面 斜边 方向速度
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        private Vector3 ProjectOnContactPlane(Vector3 vector)
+        {
+            return vector - contactNormal * Vector3.Dot(vector, contactNormal);
+        }
+
+        /// <summary>
+        /// 碰撞检测
+        /// </summary>
+        /// <param name="collision"></param>
+        public void EvaluateCollision(Collision collision)
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                Vector3 normal = collision.GetContact(i).normal;
+                //onGround |= normal.y >= minGroundDotProduct;
+                if (normal.y >= minGroundDotProduct)
+                {
+                    //onGround = true;
+                    groundContactCount += 1;
+                    //累积法线
+                    contactNormal += normal;
+                }
+            }
         }
 
         private void LateUpdate()

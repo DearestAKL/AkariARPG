@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/GameMain/Scenes/GameMain/GameMain.unity
     guid: 37b2ee5fbe0023b4caf753545bcb400a
   - enabled: 1
-    path: Assets/GameMain/Scenes/GameStart/GameStart.unity
+    path: Assets/GameMain/Scenes/Init/Init.unity
     guid: 15ae16ef2d80c2543ad03f6f94b5c171
   - enabled: 0
     path: Assets/GameMain/Scenes/Menu/Menu.unity

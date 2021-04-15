@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
 
 
@@ -23,32 +25,39 @@ namespace Akari
         #region 移动相关数据
 
 
-        [SerializeField]
+        [FoldoutGroup("玩家移动"),SerializeField]
         private Vector2 playerInput;
-        [SerializeField]
+        [FoldoutGroup("玩家移动"), SerializeField]
         private Vector3 velocity;
-        [SerializeField]
+        [FoldoutGroup("玩家移动"),SerializeField]
         private Vector3 desiredVelocity;
 
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 100f), Header("最大速度")]
         private float maxSpeed = 10f;
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 100f), Header("最大加速度")]
         private float maxAcceleration = 10f;
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 100f), Header("最大空中加速度")]
         private float maxAirAcceleration = 1f;
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 10f), Header("跳跃高度")]
         private float jumpHight = 2f;
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0, 5), Header("空中跳跃")]
         private int maxAirJumps = 0;
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0F, 90F), Header("角度")]
         private float maxGroundAngle = 25f;
 
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0F, 90F), Header("旋转速度")]
         private float desiredRotationSpeed = 0.1f;
 
@@ -61,19 +70,32 @@ namespace Akari
 
         #endregion
 
+        #region Input
+        public InputAction jumpAction;
+        #endregion
+
         private void Start()
         {
             m_HeroData = new HeroData(1, 1);
 
             m_MainCameraTransform = GameEntry.Camera.MainCamera.transform;
+
+            jumpAction = new InputAction(binding: "*/<Keyboard>{jKey}");
         }
 
         private void Update()
         {
             if (m_Hero == null) { return; }
 
-            playerInput.x = Input.GetAxis("Horizontal");
-            playerInput.y = Input.GetAxis("Vertical");
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                Debug.Log("Space");
+            }
+
+            //playerInput.x = Input.GetAxis("Horizontal");
+            //playerInput.y = Input.GetAxis("Vertical");
+            playerInput.x =0;
+            playerInput.y = 0;
             playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
             if (m_MainCameraTransform)
@@ -91,7 +113,8 @@ namespace Akari
                 desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
             }
 
-            desiredJump |= Input.GetButtonDown("Jump");
+            //desiredJump |= Input.GetButtonDown("Jump");
+            desiredJump |= jumpAction.triggered;
         }
 
         private void FixedUpdate()

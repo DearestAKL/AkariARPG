@@ -6,7 +6,8 @@
         "UnityGameFramework.Editor",
         "Libraries",
         "Unity.TextMeshPro",
-        "Cinemachine"
+        "Cinemachine",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

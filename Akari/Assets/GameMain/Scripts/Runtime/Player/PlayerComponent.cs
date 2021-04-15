@@ -24,14 +24,15 @@ namespace Akari
 
         #region 移动相关数据
 
-
-        [FoldoutGroup("玩家移动"),SerializeField]
+        [FoldoutGroup("玩家移动")]
+        [SerializeField]
         private Vector2 playerInput;
-        [FoldoutGroup("玩家移动"), SerializeField]
+        [FoldoutGroup("玩家移动")]
+        [SerializeField]
         private Vector3 velocity;
-        [FoldoutGroup("玩家移动"),SerializeField]
+        [FoldoutGroup("玩家移动")]
+        [SerializeField]
         private Vector3 desiredVelocity;
-
 
         [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 100f), Header("最大速度")]
@@ -70,32 +71,17 @@ namespace Akari
 
         #endregion
 
-        #region Input
-        public InputAction jumpAction;
-        #endregion
-
         private void Start()
         {
             m_HeroData = new HeroData(1, 1);
 
             m_MainCameraTransform = GameEntry.Camera.MainCamera.transform;
-
-            jumpAction = new InputAction(binding: "*/<Keyboard>{jKey}");
         }
 
         private void Update()
         {
             if (m_Hero == null) { return; }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                Debug.Log("Space");
-            }
-
-            //playerInput.x = Input.GetAxis("Horizontal");
-            //playerInput.y = Input.GetAxis("Vertical");
-            playerInput.x =0;
-            playerInput.y = 0;
             playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
             if (m_MainCameraTransform)
@@ -112,9 +98,6 @@ namespace Akari
             {
                 desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
             }
-
-            //desiredJump |= Input.GetButtonDown("Jump");
-            desiredJump |= jumpAction.triggered;
         }
 
         private void FixedUpdate()
@@ -247,11 +230,6 @@ namespace Akari
             }
         }
 
-        private void LateUpdate()
-        {
-            
-        }
-
         #region 外接口
         /// <summary>
         /// 创建英雄
@@ -301,6 +279,22 @@ namespace Akari
             {
                 return m_HeroData;
             }
+        }
+        #endregion
+
+        #region InputSystem
+        public void OnMove(InputAction.CallbackContext context)
+        {
+            if (m_Hero == null) { return; }
+
+            playerInput = context.ReadValue<Vector2>();
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (m_Hero == null) { return; }
+
+            desiredJump = true;
         }
         #endregion
     }

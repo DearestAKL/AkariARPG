@@ -24,6 +24,8 @@ namespace Akari
 
         private Transform m_LookAtPos = null;
 
+        private GameObject m_Weapon = null;
+
         private PlayerComponent m_Player = null;
 
         protected override void OnInit(object userData)
@@ -34,6 +36,7 @@ namespace Akari
             m_Rigidbody = CachedTransform.GetComponent<Rigidbody>();
             m_Animator = CachedTransform.Find("HeroModel").GetComponent<Animator>();
             m_LookAtPos = CachedTransform.Find("LookAt").GetComponent<Transform>();
+            m_Weapon = CachedTransform.Find("Weapon").gameObject;
 
             m_Player = GameEntry.Player;
         }
@@ -156,6 +159,11 @@ namespace Akari
         public Transform CachedLookAtPos
         {
             get { return m_LookAtPos; }
+        }
+
+        public GameObject Weapon
+        {
+            get { return m_Weapon; }
         }
         #endregion
     }

@@ -71,6 +71,14 @@ namespace Akari
 
         #endregion
 
+        #region 攻击相关数据
+
+        private bool isWeaponOpen = false;
+        private float weaponTime = 1F;
+        private float attackCD = 0;
+
+        #endregion
+
         private void Start()
         {
             m_HeroData = new HeroData(1, 1);
@@ -97,6 +105,22 @@ namespace Akari
             else
             {
                 desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
+            }
+
+            if (attackCD > 0)
+            {
+                attackCD -= Time.deltaTime;
+            }
+
+            if (isWeaponOpen)
+            {
+                weaponTime -= Time.deltaTime;
+                if (weaponTime <= 0.01f)
+                {
+                    isWeaponOpen = false;
+                    weaponTime = 1F;
+                    m_Hero.Weapon.SetActive(false);
+                }
             }
         }
 
@@ -295,6 +319,20 @@ namespace Akari
             if (m_Hero == null) { return; }
 
             desiredJump = true;
+        }
+
+        public void OnFire(InputAction.CallbackContext context)
+        {
+            if (m_Hero == null) { return; }
+
+            if(attackCD > 0f)
+            {
+                return;
+            }
+
+            isWeaponOpen = true;
+            m_Hero.Weapon.SetActive(true);
+            attackCD = 1.5f;
         }
         #endregion
     }

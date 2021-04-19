@@ -27,7 +27,7 @@
                     "id": "c84f0198-4cda-4a59-a6f2-f5c7ef5d9436",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "Jump",

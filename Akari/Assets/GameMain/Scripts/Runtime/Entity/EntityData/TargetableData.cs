@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Akari
@@ -6,16 +7,16 @@ namespace Akari
     [Serializable]
     public abstract class TargetableData : EntityData
     {
-        [SerializeField]
+        [FoldoutGroup("基础属性"),SerializeField]
         private int m_MaxHP = 0;
 
-        [SerializeField]
+        [FoldoutGroup("基础属性"), SerializeField]
         private int m_Attack = 0;
 
-        [SerializeField]
+        [FoldoutGroup("基础属性"), SerializeField]
         private int m_Defense = 0;
 
-        [SerializeField]
+        [FoldoutGroup("基础属性"), SerializeField]
         private int m_HP = 0;
 
         public TargetableData(int entityId, int typeId) : base(entityId, typeId)
@@ -23,6 +24,8 @@ namespace Akari
             m_MaxHP = 100;
             m_HP = 100;
         }
+
+        #region 基础属性
 
         /// <summary>
         /// 最大生命。
@@ -82,5 +85,13 @@ namespace Akari
                 return m_Defense;
             }
         }
+
+        #endregion
+
+        #region 动画控制
+        private GameObject CharacterPrefab;
+
+        #endregion
     }
+
 }

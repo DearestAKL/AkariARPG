@@ -213,6 +213,9 @@ GameObject:
   - component: {fileID: 9124941227254370926}
   - component: {fileID: 3095295535974150889}
   - component: {fileID: 5369892850993678309}
+  - component: {fileID: 7208290341562526473}
+  - component: {fileID: 7187001502820857096}
+  - component: {fileID: 2381809031943395438}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -268,6 +271,82 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &7208290341562526473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544930258569835435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d079695081009514fb87022cf034c236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HeroData:
+    m_Id: 0
+    m_TypeId: 0
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0, w: 0}
+    m_MaxHP: 0
+    m_Attack: 0
+    m_Defense: 0
+    m_HP: 0
+    m_MaxCP: 0
+  m_Animator: {fileID: 0}
+  m_Rigidbody: {fileID: 0}
+--- !u!114 &7187001502820857096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544930258569835435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e428e55625a5bdf42819b0c6ad51cc6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Hero: {fileID: 0}
+  m_HeroData:
+    m_Id: 0
+    m_TypeId: 0
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0, w: 0}
+    m_MaxHP: 0
+    m_Attack: 0
+    m_Defense: 0
+    m_HP: 0
+    m_MaxCP: 0
+  m_MainCameraTransform: {fileID: 0}
+  m_Rigidbody: {fileID: 0}
+  m_Animator: {fileID: 0}
+  playerInput: {x: 0, y: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  desiredVelocity: {x: 0, y: 0, z: 0}
+  maxSpeed: 10
+  maxAcceleration: 10
+  maxAirAcceleration: 1
+  jumpHight: 2
+  maxAirJumps: 0
+  maxGroundAngle: 25
+  desiredRotationSpeed: 0.1
+--- !u!111 &2381809031943395438
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544930258569835435}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 0}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5668088308441183822
 GameObject:
   m_ObjectHideFlags: 0

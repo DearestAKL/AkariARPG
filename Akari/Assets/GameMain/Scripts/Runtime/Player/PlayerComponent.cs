@@ -8,6 +8,14 @@ namespace Akari
 {
     public class PlayerComponent : GameFrameworkComponent
     {
+        private enum State
+        {
+            Locomotion,//地面
+            Water,//水中
+            Air,//空中
+        }
+
+
         [SerializeField]
         private Hero m_Hero;
         [SerializeField]
@@ -18,8 +26,8 @@ namespace Akari
         private Transform m_MainCameraTransform;
         [SerializeField]
         private Rigidbody m_Rigidbody;
-        [SerializeField]
-        private Animator m_Animator;
+
+        private AnimationControllerBase m_AnimationController;
 
 
         #region 移动相关数据
@@ -39,8 +47,12 @@ namespace Akari
         private float maxSpeed = 10f;
 
         [FoldoutGroup("玩家移动")]
+        [SerializeField, Range(0f, 100f), Header("冲刺速度")]
+        private float maxSprintSpeed = 20f;
+
+        [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 100f), Header("最大加速度")]
-        private float maxAcceleration = 10f;
+        private float maxAcceleration = 100f;
 
         [FoldoutGroup("玩家移动")]
         [SerializeField, Range(0f, 100f), Header("最大空中加速度")]
@@ -72,9 +84,6 @@ namespace Akari
         #endregion
 
         #region 攻击相关数据
-
-        private bool isWeaponOpen = false;
-        private float weaponTime = 1F;
         private float attackCD = 0;
 
         #endregion
@@ -84,13 +93,17 @@ namespace Akari
             m_HeroData = new HeroData(1, 1);
 
             m_MainCameraTransform = GameEntry.Camera.MainCamera.transform;
+
+            m_AnimationController = new AnimationControllerBase();
         }
 
         private void Update()
         {
-            if (m_Hero == null) { return; }
+            if (m_Hero == null) { return; }         
 
             playerInput = Vector2.ClampMagnitude(playerInput, 1f);
+
+            float maxCurSpeed = OnSprintHold ? maxSprintSpeed : maxSpeed;
 
             if (m_MainCameraTransform)
             {
@@ -100,27 +113,16 @@ namespace Akari
                 Vector3 right = m_MainCameraTransform.right;
                 right.y = 0f;
                 right.Normalize();
-                desiredVelocity = (forward * playerInput.y + right * playerInput.x) * maxSpeed;
+                desiredVelocity = (forward * playerInput.y + right * playerInput.x) * maxCurSpeed;
             }
             else
             {
-                desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
+                desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * maxCurSpeed;
             }
 
             if (attackCD > 0)
             {
                 attackCD -= Time.deltaTime;
-            }
-
-            if (isWeaponOpen)
-            {
-                weaponTime -= Time.deltaTime;
-                if (weaponTime <= 0.01f)
-                {
-                    isWeaponOpen = false;
-                    weaponTime = 1F;
-                    m_Hero.Weapon.SetActive(false);
-                }
             }
         }
 
@@ -138,6 +140,10 @@ namespace Akari
             }
 
             m_Rigidbody.velocity = velocity;
+
+            //获取水平速度
+            velocity.y = 0;
+            m_AnimationController.PlayMove(velocity.magnitude / maxSpeed);
 
             if (playerInput.magnitude > 0.1)
             {
@@ -192,6 +198,8 @@ namespace Akari
                     jumpSpeed = Mathf.Max(jumpSpeed - alignedSpeed, 0f);
                 }
                 velocity += contactNormal * jumpSpeed;
+
+                m_AnimationController.PlayJump();
             }
         }
 
@@ -212,14 +220,14 @@ namespace Akari
             float currentZ = Vector3.Dot(velocity, zAxis);
 
             //最大加速度
-            float acceleration = OnGround ? maxAcceleration : maxAirAcceleration;
+            //float acceleration = OnGround ? maxAcceleration : maxAirAcceleration;
+            float acceleration = maxAcceleration;
             //最大速度变化
             float maxSpeedChange = acceleration * Time.deltaTime;
 
             //新的方向速率
             float newX = Mathf.MoveTowards(currentX, desiredVelocity.x, maxSpeedChange);
             float newZ = Mathf.MoveTowards(currentZ, desiredVelocity.z, maxSpeedChange);
-
             //新的速率
             velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
         }
@@ -286,7 +294,7 @@ namespace Akari
 
                 //刷新引用
                 m_Rigidbody = m_Hero.CachedRigidbody;
-                m_Animator = m_Hero.CachedAnimator;
+                m_AnimationController.SetAnimator(m_Hero.CachedAnimator);
                 minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
 
                 GameEntry.Camera.SetFreeLookFollowAndLookAt(m_Hero.CachedTransform, m_Hero.CachedLookAtPos);
@@ -321,18 +329,138 @@ namespace Akari
             desiredJump = true;
         }
 
+        int AttackIndex = 1;
+        /// <summary>
+        /// 普通攻击
+        /// </summary>
+        /// <param name="context"></param>
         public void OnFire(InputAction.CallbackContext context)
         {
             if (m_Hero == null) { return; }
 
-            if(attackCD > 0f)
+            if (context.performed)
+            {
+                //int index = context.
+            }
+
+
+            if (attackCD > 0f)
             {
                 return;
             }
 
-            isWeaponOpen = true;
-            m_Hero.Weapon.SetActive(true);
+            m_AnimationController.PlayLightAttack(AttackIndex);
             attackCD = 1.5f;
+
+            //TODO:点击
+
+            //TODO:长按
+        }
+
+        bool OnSprintHold = false;
+        /// <summary>
+        /// 冲刺
+        /// </summary>
+        /// <param name="context"></param>
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                return;
+            }
+
+            //TODO:点击
+            if (context.canceled)
+            {
+                if (OnSprintHold)
+                {
+                    Debug.Log("冲刺长按取消");
+                    OnSprintHold = false;
+                }
+                else
+                {
+                    Debug.Log("冲刺点击");
+                }
+            }
+
+
+            //TODO:长按
+            if (context.performed)
+            {
+                Debug.Log("冲刺长按开始");
+                OnSprintHold = true;
+            }
+        }
+
+        bool OnSpecialSkillHold = false;
+        /// <summary>
+        /// 特殊技
+        /// </summary>
+        /// <param name="context"></param>
+        public void OnSpecialSkill(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                return;
+            }
+
+            //TODO:点击
+            if (context.canceled)
+            {
+                if (OnSpecialSkillHold)
+                {
+                    Debug.Log("特殊技长按取消");
+                    OnSpecialSkillHold = false;
+                }
+                else
+                {
+                    Debug.Log("特殊技点击");
+                }
+            }
+
+
+            //TODO:长按
+            if (context.performed)
+            {
+                Debug.Log("特殊技长按开始");
+                OnSpecialSkillHold = true;
+            }
+        }
+
+
+        bool OnUltimateSkillHold = false;
+        /// <summary>
+        /// 终极技
+        /// </summary>
+        /// <param name="context"></param>
+        public void OnUltimateSkill(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                return;
+            }
+
+            //TODO:点击
+            if (context.canceled)
+            {
+                if (OnUltimateSkillHold)
+                {
+                    Debug.Log("终极技长按取消");
+                    OnUltimateSkillHold = false;
+                }
+                else
+                {
+                    Debug.Log("终极技点击");
+                }
+            }
+
+
+            //TODO:长按
+            if (context.performed)
+            {
+                Debug.Log("终极技长按开始");
+                OnUltimateSkillHold = true;
+            }
         }
         #endregion
     }

@@ -32,7 +32,8 @@ namespace UnityGameFramework.Editor.ResourceTools
 
         public ResourceCollection()
         {
-            m_ConfigurationPath = Type.GetConfigurationPath<ResourceCollectionConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "Res/Configs/ResourceCollection.xml"));
+            //m_ConfigurationPath = Type.GetConfigurationPath<ResourceCollectionConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "Res/Configs/ResourceCollection.xml"));
+            m_ConfigurationPath = Type.GetConfigurationPath<ResourceCollectionConfigPathAttribute>() ?? Utility.Path.GetRegularPath(Path.Combine(Application.dataPath, "GameMain/Configs/ResourceCollection.xml"));
             m_Resources = new SortedDictionary<string, Resource>(StringComparer.Ordinal);
             m_Assets = new SortedDictionary<string, Asset>(StringComparer.Ordinal);
         }

@@ -30,6 +30,7 @@ namespace UnityGameFramework.Runtime
         {
             get
             {
+                var ss = Utility.Path.GetRegularPath(Path.Combine(Application.persistentDataPath, SettingFileName));
                 return Utility.Path.GetRegularPath(Path.Combine(Application.persistentDataPath, SettingFileName));
             }
         }

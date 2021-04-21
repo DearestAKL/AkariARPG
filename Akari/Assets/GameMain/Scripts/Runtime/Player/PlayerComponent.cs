@@ -8,6 +8,8 @@ namespace Akari
 {
     public class PlayerComponent : GameFrameworkComponent
     {
+        public TextAsset config;
+
         private enum State
         {
             Locomotion,//地面
@@ -95,6 +97,8 @@ namespace Akari
             m_MainCameraTransform = GameEntry.Camera.MainCamera.transform;
 
             m_AnimationController = new AnimationControllerBase();
+
+            var mac = JsonUtility.FromJson<MachineConfig>(config.text);
         }
 
         private void Update()

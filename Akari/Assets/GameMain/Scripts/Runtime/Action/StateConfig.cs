@@ -19,6 +19,7 @@ namespace Akari
         public int dafualtAnimIndex = 0;
         public Single fadeTime = 1 / (Single)20;
         public bool enableLoop = false;
+        public string nextStateName = "";
         public int nextAnimIndex = -1;
 
         public List<FrameConfig> frames = new List<FrameConfig>();

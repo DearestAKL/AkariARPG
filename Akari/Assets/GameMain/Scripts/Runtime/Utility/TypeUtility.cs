@@ -4,7 +4,7 @@ using System.Text;
 namespace Akari
 {
     /// <summary>
-    /// TypeUtility
+    /// 类型工具
     /// </summary>
     public static class TypeUtility
     {

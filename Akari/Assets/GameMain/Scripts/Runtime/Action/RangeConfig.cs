@@ -9,8 +9,9 @@ namespace Akari
     [Serializable]
     public class RangeConfig
     {
+        [RangeTypes]
         [SerializeReference]
-        public IItem value;
+        public IRangeItem value;
 
         public Type GetValueType() => value?.GetType() ?? null;
 
@@ -26,18 +27,18 @@ namespace Akari
 
     #region data
 
-    public interface IItem
+    public interface IRangeItem
     {
-        IItem Clone();
+        IRangeItem Clone();
     }
 
     [Serializable]
-    public class RectItem : IItem
+    public class RectItem : IRangeItem
     {
         public Vector2 offset = Vector2.up;
         public Vector2 size = Vector2.one;
 
-        public IItem Clone()
+        public IRangeItem Clone()
         {
             return new RectItem()
             {
@@ -48,12 +49,12 @@ namespace Akari
     }
 
     [Serializable]
-    public class CircleItem : IItem
+    public class CircleItem : IRangeItem
     {
         public Vector2 offset = Vector2.up;
         public Single radius = 1;
 
-        public IItem Clone()
+        public IRangeItem Clone()
         {
             return new CircleItem()
             {
@@ -64,12 +65,12 @@ namespace Akari
     }
 
     [Serializable]
-    public class BoxItem : IItem
+    public class BoxItem : IRangeItem
     {
         public Vector3 offset = Vector3.up;
         public Vector3 size = Vector3.one;
 
-        public IItem Clone()
+        public IRangeItem Clone()
         {
             return new BoxItem()
             {
@@ -80,12 +81,12 @@ namespace Akari
     }
 
     [Serializable]
-    public class SphereItem : IItem
+    public class SphereItem : IRangeItem
     {
         public Vector3 offset = Vector3.up;
         public Single radius = 1;
 
-        public IItem Clone()
+        public IRangeItem Clone()
         {
             return new SphereItem()
             {
@@ -93,6 +94,11 @@ namespace Akari
                 radius = this.radius
             };
         }
+    }
+
+    public class RangeTypesAttribute : ObjectTypesAttribute
+    {
+        public override Type baseType => typeof(IRangeItem);
     }
     #endregion data
 }

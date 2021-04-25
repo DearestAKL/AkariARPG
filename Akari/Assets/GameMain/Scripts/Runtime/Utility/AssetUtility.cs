@@ -9,6 +9,9 @@ using GameFramework;
 
 namespace Akari
 {
+    /// <summary>
+    /// 资源工具
+    /// </summary>
     public static class AssetUtility
     {
         public static string GetConfigAsset(string assetName, bool fromBytes)

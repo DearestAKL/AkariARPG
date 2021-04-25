@@ -48,6 +48,8 @@ namespace Akari
 
         public float frameWidth = 40;
         public float frameListViewRectHeight = 200f;
+
+        public ToolView.Setting toolView = new ToolView.Setting();
     }
 
 
@@ -92,29 +94,53 @@ namespace Akari
             win.UpdateConfig(config);
         }
 
+        #region 子界面
+
         [NonSerialized] public readonly ActionListView actionListView;
         [NonSerialized] public readonly ActionSetView actionSetView;
-        //[NonSerialized] public readonly MenuView menuView;
+        [NonSerialized] public readonly GlobalActionListView globalActionListView;
+        [NonSerialized] public readonly GlobalActionSetView globalActionSetView;
+        [NonSerialized] public readonly AttackRangeListView attackRangeListView;
+        [NonSerialized] public readonly BodyRangeListView bodyRangeListView;
+        [NonSerialized] public readonly FrameListView frameListView;
+        [NonSerialized] public readonly StateListView stateListView;
+        [NonSerialized] public readonly StateSetView stateSetView;
+        [NonSerialized] public readonly MenuView menuView;
+        [NonSerialized] public readonly ToolView toolView;
 
         public List<IView> views { get; private set; }
 
-        #region style
+        private readonly SceneGUIDrawer guiDrawer;
+        private readonly QuickButtonHandler quickButtonHandler;
+        #endregion 子界面
+
+        #region 风格参数
         private readonly float space = 3f;
         private readonly float scrollHeight = 13f;
+        private readonly float menuViewRectHeight = 26f;
+        private readonly float stateListViewRectWidth = 150f;
+        private readonly float stateSetViewRectWidth = 200f;
+        private readonly float bodyRangeListViewRectWidth = 200f;
+        private readonly float attackRangeListViewRectWidth = 200f;
         private readonly float actionListViewRectWidth = 180f;
         private readonly float actionSetViewRectWidth = 300f;
-        #endregion style
+        private readonly float globalActionListViewRectWidth = 180f;
+        private readonly float globalActionSetViewRectWidth = 300f;
+        private readonly float toolViewRectWidth = 200f;
 
-        #region data
+        public float frameWidth => setting.frameWidth;
+        public float frameListViewRectHeight => setting.frameListViewRectHeight;
+        #endregion 风格参数
+
+        #region 基础数据
 
         protected static string settingPath = "Akari.ActionEditorWindow";
-
-        public ActionEditorSetting setting = new ActionEditorSetting();
-
         public bool actionMachineDirty = false;
-
         public bool isRunning => EditorApplication.isPlaying;
 
+        public string lastEditorTargetPath = null;
+
+        public ActionEditorSetting setting = new ActionEditorSetting();
         public GameObject actionMachineObj = null;
         public ActionMachineTest actionMachine = null;
         public TextAsset configAsset = null;
@@ -125,6 +151,12 @@ namespace Akari
         public bool isActionMachineValid => actionMachine != null;
         //public bool isCurrentAnimationClipValid => null != GetCurrentAnimationClip();
 
+        #endregion
+
+        #region 动作数据整合
+        /// <summary>
+        /// 状态选择索引
+        /// </summary>
         public int stateSelectIndex
         {
             get
@@ -144,6 +176,9 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 攻击范围选择索引
+        /// </summary>
         public int attackRangeSelectIndex
         {
             get
@@ -158,6 +193,9 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 身体范围选择索引
+        /// </summary>
         public int bodyRangeSelectIndex
         {
             get
@@ -172,6 +210,9 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 动作选择索引
+        /// </summary>
         public int actionSelectIndex
         {
             get
@@ -186,6 +227,9 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 全局动作选择索引
+        /// </summary>
         public int globalActionSelectIndex
         {
             get
@@ -200,6 +244,9 @@ namespace Akari
             }
         }
 
+        /// <summary>
+        /// 帧数选择索引
+        /// </summary>
         public int frameSelectIndex
         {
             get
@@ -257,13 +304,94 @@ namespace Akari
 
         #endregion
 
+        #region  攻击范围数据外部接口
+        public List<RangeConfig> FindStayAttackRangeStartWith(int frameIndex, bool copyNew = false)
+        {
+            StateConfig state = currentState;
+            FrameConfig config = state.GetAttackRangesFrame(frameIndex);
+            List<RangeConfig> result = copyNew ? config?.CopyAttackRanges() : config?.attackRanges;
+            return result;
+        }
+
+        public List<RangeConfig> FindStayAttackRangeFromCurrent(bool copyNew = false)
+        {
+            return FindStayAttackRangeStartWith(frameSelectIndex, copyNew);
+        }
+
+        public void CopyAttackRangeToCurrentFrameIfStay()
+        {
+            FrameConfig config = currentFrame;
+            if (config == null || !config.stayAttackRange)
+            {
+                return;
+            }
+
+            List<RangeConfig> target = FindStayAttackRangeStartWith(frameSelectIndex);
+            if (target == null)
+            {
+                config.attackRanges = new List<RangeConfig>();
+                return;
+            }
+
+            config.CopyAttackRangeFrom(target);
+            config.stayAttackRange = false;
+        }
+
+        #endregion
+
+        #region  身体范围数据外部接口
+
+        public List<RangeConfig> FindStayBodyRangeStartWith(int frameIndex, bool copyNew = false)
+        {
+            StateConfig state = currentState;
+            FrameConfig config = state.GetBodyRangesFrame(frameIndex);
+            List<RangeConfig> result = copyNew ? config?.CopyBodyRanges() : config?.bodyRanges;
+            return result;
+        }
+
+        public List<RangeConfig> FindStayBodyRangeFromCurrent(bool copyNew = false)
+        {
+            return FindStayBodyRangeStartWith(frameSelectIndex, copyNew);
+        }
+
+        public void CopyBodyRangeToCurrentFrameIfStay()
+        {
+            FrameConfig config = currentFrame;
+            if (config == null || !config.stayBodyRange)
+            {
+                return;
+            }
+
+            List<RangeConfig> target = FindStayBodyRangeStartWith(frameSelectIndex);
+            if (target == null)
+            {
+                config.bodyRanges = new List<RangeConfig>();
+                return;
+            }
+
+            config.CopyBodyRangeFrom(target);
+            config.stayBodyRange = false;
+        }
+        #endregion
 
         public ActionEditorWindow()
         {
             views = new List<IView>();
 
+            globalActionListView = CreateView<GlobalActionListView>();
+            globalActionSetView = CreateView<GlobalActionSetView>();
             actionListView = CreateView<ActionListView>();
             actionSetView = CreateView<ActionSetView>();
+            attackRangeListView = CreateView<AttackRangeListView>();
+            bodyRangeListView = CreateView<BodyRangeListView>();
+            frameListView = CreateView<FrameListView>();
+            stateListView = CreateView<StateListView>();
+            stateSetView = CreateView<StateSetView>();
+            menuView = CreateView<MenuView>();
+            toolView = CreateView<ToolView>();
+
+            guiDrawer = new SceneGUIDrawer() { win = this };
+            quickButtonHandler = new QuickButtonHandler() { win = this };
         }
 
         private T CreateView<T>() where T : IView, new()
@@ -289,18 +417,6 @@ namespace Akari
 
         public void OnGUI()
         {
-
-            //EditorGUILayout.BeginVertical(GUILayout.Width(position.width), GUILayout.Height(position.height));
-            //{
-            //    GUILayout.Space(5f);
-            //    if (GUILayout.Button("创建", GUILayout.Width(80)))
-            //    {
-            //        GUI.FocusControl(null);
-            //        CreateNew();
-            //    }
-            //}
-            //EditorGUILayout.EndVertical();
-
             Check();
             //Undo.RecordObject(this, "ActionEditorWindow");
             Draw();
@@ -308,7 +424,7 @@ namespace Akari
 
             EventProcess();
 
-            //quickButtonHandler.OnGUI();
+            quickButtonHandler.OnGUI();
 
             Repaint();
         }
@@ -326,23 +442,55 @@ namespace Akari
 
             autoRepaintOnSceneChange = true;
 
-            //SceneView.duringSceneGui += OnSceneGUI;
-            //EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            SceneView.duringSceneGui += OnSceneGUI;
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 
-            //if (config == null && configAsset != null)
-            //{
-            //    UpdateConfig(configAsset);
-            //}
+            if (config == null && configAsset != null)
+            {
+                UpdateConfig(configAsset);
+            }
         }
 
         private void OnDisable()
         {
-            //SceneView.duringSceneGui -= OnSceneGUI;
-            //EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            SceneView.duringSceneGui -= OnSceneGUI;
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 
             //保存配置
             string data = EditorJsonUtility.ToJson(setting, false);
             EditorUserSettings.SetConfigValue(settingPath, data);
+        }
+
+        private void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            switch (state)
+            {
+                case PlayModeStateChange.EnteredPlayMode:
+                    actionMachineObj = null;
+                    actionMachine = null;
+                    configAsset = null;
+                    config = null;
+                    break;
+
+                case PlayModeStateChange.EnteredEditMode:
+                    //还原最后的选择
+                    GameObject obj;
+                    ActionMachineTest amTest;
+                    if (!string.IsNullOrEmpty(lastEditorTargetPath)
+                        && (obj = GameObject.Find(lastEditorTargetPath)) != null
+                        && (amTest = obj.GetComponent<ActionMachineTest>()) != null)
+                    {
+                        UpdateTarget(obj);
+                        UpdateConfig(amTest.config);
+                    }
+                    lastEditorTargetPath = string.Empty;
+                    break;
+
+                case PlayModeStateChange.ExitingEditMode:
+                    //记录最后的选择
+                    lastEditorTargetPath = actionMachineObj?.GetScenePath();
+                    break;
+            }
         }
 
         private void OnDestroy()
@@ -366,9 +514,6 @@ namespace Akari
                 configAsset = null;
                 config = null;
             }
-
-            //更新标题
-            //this.titleContent = new GUIContent(configAsset != null ? $"编辑 {configAsset.name} " : $"动作编辑器");
         }
 
         private void EventProcess()
@@ -434,8 +579,8 @@ namespace Akari
 
             //Undo.RecordObject(this, "ActionEditorWindow");
 
-            //guiDrawer.OnSceneGUI(sceneView);
-            //quickButtonHandler.OnSceneGUI(sceneView);
+            guiDrawer.OnSceneGUI(sceneView);
+            quickButtonHandler.OnSceneGUI(sceneView);
 
             sceneView.Repaint();
             Repaint();
@@ -539,14 +684,100 @@ namespace Akari
             float height = rect.height;
             float width = rect.width;
 
+            Rect menuViewRect = Rect.zero;
+            Rect toolViewRect = Rect.zero;
+            Rect globalActionListViewRect = Rect.zero;
+            Rect globalActionSetViewRect = Rect.zero;
             Rect actionListViewRect = Rect.zero;
             Rect actionSetViewRect = Rect.zero;
+            Rect frameListViewRect = Rect.zero;
+            Rect bodyRangeListViewRect = Rect.zero;
+            Rect attackRangeListViewRect = Rect.zero;
+            Rect stateListViewRect = Rect.zero;
+            Rect stateSetViewRect = Rect.zero;
 
+            menuViewRect = new Rect(
+                startPosX + space,
+                startPosY + space,
+                rect.width - space,
+                menuViewRectHeight - space);
+            startPosY += menuViewRectHeight;
+            height -= menuViewRectHeight;
+
+            if ((setting.showView & ViewType.GlobalAction) != 0)
+            {
+                if (!globalActionListView.isPop)
+                {
+                    globalActionListViewRect = new Rect(
+                       startPosX + space,
+                       startPosY + space,
+                       globalActionListViewRectWidth - space,
+                       height - space * 2);
+                    startPosX += globalActionListViewRectWidth;
+                    width -= globalActionListViewRectWidth;
+                }
+
+                if (!globalActionSetView.isPop)
+                {
+                    globalActionSetViewRect = new Rect(
+                       startPosX + space,
+                       startPosY + space,
+                       globalActionSetViewRectWidth - space,
+                       height - space * 2);
+                    startPosX += globalActionSetViewRectWidth;
+                    width -= globalActionSetViewRectWidth;
+                }
+            }
+
+            if ((setting.showView & ViewType.State) != 0 && !stateListView.isPop)
+            {
+                stateListViewRect = new Rect(
+               startPosX + space,
+               startPosY + space,
+               stateListViewRectWidth - space,
+               height - space * 2);
+                startPosX += stateListViewRectWidth;
+                width -= stateListViewRectWidth;
+            }
+
+            if ((setting.showView & ViewType.Frame) != 0 && !frameListView.isPop)
+            {
+                frameListViewRect = new Rect(
+                   startPosX + space,
+                   startPosY + space,
+                   width - space,
+                    frameListViewRectHeight - space);
+                startPosY += frameListViewRectHeight;
+                height -= frameListViewRectHeight;
+            }
 
             float itemHeight = height - scrollHeight;
             float nextPosX = startPosX;
             float nextPosY = startPosY;
             bool hasNextView = false;
+
+
+            if ((setting.showView & ViewType.Tool) != 0 && !toolView.isPop)
+            {
+                toolViewRect = new Rect(
+                    nextPosX + space,
+                    nextPosY + space,
+                    toolViewRectWidth - space,
+                    itemHeight - space * 2);
+                nextPosX += toolViewRectWidth;
+                hasNextView = true;
+            }
+
+            if ((setting.showView & ViewType.StateSet) != 0 && !stateSetView.isPop)
+            {
+                stateSetViewRect = new Rect(
+                    nextPosX + space,
+                    nextPosY + space,
+                    stateSetViewRectWidth - space,
+                    itemHeight - space * 2);
+                nextPosX += stateSetViewRectWidth;
+                hasNextView = true;
+            }
 
             if ((setting.showView & ViewType.Action) != 0)
             {
@@ -559,6 +790,32 @@ namespace Akari
                         itemHeight - space * 2);
                     nextPosX += actionListViewRectWidth;
                     hasNextView = true;
+                }
+
+
+                if ((setting.showView & ViewType.Other) != 0)
+                {
+                    if (!attackRangeListView.isPop)
+                    {
+                        attackRangeListViewRect = new Rect(
+                            nextPosX + space,
+                            nextPosY + space,
+                            attackRangeListViewRectWidth - space,
+                            itemHeight - space * 2);
+                        nextPosX += attackRangeListViewRectWidth;
+                        hasNextView = true;
+                    }
+
+                    if (!bodyRangeListView.isPop)
+                    {
+                        bodyRangeListViewRect = new Rect(
+                            nextPosX + space,
+                            nextPosY + space,
+                            bodyRangeListViewRectWidth - space,
+                            itemHeight - space * 2);
+                        nextPosX += bodyRangeListViewRectWidth;
+                        hasNextView = true;
+                    }
                 }
 
                 if (!actionSetView.isPop)
@@ -576,11 +833,47 @@ namespace Akari
             #endregion calc size
 
             #region draw
+
+            menuView.Draw(menuViewRect);
+
+            if ((setting.showView & ViewType.Frame) != 0 && !frameListView.isPop)
+            {
+                frameListViewRect.height += hasNextView ? 0 : (height - space);
+                frameListView.Draw(frameListViewRect);
+            }
+
+            if ((setting.showView & ViewType.State) != 0 && !stateListView.isPop)
+            {
+                stateListView.Draw(stateListViewRect);
+            }
+
+            if ((setting.showView & ViewType.GlobalAction) != 0)
+            {
+                if (!globalActionSetView.isPop)
+                {
+                    globalActionSetView.Draw(globalActionSetViewRect);
+                }
+                if (!globalActionListView.isPop)
+                {
+                    globalActionListView.Draw(globalActionListViewRect);
+                }
+            }
+
+            if ((setting.showView & ViewType.Tool) != 0 && !toolView.isPop)
+            {
+                toolView.Draw(toolViewRect);
+            }
+
             if (hasNextView)
             {
                 Rect position = new Rect(startPosX + space, startPosY, width - space, height);
                 Rect view = new Rect(startPosX + space, startPosY, nextPosX - startPosX - space, itemHeight);
                 setting.otherViewScrollPos = GUI.BeginScrollView(position, setting.otherViewScrollPos, view, true, false);
+
+                if ((setting.showView & ViewType.StateSet) != 0 && !stateSetView.isPop)
+                {
+                    stateSetView.Draw(stateSetViewRect);
+                }
 
                 if ((setting.showView & ViewType.Action) != 0)
                 {
@@ -591,6 +884,18 @@ namespace Akari
                     if (!actionSetView.isPop)
                     {
                         actionSetView.Draw(actionSetViewRect);
+                    }
+                }
+
+                if ((setting.showView & ViewType.Other) != 0)
+                {
+                    if (!attackRangeListView.isPop)
+                    {
+                        attackRangeListView.Draw(attackRangeListViewRect);
+                    }
+                    if (!bodyRangeListView.isPop)
+                    {
+                        bodyRangeListView.Draw(bodyRangeListViewRect);
                     }
                 }
 

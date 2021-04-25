@@ -29,6 +29,11 @@ namespace Akari
             return CopyRanges(attackRanges);
         }
 
+        public List<RangeConfig> CopyBodyRanges()
+        {
+            return CopyRanges(bodyRanges);
+        }
+
         private List<RangeConfig> CopyRanges(List<RangeConfig> ranges)
         {
             List<RangeConfig> copy = new List<RangeConfig>(ranges.Count);

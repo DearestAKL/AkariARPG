@@ -1,7 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-/*
 namespace Akari
 {
     /// <summary>
@@ -217,4 +216,3 @@ namespace Akari
         }
     }
 }
-*/

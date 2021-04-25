@@ -9,6 +9,9 @@ using System;
 
 namespace Akari
 {
+    /// <summary>
+    /// Web工具
+    /// </summary>
     public static class WebUtility
     {
         public static string EscapeString(string stringToEscape)

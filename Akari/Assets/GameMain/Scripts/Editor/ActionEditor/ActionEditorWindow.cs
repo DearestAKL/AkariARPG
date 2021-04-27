@@ -6,7 +6,7 @@ using System.Xml;
 using UnityEditor;
 using UnityEngine;
 
-namespace Akari
+namespace Akari.Editor.Action
 {
     /// <summary>
     /// 动作编辑器窗口类型
@@ -669,7 +669,7 @@ namespace Akari
             get
             {
                 if (copyDataType == null || copyData == null) { return null; }
-                return JsonUtility.FromJson(copyData, copyDataType);
+                return JsonUtility.FromJson<MachineConfig>(copyData);
             }
         }
 

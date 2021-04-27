@@ -9,25 +9,25 @@ namespace Akari
     [Flags]
     public enum ActionMachineEvent
     {
-        None = 1,
-        FrameChanged = 2,
-        StateChanged = 3,
-        AnimChanged = 4,
-        HoldAnimDuration = 5,
+        None = 0b0000_0000,
+        FrameChanged = 0b0000_0001,
+        StateChanged = 0b0000_0010,
+        AnimChanged = 0b0000_0100,
+        HoldAnimDuration = 0b0000_1000,
 
-        All = 6
+        All = 0b1111_1111
     }
     public interface IActionMachine
     {
         bool isDebug { get; set; }
         System.Object controller { get; }
-        Single animStartTime { get; }
+        float animStartTime { get; }
 
         void Initialize(string config, System.Object controller);
 
-        void LogicUpdate(Single delta);
+        void LogicUpdate(float delta);
 
-        void ChangeState(string stateName, int priority = 0, int animIndex = -1, Single animStartTime = default);
+        void ChangeState(string stateName, int priority = 0, int animIndex = -1, float animStartTime = default);
 
         ActionMachineEvent eventTypes { get; }
 

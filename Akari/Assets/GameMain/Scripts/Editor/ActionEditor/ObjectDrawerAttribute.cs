@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-namespace Akari
+namespace Akari.Editor.Action
 {
     /// <summary>
     /// ObjectDrawer

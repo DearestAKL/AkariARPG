@@ -134,7 +134,7 @@ namespace LitJson
         #region Constructors
         static JsonMapper ()
         {
-            max_nesting_depth = 100;
+            max_nesting_depth = 1000;
 
             array_metadata = new Dictionary<Type, ArrayMetadata> ();
             conv_ops = new Dictionary<Type, IDictionary<Type, MethodInfo>> ();

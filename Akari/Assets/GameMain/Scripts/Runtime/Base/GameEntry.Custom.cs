@@ -32,11 +32,18 @@ namespace Akari
             private set;
         }
 
+        public static InputComponent Input
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
             BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
             Camera = UnityGameFramework.Runtime.GameEntry.GetComponent<CameraComponent>();
             Player = UnityGameFramework.Runtime.GameEntry.GetComponent<PlayerComponent>();
+            Input = UnityGameFramework.Runtime.GameEntry.GetComponent<InputComponent>();
         }
     }
 }

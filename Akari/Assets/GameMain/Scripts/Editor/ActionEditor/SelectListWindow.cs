@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-namespace Akari
+namespace Akari.Editor.Action
 {
     /// <summary>
     /// SelectListWindow

@@ -15,6 +15,6 @@ namespace Akari
 
         void Exit(ActionNode node);
 
-        void Update(ActionNode node, Single deltaTime);
+        void Update(ActionNode node, float deltaTime);
     }
 }

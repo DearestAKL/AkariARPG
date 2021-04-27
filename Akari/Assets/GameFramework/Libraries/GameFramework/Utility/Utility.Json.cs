@@ -16,7 +16,11 @@ namespace GameFramework
         /// </summary>
         public static partial class Json
         {
+#if UNITY_EDITOR
+            private static IJsonHelper s_JsonHelper = (IJsonHelper)Activator.CreateInstance(Utility.Assembly.GetType("Akari.LitJsonHelper"));
+#else
             private static IJsonHelper s_JsonHelper = null;
+#endif
 
             /// <summary>
             /// 设置 JSON 辅助器。

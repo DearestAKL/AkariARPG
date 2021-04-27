@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-namespace Akari
+namespace Akari.Editor.Action
 {
     /// <summary>
     /// SceneGUIDrawer
@@ -104,9 +104,9 @@ namespace Akari
             HandlesDrawer.H.PopColor();
         }
 
-        private Single FixFloat(float v)
+        private float FixFloat(float v)
         {
-            return (Single)Math.Round(v, 3);
+            return (float)Math.Round(v, 3);
         }
 
         private BoxBoundsHandle boxHandle = new BoxBoundsHandle();
@@ -190,7 +190,7 @@ namespace Akari
                                 sphereHandle.radius = size.x;
                                 sphereHandle.DrawHandle();
                                 offset = (Vector3)sphereHandle.center;
-                                size.x = (Single)sphereHandle.radius;
+                                size.x = (float)sphereHandle.radius;
                                 break;
                             }
                         case BoxItem v:
@@ -210,7 +210,7 @@ namespace Akari
                                 sphereHandle.radius = size.x;
                                 sphereHandle.DrawHandle();
                                 offset = (Vector3)sphereHandle.center;
-                                size.x = (Single)sphereHandle.radius;
+                                size.x = (float)sphereHandle.radius;
                                 break;
                             }
                     }
@@ -222,7 +222,7 @@ namespace Akari
 
             Func<Vector3> getOffset = () => new Vector3(FixFloat(offset.x), FixFloat(offset.y), FixFloat(offset.z));
             Func<Vector3> getSize = () => new Vector3(FixFloat(size.x), FixFloat(size.y), FixFloat(size.z));
-            Func<Single> getRadius = () => FixFloat(size.magnitude);
+            Func<float> getRadius = () => FixFloat(size.magnitude);
 
             switch (config)
             {

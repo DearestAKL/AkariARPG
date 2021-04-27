@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿using GameFramework;
+using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
@@ -8,27 +10,64 @@ namespace Akari
 {
     public class PlayerComponent : GameFrameworkComponent
     {
-        public TextAsset config;
+        //private enum State
+        //{
+        //    Locomotion,//地面
+        //    Water,//水中
+        //    Air,//空中
+        //}
 
-        private enum State
-        {
-            Locomotion,//地面
-            Water,//水中
-            Air,//空中
-        }
+        //---
+        [SerializeField]
+        private Transform m_MainCameraTransform;
 
+        #region 运动参数"
+
+        [FoldoutGroup("运动参数")]
+        [SerializeField,Header("地面遮罩")]
+        private LayerMask goundMask;
+
+        [FoldoutGroup("运动参数")]
+        [SerializeField, Header("是否接地")]
+        private bool isGround = true;
+
+        [FoldoutGroup("运动参数")]
+        [SerializeField, Range(0F, 90F), Header("旋转速度")]
+        private float rotationSpeed = 1f;
+
+        #endregion
+
+        #region 动画参数
+
+        /// 全局
+        [SerializeField]
+        private List<TextAsset> configs;
+        protected float logicTimer = 0f;
+        protected const float logicDeltaTime = 1 / 30f;
+        /// -----------
+
+        private IActionMachine m_ActionMachine;
+        [SerializeField]
+        private string configName = null;
+
+        private float animatorTimer = 0;
+
+
+        #endregion
+
+        #region 英雄数据
 
         [SerializeField]
         private Hero m_Hero;
         [SerializeField]
         private HeroData m_HeroData;
 
-        //---
-        [SerializeField]
-        private Transform m_MainCameraTransform;
-        [SerializeField]
-        private Rigidbody m_Rigidbody;
+        private Rigidbody m_HeroRigidbody;
+        private Animator m_HeroAnimator;
+        #endregion 英雄数据
 
+
+        /*
         private AnimationControllerBase m_AnimationController;
 
 
@@ -89,18 +128,193 @@ namespace Akari
         private float attackCD = 0;
 
         #endregion
+        */
 
         private void Start()
         {
+            //初始化配置文件加载函数
+            //----------------------------------------
+            ActionMachineHelper.Init(OnActionMachineConfigLoader);
+            Physics.autoSimulation = false;
+            //----------------------------------------
+
             m_HeroData = new HeroData(1, 1);
 
             m_MainCameraTransform = GameEntry.Camera.MainCamera.transform;
 
-            m_AnimationController = new AnimationControllerBase();
-
-            var mac = JsonUtility.FromJson<MachineConfig>(config.text);
+            m_ActionMachine = new ActionMachine();
+            m_ActionMachine.Initialize(configName, this);
         }
 
+        private MachineConfig OnActionMachineConfigLoader(string configName)
+        {
+            TextAsset asset = configs.Find(t => string.Compare(t.name, configName) == 0);
+            return JsonUtility.FromJson<MachineConfig>(asset.text);
+        }
+
+        private void Update()
+        {
+            if(m_Hero == null) 
+            {
+                return;
+            }
+
+            UpdateRotation();
+            UpdateAnimation();
+
+            //帧更新
+            LogicUpdate();
+        }
+
+        private void UpdateRotation()
+        {
+            Vector3 velocity = m_HeroRigidbody.velocity;
+            velocity.y = 0f;
+            if (velocity.magnitude > 0.0001f)
+            {
+                var rotation = m_Hero.CachedTransform.rotation;
+                m_Hero.CachedTransform.rotation = Quaternion.Slerp(rotation, Quaternion.LookRotation(velocity), rotationSpeed * Time.deltaTime);
+            }
+        }
+
+        private void UpdateAnimation()
+        {
+            if(animatorTimer <= 0)
+            {
+                return;
+            }
+
+            float deltaTime = Time.deltaTime;
+            if(deltaTime < animatorTimer)
+            {
+                animatorTimer -= deltaTime;
+            }
+            else
+            {
+                deltaTime = animatorTimer;
+                animatorTimer = 0;
+            }
+
+            if(m_HeroAnimator != null)
+            {
+                m_HeroAnimator.Update(deltaTime);
+            }
+        }
+
+        #region 帧更新 一秒30帧
+        private void LogicUpdate()
+        {
+            logicTimer += Time.deltaTime;
+            if (logicTimer >= logicDeltaTime)
+            {
+                logicTimer -= logicDeltaTime;
+
+                //更新状态
+                m_ActionMachine.LogicUpdate(logicDeltaTime);
+                //更新动画
+                UpdateLogicAnimation(logicDeltaTime);
+                //检测地面
+                CheckGround();
+                //更新物理
+                Physics.Simulate(logicDeltaTime);
+                //清理输入
+                GameEntry.Input.Clear();
+            }
+        }
+
+        private void UpdateLogicAnimation(float deltaTime)
+        {
+            ActionMachineEvent eventTypes = m_ActionMachine.eventTypes;
+
+            if ((eventTypes & ActionMachineEvent.FrameChanged) != 0)
+            {
+                animatorTimer += deltaTime;
+            }
+
+            if ((eventTypes & ActionMachineEvent.StateChanged) != 0)
+            {
+                Debug.Log($"StateChanged：{m_ActionMachine.stateName}");
+            }
+
+            if (m_HeroAnimator != null && (eventTypes & ActionMachineEvent.AnimChanged) != 0)
+            {
+                StateConfig config = m_ActionMachine.GetStateConfig();
+
+                float fixedTimeOffset = m_ActionMachine.animStartTime;
+                float fadeTime = config.fadeTime;
+                string animName = m_ActionMachine.GetAnimName();
+
+                if ((eventTypes & ActionMachineEvent.HoldAnimDuration) != 0)
+                {
+                    fixedTimeOffset = m_HeroAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                }
+
+                m_HeroAnimator.CrossFadeInFixedTime(animName, fadeTime, 0, fixedTimeOffset);
+                m_HeroAnimator.Update(0);
+            }
+        }
+
+        private void CheckGround()
+        {
+            float length = 0.02f;
+            isGround = m_HeroRigidbody.velocity.y > 0 ? false : Physics.Raycast(transform.position + length * Vector3.up, Vector3.down, length * 2, goundMask);
+        }
+
+        private void InitAnimation()
+        {
+            if (m_HeroAnimator == null)
+            {
+                return;
+            }
+
+            string animName = m_ActionMachine.GetAnimName();
+            m_HeroAnimator.Play(animName, 0, 0);
+            m_HeroAnimator.Update(0);
+        }
+        #endregion
+
+        private void OnDrawGizmos()
+        {
+            if (m_ActionMachine == null)
+            {
+                return;
+            }
+
+            Matrix4x4 mat = Matrix4x4.TRS(transform.position, m_Hero.CachedTransform.rotation, Vector3.one);
+            var attackRanges = m_ActionMachine.GetAttackRanges();
+            var bodyRanges = m_ActionMachine.GetBodyRanges();
+            DrawRanges(attackRanges, mat, Color.red);
+            DrawRanges(bodyRanges, mat, Color.green);
+
+            return;
+
+            void DrawRanges(List<RangeConfig> ranges, Matrix4x4 matrix, Color color)
+            {
+                if (ranges == null || ranges.Count == 0)
+                {
+                    return;
+                }
+
+                DrawUtility.G.PushColor(color);
+
+                foreach (var range in ranges)
+                {
+                    switch (range.value)
+                    {
+                        case BoxItem v:
+                            DrawUtility.G.DrawBox(v.size, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
+                            break;
+
+                        case SphereItem v:
+                            DrawUtility.G.DrawSphere(v.radius, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
+                            break;
+                    }
+                }
+                DrawUtility.G.PopColor();
+            }
+        }
+
+        /*
         private void Update()
         {
             if (m_Hero == null) { return; }         
@@ -265,8 +479,27 @@ namespace Akari
                 }
             }
         }
+        */
 
-        #region 外接口
+
+        #region  英雄
+
+        public Rigidbody HeroRigidbody
+        {
+            get
+            {
+                return m_HeroRigidbody;
+            }
+        }
+
+        public Animator HeroAnimator
+        {
+            get
+            {
+                return m_HeroAnimator;
+            }
+        }
+
         /// <summary>
         /// 创建英雄
         /// </summary>
@@ -297,9 +530,10 @@ namespace Akari
                 m_Hero = value;
 
                 //刷新引用
-                m_Rigidbody = m_Hero.CachedRigidbody;
-                m_AnimationController.SetAnimator(m_Hero.CachedAnimator);
-                minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
+                m_HeroRigidbody = m_Hero.CachedRigidbody;
+                m_HeroAnimator = m_Hero.CachedAnimator;
+
+                InitAnimation();
 
                 GameEntry.Camera.SetFreeLookFollowAndLookAt(m_Hero.CachedTransform, m_Hero.CachedLookAtPos);
             }
@@ -316,8 +550,10 @@ namespace Akari
                 return m_HeroData;
             }
         }
-        #endregion
+        
+        #endregion 英雄
 
+        /*
         #region InputSystem
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -466,6 +702,8 @@ namespace Akari
                 OnUltimateSkillHold = true;
             }
         }
+        
         #endregion
+        */
     }
 }

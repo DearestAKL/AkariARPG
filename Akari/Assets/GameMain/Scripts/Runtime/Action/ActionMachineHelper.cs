@@ -1,4 +1,5 @@
 ﻿using GameFramework;
+using GameFramework.Fsm;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -16,7 +17,7 @@ namespace Akari
 
         public static Dictionary<string, MachineConfig> loadedConfig => machineConfigDict;
 
-        private static Dictionary<Type, IActionHandler> actionHandlerDict = new Dictionary<Type, IActionHandler>();
+        private static Dictionary<Type, FsmState<Hero>> actionHandlerDict = new Dictionary<Type, FsmState<Hero>>();
         private static Dictionary<string, MachineConfig> machineConfigDict = new Dictionary<string, MachineConfig>();
         private static Dictionary<string, Dictionary<string, StateConfig>> stateConfigDict = new Dictionary<string, Dictionary<string, StateConfig>>();
 
@@ -36,9 +37,9 @@ namespace Akari
         /// </summary>
         /// <param name="type">配置文件类型</param>
         /// <returns>操作类</returns>
-        public static IActionHandler GetActionHandler(Type type)
+        public static FsmState<Hero> GetActionHandler(Type type)
         {
-            IActionHandler handler = null;
+            FsmState<Hero> handler = null;
 
             if (actionHandlerDict.TryGetValue(type, out handler))
             {
@@ -49,7 +50,7 @@ namespace Akari
 
             Type handlerType = config.handlerType;
 
-            handler = Activator.CreateInstance(handlerType) as IActionHandler;
+            handler = Activator.CreateInstance(handlerType) as FsmState<Hero>;
             if (handler == null)
             {
                 throw new GameFrameworkException($"{handlerType} 类型未继承 {nameof(IActionHandler)} 接口");

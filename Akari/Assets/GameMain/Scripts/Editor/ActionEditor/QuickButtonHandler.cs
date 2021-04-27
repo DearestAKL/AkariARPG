@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Akari
+namespace Akari.Editor.Action
 {
     /// <summary>
     /// QuickButtonHandler

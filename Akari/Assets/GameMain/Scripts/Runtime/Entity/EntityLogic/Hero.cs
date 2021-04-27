@@ -79,15 +79,15 @@ namespace Akari
 
         #region 向PlayerComponent传递信息
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            m_Player.EvaluateCollision(collision);
-        }
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    m_Player.EvaluateCollision(collision);
+        //}
 
-        private void OnCollisionStay(Collision collision)
-        {
-            m_Player.EvaluateCollision(collision);
-        }
+        //private void OnCollisionStay(Collision collision)
+        //{
+        //    m_Player.EvaluateCollision(collision);
+        //}
 
         #endregion
 

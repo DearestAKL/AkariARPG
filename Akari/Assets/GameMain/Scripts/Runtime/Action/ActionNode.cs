@@ -15,7 +15,7 @@ namespace Akari
         public IActionMachine actionMachine;
         public int beginFrameIndex;
         public object config;
-        public FsmState<Hero> handler;
+        public IActionHandler handler;
         public object data;
         public bool isUpdating { get; private set; } = false;
         public int updateCnt { get; private set; } = 0;
@@ -36,31 +36,28 @@ namespace Akari
             data = null;
         }
 
-        //public void InvokeEnter()
-        //{
-        //    updateCnt = 0;
-        //    isUpdating = true;
-        //    // TODO：进入状态
-        //    //handler.OnEnter(this);
-        //}
+        public void InvokeEnter()
+        {
+            updateCnt = 0;
+            isUpdating = true;
+            handler.Enter(this);
+        }
 
-        //public void InvokeExit()
-        //{
-        //    //handler.Onex(this);
-        //    // TODO：退出状态
-        //    isUpdating = false;
-        //}
+        public void InvokeExit()
+        {
+            handler.Exit(this);
+            isUpdating = false;
+        }
 
-        //public void InvokeUpdate(float deltaTime)
-        //{
-        //    if (!isUpdating)
-        //    {
-        //        return;
-        //    }
+        public void InvokeUpdate(float deltaTime)
+        {
+            if (!isUpdating)
+            {
+                return;
+            }
 
-        //    // TODO：在状态中
-        //    //handler.Update(this, deltaTime);
-        //    updateCnt++;
-        //}
+            handler.Update(this, deltaTime);
+            updateCnt++;
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Akari
         Moving = 0b0001,
         Attack = 0b0010,
         Jump = 0b0100,
+        Jumping = 0b1000,
     }
 
     public class InputComponent : GameFrameworkComponent

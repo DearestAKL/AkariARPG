@@ -35,9 +35,6 @@ namespace Akari
             }
         }
 
-        private IFsm<Hero> fsm;
-        protected List<FsmState<Hero>> stateList = new List<FsmState<Hero>>();
-
         private List<ActionNode> globalActionNodes { get; set; } = new List<ActionNode>();
         private List<ActionNode> actionNodes { get; set; } = new List<ActionNode>();
 

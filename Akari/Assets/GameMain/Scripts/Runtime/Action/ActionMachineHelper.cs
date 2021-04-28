@@ -3,6 +3,7 @@ using GameFramework.Fsm;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine;
 
 namespace Akari
 {
@@ -12,34 +13,22 @@ namespace Akari
     public class ActionMachineHelper
     {
         #region static
-
-        public static Func<string, MachineConfig> loader { get; private set; }
-
         public static Dictionary<string, MachineConfig> loadedConfig => machineConfigDict;
 
-        private static Dictionary<Type, FsmState<Hero>> actionHandlerDict = new Dictionary<Type, FsmState<Hero>>();
+        private static Dictionary<Type, IActionHandler> actionHandlerDict = new Dictionary<Type, IActionHandler>();
         private static Dictionary<string, MachineConfig> machineConfigDict = new Dictionary<string, MachineConfig>();
         private static Dictionary<string, Dictionary<string, StateConfig>> stateConfigDict = new Dictionary<string, Dictionary<string, StateConfig>>();
 
         private static Stack<ActionNode> actionNodePool = new Stack<ActionNode>();
 
         /// <summary>
-        /// 初始化
-        /// </summary>
-        /// <param name="loader"></param>
-        public static void Init(Func<string, MachineConfig> loader)
-        {
-            ActionMachineHelper.loader = loader;
-        }
-
-        /// <summary>
         /// 获取操作类
         /// </summary>
         /// <param name="type">配置文件类型</param>
         /// <returns>操作类</returns>
-        public static FsmState<Hero> GetActionHandler(Type type)
+        public static IActionHandler GetActionHandler(Type type)
         {
-            FsmState<Hero> handler = null;
+            IActionHandler handler = null;
 
             if (actionHandlerDict.TryGetValue(type, out handler))
             {
@@ -50,7 +39,7 @@ namespace Akari
 
             Type handlerType = config.handlerType;
 
-            handler = Activator.CreateInstance(handlerType) as FsmState<Hero>;
+            handler = Activator.CreateInstance(handlerType) as IActionHandler;
             if (handler == null)
             {
                 throw new GameFrameworkException($"{handlerType} 类型未继承 {nameof(IActionHandler)} 接口");
@@ -74,7 +63,7 @@ namespace Akari
                 return config;
             }
 
-            config = loader(configName);
+            config = JsonUtility.FromJson<MachineConfig>(GameEntry.BuiltinData.GetMachineConfigTextAsset(configName).text);
             if (config == null)
             {
                 throw new GameFrameworkException($"状态机配置 {configName} 未找到");

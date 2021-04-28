@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using GameFramework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -21,6 +22,9 @@ namespace Akari
 
         [SerializeField]
         private UpdateResourceForm m_UpdateResourceFormTemplate = null;
+
+        [SerializeField]
+        private List<TextAsset> m_MachineConfigTextAssets = null;
 
         private BuildInfo m_BuildInfo = null;
 
@@ -69,6 +73,11 @@ namespace Akari
                 Log.Warning("Parse default dictionary failure.");
                 return;
             }
+        }
+
+        public TextAsset GetMachineConfigTextAsset(string configName)
+        {
+            return m_MachineConfigTextAssets.Find(t => string.Compare(t.name, configName) == 0);
         }
     }
 }

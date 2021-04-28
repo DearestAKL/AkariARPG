@@ -42,8 +42,8 @@ namespace Akari
         /// 全局
         [SerializeField]
         private List<TextAsset> configs;
-        protected float logicTimer = 0f;
-        protected const float logicDeltaTime = 1 / 30f;
+        private float logicTimer = 0f;
+        private float actionFrameRate = GameUtility.ActionFrameRate;
         /// -----------
 
         private IActionMachine m_ActionMachine;
@@ -132,9 +132,7 @@ namespace Akari
 
         private void Start()
         {
-            //初始化配置文件加载函数
             //----------------------------------------
-            ActionMachineHelper.Init(OnActionMachineConfigLoader);
             Physics.autoSimulation = false;
             //----------------------------------------
 
@@ -146,11 +144,6 @@ namespace Akari
             m_ActionMachine.Initialize(configName, this);
         }
 
-        private MachineConfig OnActionMachineConfigLoader(string configName)
-        {
-            TextAsset asset = configs.Find(t => string.Compare(t.name, configName) == 0);
-            return JsonUtility.FromJson<MachineConfig>(asset.text);
-        }
 
         private void Update()
         {
@@ -205,18 +198,18 @@ namespace Akari
         private void LogicUpdate()
         {
             logicTimer += Time.deltaTime;
-            if (logicTimer >= logicDeltaTime)
+            if (logicTimer >= actionFrameRate)
             {
-                logicTimer -= logicDeltaTime;
+                logicTimer -= actionFrameRate;
 
                 //更新状态
-                m_ActionMachine.LogicUpdate(logicDeltaTime);
+                m_ActionMachine.LogicUpdate(actionFrameRate);
                 //更新动画
-                UpdateLogicAnimation(logicDeltaTime);
+                UpdateLogicAnimation(actionFrameRate);
                 //检测地面
                 CheckGround();
                 //更新物理
-                Physics.Simulate(logicDeltaTime);
+                Physics.Simulate(actionFrameRate);
                 //清理输入
                 GameEntry.Input.Clear();
             }

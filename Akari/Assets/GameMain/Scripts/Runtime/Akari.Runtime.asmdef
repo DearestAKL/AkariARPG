@@ -3,7 +3,6 @@
     "references": [
         "GameFramework",
         "UnityGameFramework.Runtime",
-        "UnityGameFramework.Editor",
         "Libraries",
         "Unity.TextMeshPro",
         "Cinemachine",

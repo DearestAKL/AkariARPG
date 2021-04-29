@@ -145,6 +145,12 @@ namespace Akari
         }
 
 
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
+
         private void Update()
         {
             if(m_Hero == null) 

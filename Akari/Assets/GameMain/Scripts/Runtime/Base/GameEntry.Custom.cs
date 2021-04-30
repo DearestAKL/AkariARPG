@@ -42,8 +42,8 @@ namespace Akari
         {
             BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
             Camera = UnityGameFramework.Runtime.GameEntry.GetComponent<CameraComponent>();
-            Player = UnityGameFramework.Runtime.GameEntry.GetComponent<PlayerComponent>();
             Input = UnityGameFramework.Runtime.GameEntry.GetComponent<InputComponent>();
+            Player = UnityGameFramework.Runtime.GameEntry.GetComponent<PlayerComponent>();
         }
     }
 }

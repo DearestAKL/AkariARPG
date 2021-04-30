@@ -16,8 +16,10 @@ namespace Akari
 
         private CinemachineFreeLook m_CMFreeLook;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             if(m_UICamera == null)
             {
                 m_UICamera = transform.Find("UI Camera").GetComponent<Camera>();

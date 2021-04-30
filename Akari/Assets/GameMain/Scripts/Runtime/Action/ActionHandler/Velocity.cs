@@ -16,9 +16,9 @@ public class Velocity : IActionHandler
     {
         VelocityConfig config = (VelocityConfig)node.config;
         IActionMachine machine = node.actionMachine;
-        ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
+        TargetableObject controller = (TargetableObject)node.actionMachine.controller;
 
-        controller.rigid.velocity = controller.modelRotation * config.velocity;
+        controller.CachedRigidbody.velocity = controller.CachedTransform.rotation * config.velocity;
     }
 
     public void Exit(ActionNode node)

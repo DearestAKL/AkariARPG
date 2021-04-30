@@ -14,6 +14,7 @@ public class Move : IActionHandler
 {
     public void Enter(ActionNode node)
     {
+
     }
 
     public void Exit(ActionNode node)
@@ -23,18 +24,35 @@ public class Move : IActionHandler
     public void Update(ActionNode node, float deltaTime)
     {
         MoveConfig config = (MoveConfig)node.config;
-        IActionMachine machine = node.actionMachine;
-        ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
+        //IActionMachine machine = node.actionMachine;
+        TargetableObject controller = (TargetableObject)node.actionMachine.controller;
 
         if (GameEntry.Input.HasEvent(InputEvents.Moving))
         {
-            var velocity = controller.rigid.velocity;
-            var move = GameEntry.Input.AxisValue.normalized * config.moveSpeed;
+            var velocity = controller.CachedRigidbody.velocity;
 
-            velocity.x = move.x;
-            velocity.z = move.y;
+            var input = Vector2.ClampMagnitude(GameEntry.Input.AxisValue, 1f);
+            var cameraTrans = GameEntry.Camera.MainCamera.transform;
+            Vector3 desiredVelocity ;
+            if (cameraTrans)
+            {
+                Vector3 forward = cameraTrans.forward;
+                forward.y = 0f;
+                forward.Normalize();
+                Vector3 right = cameraTrans.right;
+                right.y = 0f;
+                right.Normalize();
+                desiredVelocity = (forward * input.y + right * input.x) * config.moveSpeed;
+            }
+            else
+            {
+                desiredVelocity = new Vector3(input.x, 0f, input.y) * config.moveSpeed;
+            }
 
-            controller.rigid.velocity = velocity;
+            velocity.x = desiredVelocity.x;
+            velocity.z = desiredVelocity.z;
+
+            controller.CachedRigidbody.velocity = velocity;
         }
     }
 }

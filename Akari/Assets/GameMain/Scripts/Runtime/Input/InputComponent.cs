@@ -22,8 +22,10 @@ namespace Akari
 
         private GameInput m_Input;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             m_Input = new GameInput();
             m_Input.Enable();
         }

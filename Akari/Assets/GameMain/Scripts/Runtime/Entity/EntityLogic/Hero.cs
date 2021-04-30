@@ -16,12 +16,6 @@ namespace Akari
         [SerializeField]
         private HeroData m_HeroData = null;
 
-
-        [SerializeField]
-        private Animator m_Animator = null;
-        [SerializeField]
-        private Rigidbody m_Rigidbody = null;
-
         private Transform m_LookAtPos = null;
 
         private GameObject m_Weapon = null;
@@ -33,8 +27,6 @@ namespace Akari
             base.OnInit(userData);
 
             //查找组件
-            m_Rigidbody = CachedTransform.GetComponent<Rigidbody>();
-            m_Animator = CachedTransform.Find("HeroModel").GetComponent<Animator>();
             m_LookAtPos = CachedTransform.Find("LookAt").GetComponent<Transform>();
             m_Weapon = CachedTransform.Find("Weapon").gameObject;
 
@@ -140,22 +132,6 @@ namespace Akari
         #endregion
 
         #region 外部引用接口
-        /// <summary>
-        /// 缓存的Animator
-        /// </summary>
-        public Animator CachedAnimator
-        {
-            get { return m_Animator; }
-        }
-
-        /// <summary>
-        /// 缓存的Rigidbody
-        /// </summary>
-        public Rigidbody CachedRigidbody
-        {
-            get { return m_Rigidbody; }
-        }
-
         public Transform CachedLookAtPos
         {
             get { return m_LookAtPos; }

@@ -35,7 +35,7 @@ public class Condition : IActionHandler
     {
         ConditionConfig config = (ConditionConfig)node.config;
         IActionMachine machine = node.actionMachine;
-        ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
+        //ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
 
         if (Checker(config.checker, node))
         {
@@ -84,7 +84,7 @@ namespace Conditions
         public bool Execute(ActionNode node)
         {
             IActionMachine machine = node.actionMachine;
-            ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
+            //ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
             bool result = GameEntry.Input.HasEvent(events, fullMatch);
             return isNot ? !result : result;
         }
@@ -98,8 +98,8 @@ namespace Conditions
         public bool Execute(ActionNode node)
         {
             IActionMachine machine = node.actionMachine;
-            ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
-            return isNot ? !controller.isGround : controller.isGround;
+            TargetableObject controller = (TargetableObject)node.actionMachine.controller;
+            return isNot ? !controller.IsGround : controller.IsGround;
         }
     }
 }

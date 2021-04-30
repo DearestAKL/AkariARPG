@@ -20,13 +20,13 @@ public class Jump : IActionHandler
     {
         JumpConfig config = (JumpConfig)node.config;
         IActionMachine machine = node.actionMachine;
-        ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
+        TargetableObject controller = (TargetableObject)node.actionMachine.controller;
 
         float ySpeed = MathUtility.JumpSpeed(Physics.gravity.y, config.maxHeight);
 
-        Vector3 velocity = controller.rigid.velocity;
+        Vector3 velocity = controller.CachedRigidbody.velocity;
         velocity.y = ySpeed;
-        controller.rigid.velocity = velocity;
+        controller.CachedRigidbody.velocity = velocity;
     }
 
     public void Exit(ActionNode node)
@@ -37,8 +37,8 @@ public class Jump : IActionHandler
     {
         JumpConfig config = (JumpConfig)node.config;
         IActionMachine machine = node.actionMachine;
-        ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
-        Vector3 velocity = controller.rigid.velocity;
+        TargetableObject controller = (TargetableObject)node.actionMachine.controller;
+        Vector3 velocity = controller.CachedRigidbody.velocity;
 
         bool velocityChanged = false;
 
@@ -62,10 +62,10 @@ public class Jump : IActionHandler
 
         if (velocityChanged)
         {
-            controller.rigid.velocity = velocity;
+            controller.CachedRigidbody.velocity = velocity;
         }
 
-        if (controller.isGround)
+        if (controller.IsGround)
         {//落地跳转
             machine.ChangeState(config.nextState);
         }

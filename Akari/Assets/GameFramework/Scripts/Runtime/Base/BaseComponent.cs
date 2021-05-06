@@ -220,6 +220,7 @@ namespace UnityGameFramework.Runtime
 
         private void Start()
         {
+
         }
 
         private void Update()

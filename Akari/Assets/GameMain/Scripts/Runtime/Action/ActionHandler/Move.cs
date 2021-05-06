@@ -14,15 +14,18 @@ public class Move : IActionHandler
 {
     public void Enter(ActionNode node)
     {
-
+        Debug.Log("Move Enter");
     }
 
     public void Exit(ActionNode node)
     {
+        Debug.Log("Move Exit");
     }
 
     public void Update(ActionNode node, float deltaTime)
     {
+        Debug.Log("Move Update");
+
         MoveConfig config = (MoveConfig)node.config;
         //IActionMachine machine = node.actionMachine;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;

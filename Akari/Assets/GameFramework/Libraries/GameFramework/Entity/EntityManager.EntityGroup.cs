@@ -151,6 +151,7 @@ namespace GameFramework.Entity
             /// </summary>
             /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
             /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+            /// <param name="actionFrameRate">动作帧，固定帧，一秒30帧</param>
             public void Update(float elapseSeconds, float realElapseSeconds)
             {
                 LinkedListNode<IEntity> current = m_Entities.First;

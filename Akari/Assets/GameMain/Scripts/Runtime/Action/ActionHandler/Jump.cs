@@ -18,6 +18,8 @@ public class Jump : IActionHandler
 {
     public void Enter(ActionNode node)
     {
+        Debug.Log("Jump Enter");
+
         JumpConfig config = (JumpConfig)node.config;
         IActionMachine machine = node.actionMachine;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;
@@ -31,10 +33,13 @@ public class Jump : IActionHandler
 
     public void Exit(ActionNode node)
     {
+        Debug.Log("Jump Exit");
     }
 
     public void Update(ActionNode node, float deltaTime)
     {
+        Debug.Log("Jump Update");
+
         JumpConfig config = (JumpConfig)node.config;
         IActionMachine machine = node.actionMachine;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;

@@ -288,24 +288,24 @@ namespace Akari
 
                     if (hold.GetBeginFrame() == index)
                     {
-                        //action.InvokeEnter();
+                        action.InvokeEnter();
                     }
 
-                    //action.InvokeUpdate(deltaTime);
+                    action.InvokeUpdate(deltaTime);
 
                     if (hold.GetEndFrame() == index)
                     {
-                        //action.InvokeExit();
+                        action.InvokeExit();
                     }
                 }
                 else
                 {
                     if (action.updateCnt == 0)
                     {
-                        //action.InvokeEnter();
+                        action.InvokeEnter();
                     }
 
-                    //action.InvokeUpdate(deltaTime);
+                    action.InvokeUpdate(deltaTime);
                 }
             }
         }

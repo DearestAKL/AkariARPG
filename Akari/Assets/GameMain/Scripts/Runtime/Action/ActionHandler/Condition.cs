@@ -25,17 +25,17 @@ public class Condition : IActionHandler
 {
     public void Enter(ActionNode node)
     {
-        Debug.Log("Condition Enter");
+        //Debug.Log("Condition Enter");
     }
 
     public void Exit(ActionNode node)
     {
-        Debug.Log("Condition Exit");
+        //Debug.Log("Condition Exit");
     }
 
     public void Update(ActionNode node, float deltaTime)
     {
-        Debug.Log("Condition Update");
+        //Debug.Log("Condition Update");
 
         ConditionConfig config = (ConditionConfig)node.config;
         IActionMachine machine = node.actionMachine;

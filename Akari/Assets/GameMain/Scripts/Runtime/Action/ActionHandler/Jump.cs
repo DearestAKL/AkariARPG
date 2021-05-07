@@ -20,6 +20,8 @@ public class Jump : IActionHandler
     {
         Debug.Log("Jump Enter");
 
+        GameEntry.Input.IsProhibitMove = false;
+
         JumpConfig config = (JumpConfig)node.config;
         IActionMachine machine = node.actionMachine;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;

@@ -22,6 +22,14 @@ namespace Akari
 
         private GameInput m_Input;
 
+        #region 禁用
+
+        // 禁止移动 但可以旋转
+        [SerializeField]
+        private bool m_IsProhibitMove = false;
+
+        #endregion
+
         protected override void Awake()
         {
             base.Awake();
@@ -33,7 +41,7 @@ namespace Akari
         private void Update() 
         {
             var player = m_Input.Player;
-            var move = player.Move.ReadValue<Vector2>();
+            m_AxisValue = player.Move.ReadValue<Vector2>();
 
             if (player.Move.phase == InputActionPhase.Started)
             {
@@ -43,6 +51,7 @@ namespace Akari
             if (player.Attack.triggered)
             {
                 m_InputEvents |= InputEvents.Attack;
+                m_IsProhibitMove = true;
             }
 
             if (player.Jump.triggered)
@@ -68,14 +77,40 @@ namespace Akari
 
         public Vector2 AxisValue
         {
-            get { return m_AxisValue; }
+            get 
+            { 
+                return m_IsProhibitMove? Vector2.zero: m_AxisValue; 
+            }
             //private set { m_AxisValue = value; }
+        }
+
+        public Vector2 AxisValueDirection
+        {
+            get
+            {
+                return m_AxisValue.normalized;
+            }
         }
 
         public void Clear()
         {
             m_InputEvents = InputEvents.None;
             m_AxisValue = Vector2.zero;
+        }
+
+        /// <summary>
+        /// 禁止移动 但可以旋转
+        /// </summary>
+        public bool IsProhibitMove
+        {
+            get
+            {
+                return m_IsProhibitMove;
+            }
+            set
+            {
+                m_IsProhibitMove = value;
+            }
         }
         #endregion
     }

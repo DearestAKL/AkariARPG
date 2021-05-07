@@ -19,8 +19,8 @@ namespace Akari
 
         //---
         #region 运动参数
-        [SerializeField, Range(0F, 90F), Header("旋转速度")]
-        private float m_RotationSpeed = 1f;
+        [SerializeField, Range(0F, 180F), Header("旋转速度")]
+        private float m_RotationSpeed = 90f;
 
         #endregion
 
@@ -84,8 +84,17 @@ namespace Akari
 
         private void UpdateRotation()
         {
-            Vector3 velocity = m_HeroRigidbody.velocity;
-            velocity.y = 0f;
+            Vector3 velocity;
+            if (GameEntry.Input.IsProhibitMove)
+            {
+                velocity = new Vector3(GameEntry.Input.AxisValueDirection.x, 0, GameEntry.Input.AxisValueDirection.y);
+            }
+            else
+            {
+                velocity = m_HeroRigidbody.velocity;
+                velocity.y = 0f;
+            }
+
             if (velocity.magnitude > 0.0001f)
             {
                 var rotation = m_Hero.CachedTransform.rotation;

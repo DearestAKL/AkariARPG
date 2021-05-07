@@ -15,6 +15,7 @@ public class Move : IActionHandler
     public void Enter(ActionNode node)
     {
         Debug.Log("Move Enter");
+        GameEntry.Input.IsProhibitMove = false;
     }
 
     public void Exit(ActionNode node)

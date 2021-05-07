@@ -60,8 +60,6 @@ namespace Akari
             }
         }
 
-
-
         #region 外接口
 
         public bool HasEvent(InputEvents e,bool fullMatch = false)

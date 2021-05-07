@@ -23,8 +23,6 @@ namespace Akari
         private bool m_IsGround = true;
         [SerializeField]
         private bool m_IsHit = true;
-        [SerializeField]
-        private LayerMask m_GoundMask;
 
 
         public bool IsDead
@@ -118,7 +116,7 @@ namespace Akari
         public void CheckGround()
         {
             float length = 0.02f;
-            m_IsGround = m_Rigidbody.velocity.y > 0 ? false : Physics.Raycast(CachedTransform.position + length * Vector3.up, Vector3.down, length * 2, m_GoundMask);
+            m_IsGround = m_Rigidbody.velocity.y > 0 ? false : Physics.Raycast(CachedTransform.position + length * Vector3.up, Vector3.down, length * 2, LayerMask.GetMask(Constant.Layer.GroundLayerName));
         }
 
         /// <summary>

@@ -22,8 +22,13 @@ namespace Akari
             public const string UILayerName = "UI";
             public static readonly int UILayerId = LayerMask.NameToLayer(UILayerName);
 
+            public const string GroundLayerName = "Ground";
+            public static readonly int GroundLayerId = LayerMask.NameToLayer(GroundLayerName);
+
             public const string TargetableObjectLayerName = "Targetable Object";
             public static readonly int TargetableObjectLayerId = LayerMask.NameToLayer(TargetableObjectLayerName);
+
+
         }
     }
 }

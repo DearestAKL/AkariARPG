@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 9124941227254370926}
   - component: {fileID: 3095295535974150889}
   - component: {fileID: 5369892850993678309}
+  - component: {fileID: 5479012502685646465}
+  - component: {fileID: 878103463398660127}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -189,6 +191,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &5479012502685646465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544930258569835435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f311d3949fb054bb9b651121a8eaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4589830840469843362}
+--- !u!114 &878103463398660127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544930258569835435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded813c620604014596ae6fe251052ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 4900000, guid: b4131a740b6a79a45ab25f132ff99b24, type: 3}
+  destroyOnPlay: 0
 --- !u!1001 &1459990756438207276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2179,6 +2208,12 @@ PrefabInstance:
 --- !u!4 &5852525664498008280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b04406949810a0a46b21e74416b63350,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459990758216657858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4589830840469843362 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: b04406949810a0a46b21e74416b63350,
     type: 3}
   m_PrefabInstance: {fileID: 1459990758216657858}
   m_PrefabAsset: {fileID: 0}

@@ -58,6 +58,8 @@ namespace Akari
 
             //----------------------------------------
             Physics.autoSimulation = false;
+
+            //GameEntry.ObjectPool.CreateMultiSpawnObjectPool
             //----------------------------------------
 
             m_HeroData = new HeroData(1, 1);
@@ -129,10 +131,30 @@ namespace Akari
                 UpdateLogicAnimation(actionFrameRate);
                 //检测地面
                 m_Hero.CheckGround();
+
+                //检测攻击对象
+                CheckAttack();
+
+
                 //更新物理
                 Physics.Simulate(actionFrameRate);
                 //清理输入
                 GameEntry.Input.Clear();
+            }
+        }
+
+        private void CheckAttack()
+        {
+            var attackRanges = m_ActionMachine.GetAttackRanges();
+            if (attackRanges.Count <= 0) { return; }
+
+            var attackRange = attackRanges[0];
+
+            var cols = Physics.OverlapBox(m_Hero.CachedTransform.position + ((BoxItem)attackRange.value).offset, ((BoxItem)attackRange.value).size, m_Hero.CachedTransform.rotation);
+
+            if (cols.Length > 0)
+            {
+                int s = 1;
             }
         }
 
@@ -181,46 +203,46 @@ namespace Akari
         }
         #endregion
 
-        private void OnDrawGizmos()
-        {
-            if (m_ActionMachine == null)
-            {
-                return;
-            }
+        //private void OnDrawGizmos()
+        //{
+        //    if (m_ActionMachine == null)
+        //    {
+        //        return;
+        //    }
 
-            Matrix4x4 mat = Matrix4x4.TRS(transform.position, m_Hero.CachedTransform.rotation, Vector3.one);
-            var attackRanges = m_ActionMachine.GetAttackRanges();
-            var bodyRanges = m_ActionMachine.GetBodyRanges();
-            DrawRanges(attackRanges, mat, Color.red);
-            DrawRanges(bodyRanges, mat, Color.green);
+        //    Matrix4x4 mat = Matrix4x4.TRS(transform.position, m_Hero.CachedTransform.rotation, Vector3.one);
+        //    var attackRanges = m_ActionMachine.GetAttackRanges();
+        //    var bodyRanges = m_ActionMachine.GetBodyRanges();
+        //    DrawRanges(attackRanges, mat, Color.red);
+        //    DrawRanges(bodyRanges, mat, Color.green);
 
-            return;
+        //    return;
 
-            void DrawRanges(List<RangeConfig> ranges, Matrix4x4 matrix, Color color)
-            {
-                if (ranges == null || ranges.Count == 0)
-                {
-                    return;
-                }
+        //    void DrawRanges(List<RangeConfig> ranges, Matrix4x4 matrix, Color color)
+        //    {
+        //        if (ranges == null || ranges.Count == 0)
+        //        {
+        //            return;
+        //        }
 
-                DrawUtility.G.PushColor(color);
+        //        DrawUtility.G.PushColor(color);
 
-                foreach (var range in ranges)
-                {
-                    switch (range.value)
-                    {
-                        case BoxItem v:
-                            DrawUtility.G.DrawBox(v.size, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
-                            break;
+        //        foreach (var range in ranges)
+        //        {
+        //            switch (range.value)
+        //            {
+        //                case BoxItem v:
+        //                    DrawUtility.G.DrawBox(v.size, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
+        //                    break;
 
-                        case SphereItem v:
-                            DrawUtility.G.DrawSphere(v.radius, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
-                            break;
-                    }
-                }
-                DrawUtility.G.PopColor();
-            }
-        }
+        //                case SphereItem v:
+        //                    DrawUtility.G.DrawSphere(v.radius, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
+        //                    break;
+        //            }
+        //        }
+        //        DrawUtility.G.PopColor();
+        //    }
+        //}
 
         #region  英雄
         /// <summary>

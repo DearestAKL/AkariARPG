@@ -22,6 +22,8 @@ namespace Akari
         [SerializeField]
         private bool m_IsGround = true;
         [SerializeField]
+        private bool m_IsHit = true;
+        [SerializeField]
         private LayerMask m_GoundMask;
 
 
@@ -75,7 +77,6 @@ namespace Akari
             //AIUtility.PerformCollision(this, entity);
         }
 
-        #region 外部引用接口
         /// <summary>
         /// 缓存的Animator
         /// </summary>
@@ -92,6 +93,9 @@ namespace Akari
             get { return m_Rigidbody; }
         }
 
+        /// <summary>
+        /// 是否在地面上
+        /// </summary>
         public bool IsGround
         {
             get
@@ -100,9 +104,16 @@ namespace Akari
             }
         }
 
-        #endregion
-
-        #region 行为接口
+        /// <summary>
+        /// 受击
+        /// </summary>
+        public bool IsHit
+        {
+            get
+            {
+                return m_IsHit;
+            }
+        }
 
         public void CheckGround()
         {
@@ -138,6 +149,5 @@ namespace Akari
         {
 
         }
-        #endregion
     }
 }

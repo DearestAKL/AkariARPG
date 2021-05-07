@@ -30,13 +30,12 @@ public class Move : IActionHandler
         //IActionMachine machine = node.actionMachine;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;
 
+        var velocity = controller.CachedRigidbody.velocity;
         if (GameEntry.Input.HasEvent(InputEvents.Moving))
         {
-            var velocity = controller.CachedRigidbody.velocity;
-
+            Vector3 desiredVelocity;
             var input = Vector2.ClampMagnitude(GameEntry.Input.AxisValue, 1f);
             var cameraTrans = GameEntry.Camera.MainCamera.transform;
-            Vector3 desiredVelocity ;
             if (cameraTrans)
             {
                 Vector3 forward = cameraTrans.forward;
@@ -54,8 +53,13 @@ public class Move : IActionHandler
 
             velocity.x = desiredVelocity.x;
             velocity.z = desiredVelocity.z;
-
-            controller.CachedRigidbody.velocity = velocity;
         }
+        else
+        {
+            velocity.x = 0;
+            velocity.z = 0;
+        }
+
+        controller.CachedRigidbody.velocity = velocity;
     }
 }

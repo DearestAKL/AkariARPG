@@ -109,6 +109,11 @@ namespace Conditions
 
     public class HitChecker : IChecker
     {
-
+        public bool Execute(ActionNode node)
+        {
+            IActionMachine machine = node.actionMachine;
+            TargetableObject controller = (TargetableObject)node.actionMachine.controller;
+            return controller.IsHit;
+        }
     }
 }

@@ -144,7 +144,6 @@ namespace Akari
                 //检测攻击对象
                 CheckAttack();
 
-
                 //更新物理
                 Physics.Simulate(actionFrameRate);
                 //清理输入
@@ -159,12 +158,8 @@ namespace Akari
 
             var attackRange = attackRanges[0];
 
-            var cols = Physics.OverlapBox(m_Hero.CachedTransform.position + ((BoxItem)attackRange.value).offset, ((BoxItem)attackRange.value).size, m_Hero.CachedTransform.rotation);
-
-            if (cols.Length > 0)
-            {
-                int s = 1;
-            }
+            //检测范围盒
+            m_Hero.CheckRangeBox(attackRange);
         }
 
         private void UpdateLogicAnimation(float deltaTime)

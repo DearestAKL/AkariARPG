@@ -25,10 +25,17 @@ namespace Akari
             public const string GroundLayerName = "Ground";
             public static readonly int GroundLayerId = LayerMask.NameToLayer(GroundLayerName);
 
-            public const string TargetableObjectLayerName = "Targetable Object";
-            public static readonly int TargetableObjectLayerId = LayerMask.NameToLayer(TargetableObjectLayerName);
+            public const string HeroAttackBoxLayerName = "HeroAttackBox";
+            public static readonly int HeroAttackBoxLayerId = LayerMask.NameToLayer(HeroAttackBoxLayerName);
 
+            public const string MonsterAttackBoxLayerName = "MonsterAttackBox";
+            public static readonly int MonsterAttackBoxLayerId = LayerMask.NameToLayer(MonsterAttackBoxLayerName);
 
+            public const string HeroLayerName = "Hero";
+            public static readonly int HeroLayerId = LayerMask.NameToLayer(HeroLayerName);
+
+            public const string MonsterLayerName = "Monster";
+            public static readonly int MonsterLayerId = LayerMask.NameToLayer(MonsterLayerName);
         }
     }
 }

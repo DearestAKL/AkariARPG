@@ -68,21 +68,6 @@ namespace Akari
             base.OnDead(attacker);
         }
 
-
-        #region 向PlayerComponent传递信息
-
-        //private void OnCollisionEnter(Collision collision)
-        //{
-        //    m_Player.EvaluateCollision(collision);
-        //}
-
-        //private void OnCollisionStay(Collision collision)
-        //{
-        //    m_Player.EvaluateCollision(collision);
-        //}
-
-        #endregion
-
         #region 外部行为接口
 
         /// <summary>
@@ -129,6 +114,7 @@ namespace Akari
                 GameEntry.Event.Fire(HeroRestoreHealthEventArgs.EventId, HeroRestoreHealthEventArgs.Create(fromHPRatio, toHPRatio));
             }
         }
+       
         #endregion
 
         #region 外部引用接口

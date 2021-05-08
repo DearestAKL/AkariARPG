@@ -24,6 +24,8 @@ namespace Akari
         [SerializeField]
         private bool m_IsHit = true;
 
+        private RangeBox m_AttackRange = null;
+        //private RangeBox m_BodyRange = null;
 
         public bool IsDead
         {
@@ -39,6 +41,11 @@ namespace Akari
             //查找组件
             m_Rigidbody = CachedTransform.GetComponent<Rigidbody>();
             m_Animator = CachedTransform.Find("HeroModel").GetComponent<Animator>();
+
+            m_AttackRange = CachedTransform.Find("AttackRange").GetComponent<RangeBox>();
+            m_AttackRange.Init(this);
+            //m_BodyRange = CachedTransform.Find("m_BodyRange").GetComponent<RangeBox>();
+            //m_BodyRange.Init(this);
         }
 
         protected override void OnShow(object userData)
@@ -60,17 +67,20 @@ namespace Akari
 
         private void OnTriggerEnter(Collider other)
         {
-            Entity entity = other.gameObject.GetComponent<Entity>();
-            if (entity == null)
-            {
-                return;
-            }
 
-            if (entity is TargetableObject && entity.Id >= Id)
-            {
-                // 碰撞事件由 Id 小的一方处理，避免重复处理
-                return;
-            }
+            //Entity entity = other.gameObject.GetComponent<Entity>();
+            //if (entity == null)
+            //{
+            //    return;
+            //}
+
+            //if (entity is TargetableObject && entity.Id >= Id)
+            //{
+            //    // 碰撞事件由 Id 小的一方处理，避免重复处理
+            //    return;
+            //}
+
+            //if(entity )
 
             //AIUtility.PerformCollision(this, entity);
         }
@@ -117,6 +127,16 @@ namespace Akari
         {
             float length = 0.02f;
             m_IsGround = m_Rigidbody.velocity.y > 0 ? false : Physics.Raycast(CachedTransform.position + length * Vector3.up, Vector3.down, length * 2, LayerMask.GetMask(Constant.Layer.GroundLayerName));
+        }
+
+        /// <summary>
+        /// 更新范围盒
+        /// </summary>
+        /// <param name="rangeConfig"></param>
+        public void CheckRangeBox(RangeConfig rangeConfig)
+        {
+            m_AttackRange?.UpdateRange(rangeConfig);
+            //m_BodyRange?.UpdateRange(rangeConfig);
         }
 
         /// <summary>

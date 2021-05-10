@@ -36,6 +36,11 @@ namespace Akari
             {
                 return m_MaxHP;
             }
+            //临时
+            set
+            {
+                m_MaxHP = value;
+            }
         }
 
         /// <summary>

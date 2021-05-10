@@ -154,7 +154,10 @@ namespace Akari
         private void CheckAttack()
         {
             var attackRanges = m_ActionMachine.GetAttackRanges();
-            if (attackRanges.Count <= 0) { return; }
+            if (attackRanges.Count <= 0) {
+                m_Hero.CheckRangeBox(null);
+                return;         
+            }
 
             var attackRange = attackRanges[0];
 
@@ -255,6 +258,12 @@ namespace Akari
         public void CreatHero()
         {
             GameEntry.Entity.ShowEntity(m_HeroData.Id, typeof(Hero), AssetUtility.GetEntityAsset("Hero"), "Hero", 1, m_HeroData);
+
+
+            var m_MonsterData = new MonsterData(2, 2);
+            m_MonsterData.MaxHP = 100;
+            m_MonsterData.HP = 100;
+            GameEntry.Entity.ShowEntity(m_MonsterData.Id, typeof(Monster), AssetUtility.GetEntityAsset("Monster"), "Monster", 1, m_MonsterData);
         }
 
         /// <summary>

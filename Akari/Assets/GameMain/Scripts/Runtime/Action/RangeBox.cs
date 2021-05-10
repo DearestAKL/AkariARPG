@@ -23,23 +23,25 @@ namespace Akari
         {
             parentEntity = entity;
 
-            //初始化层级
-            if(parentEntity.gameObject.layer == Constant.Layer.HeroLayerId)
-            {
-                gameObject.layer = Constant.Layer.HeroAttackBoxLayerId;
-            }
-            else if(parentEntity.gameObject.layer == Constant.Layer.MonsterLayerId)
-            {
-                gameObject.layer = Constant.Layer.MonsterAttackBoxLayerId;
-            }
+            ////初始化层级
+            //if(parentEntity.gameObject.layer == Constant.Layer.HeroLayerId)
+            //{
+            //    gameObject.layer = Constant.Layer.HeroAttackBoxLayerId;
+            //}
+            //else if(parentEntity.gameObject.layer == Constant.Layer.MonsterLayerId)
+            //{
+            //    gameObject.layer = Constant.Layer.MonsterAttackBoxLayerId;
+            //}
         }
 
-        public void UpdateRange(RangeConfig rangeConfig)
+        public void CheckRangeBox(RangeConfig rangeConfig)
         {
             if (rangeConfig == null)
             {
                 boxRange.enabled = false;
                 sphereRange.enabled = false;
+
+                return;
             }
 
             switch (rangeConfig.value)
@@ -71,7 +73,7 @@ namespace Akari
 
             if (entity is TargetableObject)
             {
-                (entity as TargetableObject).ApplyDamage(parentEntity, 100);
+                (entity as TargetableObject).ApplyDamage(parentEntity, 10);
             }
         }
     }

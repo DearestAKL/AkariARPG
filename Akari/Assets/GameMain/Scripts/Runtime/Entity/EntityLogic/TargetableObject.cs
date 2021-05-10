@@ -40,7 +40,7 @@ namespace Akari
             base.OnInit(userData);
             //查找组件
             m_Rigidbody = CachedTransform.GetComponent<Rigidbody>();
-            m_Animator = CachedTransform.Find("HeroModel").GetComponent<Animator>();
+            m_Animator = CachedTransform.Find("Model").GetComponent<Animator>();
 
             m_AttackRange = CachedTransform.Find("AttackRange").GetComponent<RangeBox>();
             m_AttackRange.Init(this);
@@ -135,7 +135,7 @@ namespace Akari
         /// <param name="rangeConfig"></param>
         public void CheckRangeBox(RangeConfig rangeConfig)
         {
-            m_AttackRange?.UpdateRange(rangeConfig);
+            m_AttackRange?.CheckRangeBox(rangeConfig);
             //m_BodyRange?.UpdateRange(rangeConfig);
         }
 

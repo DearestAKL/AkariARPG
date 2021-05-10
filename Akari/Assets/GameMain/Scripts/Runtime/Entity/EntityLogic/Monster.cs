@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Fsm;
 using GameFramework;
+using TMPro;
 
 namespace Akari
 {
@@ -17,25 +18,30 @@ namespace Akari
         protected IFsm<Monster> fsm;
         protected List<FsmState<Monster>> stateList;
 
+        private TextMeshPro txtInfo;
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
+            txtInfo = CachedTransform.Find("txtInfo").GetComponent<TextMeshPro>();
 
-            stateList = new List<FsmState<Monster>>();
+            CachedTransform.position = new Vector3(10, 0, 0);
+            //stateList = new List<FsmState<Monster>>();
         }
 
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
 
-            CreateFsm();
+            txtInfo.text = Utility.Text.Format("生命值：{0}/{1}",m_MonsterData.HP, m_MonsterData.MaxHP);
+            //CreateFsm();
         }
 
         protected override void OnHide(bool isShutdown, object userData)
         {
             base.OnHide(isShutdown, userData);
 
-            DestroyFsm();
+            //DestroyFsm();
         }
 
         protected override void OnAttachTo(UnityGameFramework.Runtime.EntityLogic parentEntity, Transform parentTransform, object userData)
@@ -48,9 +54,26 @@ namespace Akari
             base.OnDetached(childEntity, userData);
         }
 
+        public override void ApplyDamage(Entity attacker, int damageHP)
+        {
+            base.ApplyDamage(attacker, damageHP);
+
+            m_MonsterData.HP -= damageHP;
+
+            if (m_MonsterData.HP <= 0)
+            {
+                OnDead(attacker);
+                return;
+            }
+
+            txtInfo.text = Utility.Text.Format("生命值：{0}/{1}", m_MonsterData.HP, m_MonsterData.MaxHP);
+        }
+
         protected override void OnDead(Entity attacker)
         {
             base.OnDead(attacker);
+
+            txtInfo.text = Utility.Text.Format("死亡：0/{0}", m_MonsterData.MaxHP);
         }
 
         #region FSM

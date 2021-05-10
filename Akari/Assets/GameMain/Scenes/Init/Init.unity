@@ -2962,3 +2962,8 @@ MonoBehaviour:
     m_InstanceCapacity: 1
     m_InstanceExpireTime: 0
     m_InstancePriority: 0
+  - m_Name: Monster
+    m_InstanceAutoReleaseInterval: 0
+    m_InstanceCapacity: 1
+    m_InstanceExpireTime: 0
+    m_InstancePriority: 0

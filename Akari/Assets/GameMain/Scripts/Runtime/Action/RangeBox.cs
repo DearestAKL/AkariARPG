@@ -17,6 +17,7 @@ namespace Akari
         {
             boxRange = transform.GetComponent<BoxCollider>();
             sphereRange = transform.GetComponent<SphereCollider>();
+            SetRangeEnabled(00);
         }
 
         public void Init(Entity entity) 
@@ -38,8 +39,7 @@ namespace Akari
         {
             if (rangeConfig == null)
             {
-                boxRange.enabled = false;
-                sphereRange.enabled = false;
+                SetRangeEnabled(00);
 
                 return;
             }
@@ -47,15 +47,13 @@ namespace Akari
             switch (rangeConfig.value)
             {
                 case BoxItem value:
-                    boxRange.enabled = false;
-                    sphereRange.enabled = true;
+                    SetRangeEnabled(01);
 
                     boxRange.center = value.offset;
                     boxRange.size = value.size;
                     break;
                 case SphereItem value:
-                    boxRange.enabled = true;
-                    sphereRange.enabled = false;
+                    SetRangeEnabled(10);
 
                     sphereRange.center = value.offset;
                     sphereRange.radius = value.radius;
@@ -75,6 +73,12 @@ namespace Akari
             {
                 (entity as TargetableObject).ApplyDamage(parentEntity, 10);
             }
+        }
+
+        private void SetRangeEnabled(Int32 num)
+        {
+            boxRange.enabled = (num & 01) != 0;
+            sphereRange.enabled = (num & 10) != 0;
         }
     }
 }

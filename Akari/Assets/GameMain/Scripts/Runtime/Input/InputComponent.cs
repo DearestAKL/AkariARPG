@@ -73,22 +73,6 @@ namespace Akari
             //private set { m_InputEvent = value; }
         }
 
-        public Vector2 AxisValue
-        {
-            get 
-            { 
-                return m_IsProhibitMove? Vector2.zero: m_AxisValue; 
-            }
-            //private set { m_AxisValue = value; }
-        }
-
-        public Vector2 AxisValueDirection
-        {
-            get
-            {
-                return m_AxisValue.normalized;
-            }
-        }
 
         public void Clear()
         {
@@ -111,5 +95,42 @@ namespace Akari
             }
         }
         #endregion
+
+
+        /// <summary>
+        /// 获取有效的Camera下的水平输入 用于移动相关
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetEffectiveCameraAxisValue()
+        {
+            return m_IsProhibitMove ? Vector2.zero : GetCameraAxisValue();
+        }
+
+        /// <summary>
+        /// 得到Camera下的水平输入
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetCameraAxisValue()
+        {
+            Vector2 desiredAxisValue;
+            var input = Vector2.ClampMagnitude(m_AxisValue, 1f);
+            var cameraTrans = GameEntry.Camera.MainCamera.transform;
+            if (cameraTrans)
+            {
+                Vector3 forward = cameraTrans.forward;
+                forward.y = 0f;
+                forward.Normalize();
+                Vector3 right = cameraTrans.right;
+                right.y = 0f;
+                right.Normalize();
+                desiredAxisValue = (forward * input.y + right * input.x);
+            }
+            else
+            {
+                desiredAxisValue = new Vector2(input.x,input.y);
+            }
+
+            return desiredAxisValue;
+        }
     }
 }

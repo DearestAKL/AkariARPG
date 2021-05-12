@@ -34,26 +34,10 @@ public class Move : IActionHandler
         var velocity = controller.CachedRigidbody.velocity;
         if (GameEntry.Input.HasEvent(InputEvents.Moving))
         {
-            Vector3 desiredVelocity;
-            var input = Vector2.ClampMagnitude(GameEntry.Input.AxisValue, 1f);
-            var cameraTrans = GameEntry.Camera.MainCamera.transform;
-            if (cameraTrans)
-            {
-                Vector3 forward = cameraTrans.forward;
-                forward.y = 0f;
-                forward.Normalize();
-                Vector3 right = cameraTrans.right;
-                right.y = 0f;
-                right.Normalize();
-                desiredVelocity = (forward * input.y + right * input.x) * config.moveSpeed;
-            }
-            else
-            {
-                desiredVelocity = new Vector3(input.x, 0f, input.y) * config.moveSpeed;
-            }
+            Vector2 desiredVelocity = GameEntry.Input.GetEffectiveCameraAxisValue()* config.moveSpeed;
 
             velocity.x = desiredVelocity.x;
-            velocity.z = desiredVelocity.z;
+            velocity.z = desiredVelocity.y;
         }
         else
         {

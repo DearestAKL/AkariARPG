@@ -61,7 +61,7 @@ public class Jump : IActionHandler
 
         if (GameEntry.Input.HasEvent(InputEvents.Moving))
         {//空中移动
-            var move = GameEntry.Input.AxisValue.normalized * config.moveSpeed;
+            var move = GameEntry.Input.GetEffectiveCameraAxisValue() * config.moveSpeed;
             velocity.x = move.x;
             velocity.z = move.y;
             velocityChanged = true;

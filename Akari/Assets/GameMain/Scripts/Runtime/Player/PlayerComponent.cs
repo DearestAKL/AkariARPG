@@ -87,7 +87,7 @@ namespace Akari
             Vector3 velocity;
             if (GameEntry.Input.IsProhibitMove)
             {
-                velocity = new Vector3(GameEntry.Input.AxisValueDirection.x, 0, GameEntry.Input.AxisValueDirection.y);
+                velocity = GameEntry.Input.GetCameraAxisValue().ToVector3();
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Akari
                 velocity.y = 0f;
             }
 
-            if (velocity.magnitude > 0.0001f)
+            if (velocity.magnitude > 0.01f)
             {
                 var rotation = m_Hero.CachedTransform.rotation;
                 m_Hero.CachedTransform.rotation = Quaternion.Slerp(rotation, Quaternion.LookRotation(velocity), m_RotationSpeed * Time.deltaTime);
@@ -209,47 +209,6 @@ namespace Akari
             m_HeroAnimator.Update(0);
         }
         #endregion
-
-        //private void OnDrawGizmos()
-        //{
-        //    if (m_ActionMachine == null)
-        //    {
-        //        return;
-        //    }
-
-        //    Matrix4x4 mat = Matrix4x4.TRS(transform.position, m_Hero.CachedTransform.rotation, Vector3.one);
-        //    var attackRanges = m_ActionMachine.GetAttackRanges();
-        //    var bodyRanges = m_ActionMachine.GetBodyRanges();
-        //    DrawRanges(attackRanges, mat, Color.red);
-        //    DrawRanges(bodyRanges, mat, Color.green);
-
-        //    return;
-
-        //    void DrawRanges(List<RangeConfig> ranges, Matrix4x4 matrix, Color color)
-        //    {
-        //        if (ranges == null || ranges.Count == 0)
-        //        {
-        //            return;
-        //        }
-
-        //        DrawUtility.G.PushColor(color);
-
-        //        foreach (var range in ranges)
-        //        {
-        //            switch (range.value)
-        //            {
-        //                case BoxItem v:
-        //                    DrawUtility.G.DrawBox(v.size, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
-        //                    break;
-
-        //                case SphereItem v:
-        //                    DrawUtility.G.DrawSphere(v.radius, matrix * Matrix4x4.TRS((Vector3)v.offset, Quaternion.identity, Vector3.one));
-        //                    break;
-        //            }
-        //        }
-        //        DrawUtility.G.PopColor();
-        //    }
-        //}
 
         #region  英雄
         /// <summary>

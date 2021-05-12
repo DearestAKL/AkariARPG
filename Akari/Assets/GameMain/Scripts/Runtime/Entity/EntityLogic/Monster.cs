@@ -4,6 +4,7 @@ using UnityEngine;
 using GameFramework.Fsm;
 using GameFramework;
 using TMPro;
+using UnityGameFramework.Runtime;
 
 namespace Akari
 {
@@ -24,14 +25,20 @@ namespace Akari
         {
             base.OnInit(userData);
             txtInfo = CachedTransform.Find("txtInfo").GetComponent<TextMeshPro>();
-
-            CachedTransform.position = new Vector3(10, 0, 0);
+            
             //stateList = new List<FsmState<Monster>>();
         }
 
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
+
+            m_MonsterData = userData as MonsterData;
+            if (m_MonsterData == null)
+            {
+                Log.Error("Monster data is invalid.");
+                return;
+            }
 
             txtInfo.text = Utility.Text.Format("生命值：{0}/{1}",m_MonsterData.HP, m_MonsterData.MaxHP);
             //CreateFsm();

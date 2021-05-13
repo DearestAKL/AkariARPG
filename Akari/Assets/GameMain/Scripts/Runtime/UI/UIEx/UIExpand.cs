@@ -69,6 +69,8 @@ namespace Akari
 
     public class InfoBarEx
     {
+        private ReferenceCollector rc;
+
         private TextMeshProUGUI txtProgress;
         private Image imgProgress;
         private Image imgTransition;
@@ -78,9 +80,10 @@ namespace Akari
 
         public InfoBarEx(ReferenceCollector rc)
         {
-            txtProgress = rc.Get<TextMeshProUGUI>("txtProgress");
-            imgProgress = rc.Get<Image>("imgProgress");
-            imgTransition = rc.Get<Image>("imgTransition");
+            this.rc = rc;
+            txtProgress = this.rc.Get<TextMeshProUGUI>("txtProgress");
+            imgProgress = this.rc.Get<Image>("imgProgress");
+            imgTransition = this.rc.Get<Image>("imgTransition");
         }
 
         /// <summary>
@@ -152,6 +155,11 @@ namespace Akari
             }
 
             imgProgress.fillAmount = toHPRatio;
+        }
+
+        public Transform CachedTransform
+        {
+            get { return rc.gameObject.transform; }
         }
     }
 }

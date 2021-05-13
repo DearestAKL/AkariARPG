@@ -123,11 +123,11 @@ namespace Akari
                 Vector3 right = cameraTrans.right;
                 right.y = 0f;
                 right.Normalize();
-                desiredAxisValue = (forward * input.y + right * input.x);
+                desiredAxisValue = (forward * input.y + right * input.x).ToVector2();
             }
             else
             {
-                desiredAxisValue = new Vector2(input.x,input.y);
+                desiredAxisValue = new Vector2(input.x, input.y);
             }
 
             return desiredAxisValue;

@@ -208,8 +208,11 @@ namespace Akari
         public void DrawArc(float radius, float angle, float rotation, Matrix4x4 matrix)
         {
             Vector3[] vertices = MathUtility.CalcArcVertex(radius, angle, rotation, matrix, true, subdivide);
+            
             DrawPolygon(vertices);
         }
+
+
 
         [Conditional("UNITY_EDITOR")]
         [DebuggerStepThrough]

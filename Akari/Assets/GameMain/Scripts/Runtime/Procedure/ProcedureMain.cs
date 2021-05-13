@@ -44,6 +44,8 @@ namespace Akari
 
             GameEntry.UI.OpenUIForm(UIFormId.UIMainGame, this);
 
+            //GameEntry.UI.OpenUIForm(UIFormId.UIHPBarCanvas, this);
+
             //创建初始英雄
             GameEntry.Player.CreatHero();
         }

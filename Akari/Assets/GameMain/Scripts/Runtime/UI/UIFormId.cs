@@ -43,5 +43,11 @@ namespace Akari
         /// 主游戏界面。
         /// </summary>
         UIMainGame = 105,
+
+
+        /// <summary>
+        /// 主游戏界面。
+        /// </summary>
+        UIHPBarCanvas = 106,
     }
 }

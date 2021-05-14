@@ -18,7 +18,7 @@ namespace Akari
 
         public void Initialize()
         {
-            //resourceComponent = GameEntry.Resource;
+            resourceComponent = GameEntry.Resource;
 
             //AddSpriteAtlas(str_Common);
         }

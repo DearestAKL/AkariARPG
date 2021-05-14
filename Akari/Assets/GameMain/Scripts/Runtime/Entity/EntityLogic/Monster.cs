@@ -6,6 +6,7 @@ using GameFramework;
 using TMPro;
 using UnityGameFramework.Runtime;
 using Sirenix.OdinInspector;
+using Akari.HUD;
 
 namespace Akari
 {
@@ -23,25 +24,9 @@ namespace Akari
         [SerializeField]
         private GameObject ui;
 
-        private Camera m_MainCamera;
-        private InfoBarEx m_HPBar = null;
-        private Vector2 originOff;
-
-
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
-
-            m_MainCamera = GameEntry.Camera.MainCamera;
-            //var uiHPBarCanvas = GameEntry.UI.GetUIForm(UIFormId.UIHPBarCanvas)?.GetComponent<UIHPBarCanvas>();
-            //m_HPBar = GameEntry.UI.GetUIForm(UIFormId.UIHPBarCanvas)?.GetComponent<UIHPBarCanvas>()?.GetHpBar();
-
-            if (ui != null)
-            {
-                m_HPBar = new InfoBarEx(ui.GetComponent<ReferenceCollector>());
-            }
-
-            originOff = new Vector2(-Screen.width / 2, -Screen.height / 2);
             //stateList = new List<FsmState<Monster>>();
         }
 
@@ -56,6 +41,7 @@ namespace Akari
                 return;
             }
 
+            UpdateTitle();
             //txtInfo.text = Utility.Text.Format("生命值：{0}/{1}",m_MonsterData.HP, m_MonsterData.MaxHP);
             //CreateFsm();
         }
@@ -63,17 +49,6 @@ namespace Akari
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
-
-            if (m_HPBar == null)
-            {
-                return;
-            }
-
-            //var v2 =  RectTransformUtility.WorldToScreenPoint(m_MainCamera, CachedTransform.position + Vector3.up * 2.5f) + originOff;
-            //var position = new Vector3(v2.x, v2.y, CachedTransform.position.z);
-            m_HPBar.CachedTransform.position = CachedTransform.position + Vector3.up * 2.5f;
-            m_HPBar.CachedTransform.LookAt(m_MainCamera.transform);
-
         }
 
         protected override void OnHide(bool isShutdown, object userData)
@@ -158,13 +133,35 @@ namespace Akari
         }
         #endregion
 
-        [Button("UpdateUI")]
-        private void UpdateUI()
+        #region HUD
+        private int m_TitleIns = 0;
+        public bool m_Main;
+        public HUDBloodType m_nBloodType = HUDBloodType.Blood_Red;
+        private void UpdateTitle()
         {
-            if (ui != null)
+            if (m_TitleIns == 0)
             {
-                m_HPBar = new InfoBarEx(ui.GetComponent<ReferenceCollector>());
+                m_TitleIns = HUDTitleInfo.HUDTitleRender.Instance.RegisterTitle(transform, 2.5f, m_Main);
             }
+
+            HUDTitleInfo title = HUDTitleInfo.HUDTitleRender.Instance.GetTitle(m_TitleIns);
+            title.Clear();
+
+            title.SetOffsetY(0.5f);
+            title.ShowTitle(true);
+            // 血条
+            HUDBloodType nBloodType = m_nBloodType;
+            if (nBloodType != HUDBloodType.Blood_None)
+            {
+                title.BeginTitle();
+                title.PushBlood(nBloodType, m_MonsterData.HPRatio);
+                title.EndTitle();
+            }
+
+            title.BeginTitle();
+            title.PushTitle("名字", HUDTilteType.PlayerName, 0);
+            title.EndTitle();
         }
+        #endregion
     }
 }

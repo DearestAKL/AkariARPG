@@ -21,6 +21,8 @@ namespace Akari
 
             AtlasHelper = new AtlasHelperComponent();
             AtlasHelper.Initialize();
+
+            HUD.HUDMesh.OnEnterGame();
         }
 
         /// <summary>

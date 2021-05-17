@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - HeroAttackBox
+  - MonsterAttackBox
+  - Hero
+  - Monster
   - 
   - 
   - 

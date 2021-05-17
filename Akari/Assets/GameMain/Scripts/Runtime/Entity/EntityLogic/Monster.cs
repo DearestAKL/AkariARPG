@@ -141,13 +141,13 @@ namespace Akari
         {
             if (m_TitleIns == 0)
             {
-                m_TitleIns = HUDTitleInfo.HUDTitleRender.Instance.RegisterTitle(transform, 2.5f, m_Main);
+                m_TitleIns = HUDTitleInfo.HUDTitleRender.Instance.RegisterTitle(transform, 1.8f, m_Main);
             }
 
             HUDTitleInfo title = HUDTitleInfo.HUDTitleRender.Instance.GetTitle(m_TitleIns);
             title.Clear();
 
-            title.SetOffsetY(0.5f);
+            title.SetOffsetY(1.5f);
             title.ShowTitle(true);
             // 血条
             HUDBloodType nBloodType = m_nBloodType;
@@ -159,7 +159,7 @@ namespace Akari
             }
 
             title.BeginTitle();
-            title.PushTitle("名字", HUDTilteType.PlayerName, 0);
+            title.PushTitle("Lv.1", HUDTilteType.PlayerName, 0);
             title.EndTitle();
         }
         #endregion

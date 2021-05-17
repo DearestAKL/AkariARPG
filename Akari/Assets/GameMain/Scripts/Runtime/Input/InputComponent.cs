@@ -28,6 +28,11 @@ namespace Akari
         [SerializeField]
         private bool m_IsProhibitMove = false;
 
+        // 禁止输入 角色无法进行如何操作
+        [SerializeField]
+        private bool m_IsProhibitInput = false;
+
+        private bool m_IsInMainPanel = false;
         #endregion
 
         protected override void Awake()
@@ -36,13 +41,23 @@ namespace Akari
 
             m_Input = new GameInput();
             m_Input.Enable();
+
+
+            m_Input.Player.Alt.started += AltDown;
+            m_Input.Player.Alt.performed += AltUp;
         }
 
         private void Update() 
         {
-            var player = m_Input.Player;
-            m_AxisValue = player.Move.ReadValue<Vector2>();
+            if (m_IsProhibitInput)
+            {
+                Cursor.visible = true;
+            }
+            Cursor.visible = false;
 
+            var player = m_Input.Player;
+
+            m_AxisValue = player.Move.ReadValue<Vector2>();
             if (player.Move.phase == InputActionPhase.Started)
             {
                 m_InputEvents |= InputEvents.Moving;
@@ -73,6 +88,14 @@ namespace Akari
             //private set { m_InputEvent = value; }
         }
 
+        public bool IsInMainPanel
+        {
+            set 
+            {
+                m_IsInMainPanel = value;
+                m_IsProhibitInput = !m_IsInMainPanel;
+            }
+        }
 
         public void Clear()
         {
@@ -132,5 +155,24 @@ namespace Akari
 
             return desiredAxisValue;
         }
+
+
+        #region Event
+        private void AltDown(InputAction.CallbackContext callbackContext)
+        {
+            if (m_IsInMainPanel)
+            {
+                m_IsProhibitInput = true;
+            }
+        }
+
+        private void AltUp(InputAction.CallbackContext callbackContext)
+        {
+            if (m_IsInMainPanel)
+            {
+                m_IsProhibitInput = false;
+            }
+        }
+        #endregion
     }
 }

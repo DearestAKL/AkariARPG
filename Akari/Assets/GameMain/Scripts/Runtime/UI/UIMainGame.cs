@@ -18,7 +18,7 @@ namespace Akari
 
             //设置HP 和 CP
             hpBar = new InfoBarEx(goHP.GetComponent<ReferenceCollector>());
-            cpBar = new InfoBarEx(goMP.GetComponent<ReferenceCollector>());
+            //cpBar = new InfoBarEx(goMP.GetComponent<ReferenceCollector>());
 
             InitData();
         }
@@ -28,6 +28,8 @@ namespace Akari
             base.OnOpen(userData);
             GameEntry.Event.Subscribe(HeroApplyDamageEventArgs.EventId, ApplyDamage);
             GameEntry.Event.Subscribe(HeroRestoreHealthEventArgs.EventId, RestoreHealth);
+
+            GameEntry.Input.IsInMainPanel = true;
         }
 
         protected override void OnClose(bool isShutdown, object userData)
@@ -35,6 +37,9 @@ namespace Akari
             base.OnClose(isShutdown, userData);
             GameEntry.Event.Unsubscribe(HeroApplyDamageEventArgs.EventId, ApplyDamage);
             GameEntry.Event.Unsubscribe(HeroRestoreHealthEventArgs.EventId, RestoreHealth);
+
+
+            GameEntry.Input.IsInMainPanel = false;
         }
 
         #region Data

@@ -51,9 +51,8 @@ namespace Akari
         {
             if (m_IsProhibitInput)
             {
-                Cursor.visible = true;
+                return;
             }
-            Cursor.visible = false;
 
             var player = m_Input.Player;
 
@@ -93,7 +92,7 @@ namespace Akari
             set 
             {
                 m_IsInMainPanel = value;
-                m_IsProhibitInput = !m_IsInMainPanel;
+                SetProhibitInput(!m_IsInMainPanel);
             }
         }
 
@@ -162,7 +161,7 @@ namespace Akari
         {
             if (m_IsInMainPanel)
             {
-                m_IsProhibitInput = true;
+                SetProhibitInput(true);
             }
         }
 
@@ -170,7 +169,25 @@ namespace Akari
         {
             if (m_IsInMainPanel)
             {
-                m_IsProhibitInput = false;
+                SetProhibitInput(false);
+            }
+        }
+
+        /// <summary>
+        /// 是否禁止输入
+        /// </summary>
+        private void SetProhibitInput(bool isProhibit)
+        {
+            m_IsProhibitInput = isProhibit;
+            if (m_IsProhibitInput)
+            {
+                //输入禁止,则显示鼠标
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                //恢复输入,则隐藏鼠标
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
         #endregion

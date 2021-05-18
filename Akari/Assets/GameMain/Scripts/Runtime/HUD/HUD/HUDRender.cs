@@ -276,7 +276,7 @@ namespace Akari.HUD
         HUDMesh m_curFontMesh;
         public bool m_bMeshDirty;
 
-        public HUDMesh QueryMesh(int nAtlasID)
+        public HUDMesh QueryMesh(int nAtlasID,bool ZTestOff = false)
         {
             // 先从当前有效的Mesh的找
             for (int i = m_ValidList.size - 1; i >= 0; --i)
@@ -290,13 +290,13 @@ namespace Akari.HUD
                 if (m_MeshList[i].AtlasID == nAtlasID)
                 {
                     m_ValidList.Add(m_MeshList[i]);
-                    m_MeshList[i].SetAtlasID(nAtlasID);
+                    m_MeshList[i].SetAtlasID(nAtlasID, ZTestOff);
                     m_bMeshDirty = true;
                     return m_MeshList[i];
                 }
             }
             HUDMesh pHudMesh = new HUDMesh();
-            pHudMesh.SetAtlasID(nAtlasID);
+            pHudMesh.SetAtlasID(nAtlasID, ZTestOff);
             m_MeshList.Add(pHudMesh);
             m_ValidList.Add(pHudMesh);
             m_bMeshDirty = true;
@@ -398,7 +398,7 @@ namespace Akari.HUD
                 HUDMesh mesh = m_ValidList[i];
                 if (mesh.SpriteNumb > 0 && mesh.AtlasID != 0)
                 {
-                    cmdBuffer.DrawMesh(mesh.m_Mesh, matWorld, mesh.m_mat);
+                    cmdBuffer.DrawMesh(mesh.m_Mesh, matWorld, mesh.m_Mat);
                 }
             }
             for (int i = 0, nSize = m_ValidList.size; i < nSize; ++i)
@@ -406,7 +406,7 @@ namespace Akari.HUD
                 HUDMesh mesh = m_ValidList[i];
                 if (mesh.SpriteNumb > 0 && mesh.AtlasID == 0)
                 {
-                    cmdBuffer.DrawMesh(mesh.m_Mesh, matWorld, mesh.m_mat);
+                    cmdBuffer.DrawMesh(mesh.m_Mesh, matWorld, mesh.m_Mat);
                 }
             }
         }

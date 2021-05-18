@@ -466,7 +466,7 @@ namespace Akari.HUD
         {
             for (int i = 0; i < pNode.m_aSprite.size; ++i)
             {
-                HUDMesh hudMesh = m_MeshRender.QueryMesh(pNode.m_aSprite[i].AtlasID);
+                HUDMesh hudMesh = m_MeshRender.QueryMesh(pNode.m_aSprite[i].AtlasID,true);
                 pNode.m_aSprite[i].hudMesh = hudMesh;
                 hudMesh.PushHUDVertex(pNode.m_aSprite[i]);
             }

@@ -7,6 +7,9 @@ Shader "HUD/HUDFont"
 		_MainTex ("Alpha (A)", 2D) = "white" {}
 		_Color("Main Color", Color) = (1,1,1,1)
 		_ReverseY("ReverseY", Float) = 1.0
+
+		[Header(ZTest)]
+        [Enum(UnityEngine.Rendering.CompareFunction)]_ZTest("LEqual or Disable", Float) = 4 //0 = disable
 	}
 	SubShader
 	{
@@ -21,7 +24,7 @@ Shader "HUD/HUDFont"
 		Lighting Off
 		ZWrite Off
 		//ZTest Off
-		ZTest LEqual
+		ZTest[_ZTest]
 		Fog { Mode Off }
 		ColorMask RGB
 		Blend SrcAlpha OneMinusSrcAlpha

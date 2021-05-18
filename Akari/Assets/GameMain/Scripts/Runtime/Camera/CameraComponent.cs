@@ -15,6 +15,7 @@ namespace Akari
         private Camera m_MainCamera;
 
         private CinemachineFreeLook m_CMFreeLook;
+        private CinemachineInputProvider m_CinemachineInputProvider;
 
         protected override void Awake()
         {
@@ -33,6 +34,7 @@ namespace Akari
             if (m_CMFreeLook == null)
             {
                 m_CMFreeLook = transform.Find("CM FreeLook").GetComponent<CinemachineFreeLook>();
+                m_CinemachineInputProvider = m_CMFreeLook.transform.GetComponent<CinemachineInputProvider>();
             }
 
             //m_CMFreeLook.SetGoActive(false);
@@ -68,6 +70,11 @@ namespace Akari
             m_CMFreeLook.Follow = follow;
             m_CMFreeLook.LookAt = lookAt;
             //m_CMFreeLook.SetGoActive(true);
+        }
+
+        public void SetInputProvider(bool _boo)
+        {
+            m_CinemachineInputProvider.enabled = _boo;
         }
         #endregion
     }

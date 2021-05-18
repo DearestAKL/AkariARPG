@@ -183,11 +183,15 @@ namespace Akari
             {
                 //输入禁止,则显示鼠标
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                GameEntry.Camera.SetInputProvider(false);
             }
             else
             {
                 //恢复输入,则隐藏鼠标
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                GameEntry.Camera.SetInputProvider(true);
             }
         }
         #endregion

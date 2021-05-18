@@ -257,7 +257,7 @@ namespace Akari.HUD
     class HUDMesh
     {
         public Mesh m_Mesh;
-        public Material m_mat;
+        public Material m_Mat;
         public UIFont mFont;
         public BetterList<Vector3> mVerts = new BetterList<Vector3>();
         public BetterList<Vector2> mOffset = new BetterList<Vector2>();
@@ -304,21 +304,26 @@ namespace Akari.HUD
             return s_mainCamera;
         }
 
-        public void SetAtlasID(int nAtlasID)
+        public void SetAtlasID(int nAtlasID, bool ZTestOff = false)
         {
             if (mAtlasID != nAtlasID && mAtlasID != 0)
             {
                 ReleaseTexture();
             }
             mAtlasID = nAtlasID;
-            if (m_mat == null)
+            if (m_Mat == null)
             {
-                m_mat = new Material(Shader.Find("HUD/HUDSprite"));
-                if (m_mat != null && Application.platform != RuntimePlatform.WindowsEditor)
+                m_Mat = new Material(Shader.Find("HUD/HUDSprite"));
+                if (m_Mat != null)
                 {
-                    m_mat.EnableKeyword("MAIN_ALPHA_ON");
+                    if (Application.platform != RuntimePlatform.WindowsEditor)
+                    {
+                        m_Mat.EnableKeyword("MAIN_ALPHA_ON");
+                    }
+                    m_Mat.SetFloat("_ZTest", ZTestOff ? 0 : 4);
                 }
             }
+
             if (mAtlasID != 0)
                 QueryTexture();
         }
@@ -359,9 +364,9 @@ namespace Akari.HUD
                 UITexAtlas atlas = CAtlasMng.instance.GetAtlasByID(mAtlasID);
                 if (atlas != null)
                 {
-                    m_mat.SetTexture("_MainTex", atlas.mainTexture);
-                    m_mat.SetTexture("_MainAlpha", atlas.MainAlphaTexture);
-                    m_mat.SetFloat("_ReverseY", GetReserveY());
+                    m_Mat.SetTexture("_MainTex", atlas.mainTexture);
+                    m_Mat.SetTexture("_MainAlpha", atlas.MainAlphaTexture);
+                    m_Mat.SetFloat("_ReverseY", GetReserveY());
                 }
             }
             else
@@ -369,32 +374,32 @@ namespace Akari.HUD
                 if (mFont != null && mFont.material != null)
                 {
                     Material mat = mFont.material;
-                    if (m_mat == null)
+                    if (m_Mat == null)
                     {
-                        m_mat = new Material(Shader.Find("HUD/HUDFont"));
+                        m_Mat = new Material(Shader.Find("HUD/HUDFont"));
                     }
-                    m_mat.mainTexture = mat.mainTexture;
-                    m_mat.mainTextureOffset = mat.mainTextureOffset;
-                    m_mat.mainTextureScale = mat.mainTextureScale;
-                    m_mat.SetFloat("_ReverseY", GetReserveY());
+                    m_Mat.mainTexture = mat.mainTexture;
+                    m_Mat.mainTextureOffset = mat.mainTextureOffset;
+                    m_Mat.mainTextureScale = mat.mainTextureScale;
+                    m_Mat.SetFloat("_ReverseY", GetReserveY());
                 }
             }
         }
 
         public void SetFont(UIFont font)
         {
-            if (m_mat == null)
+            if (m_Mat == null)
             {
-                m_mat = new Material(Shader.Find("HUD/HUDFont"));
+                m_Mat = new Material(Shader.Find("HUD/HUDFont"));
             }
             mFont = font;
             Material mat = mFont.material;
             if (mat != null)
             {
-                m_mat.mainTexture = mat.mainTexture;
-                m_mat.mainTextureOffset = mat.mainTextureOffset;
-                m_mat.mainTextureScale = mat.mainTextureScale;
-                m_mat.SetFloat("_ReverseY", GetReserveY());
+                m_Mat.mainTexture = mat.mainTexture;
+                m_Mat.mainTextureOffset = mat.mainTextureOffset;
+                m_Mat.mainTextureScale = mat.mainTextureScale;
+                m_Mat.SetFloat("_ReverseY", GetReserveY());
             }
         }
 
@@ -406,10 +411,10 @@ namespace Akari.HUD
                 GameObject.Destroy(m_Mesh);
                 m_Mesh = null;
             }
-            if (m_mat != null)
+            if (m_Mat != null)
             {
-                GameObject.Destroy(m_mat);
-                m_mat = null;
+                GameObject.Destroy(m_Mat);
+                m_Mat = null;
             }
         }
 

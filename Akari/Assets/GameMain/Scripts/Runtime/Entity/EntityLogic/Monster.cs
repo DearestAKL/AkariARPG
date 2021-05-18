@@ -73,6 +73,8 @@ namespace Akari
             base.ApplyDamage(attacker, damageHP);
 
             m_MonsterData.HP -= damageHP;
+            HUDNumberRender.Instance.AddHudNumber(CachedTransform, HUDNumberRenderType.HUD_SHOW_COMMON_ATTACK, damageHP, true, false, false);
+            hudTitleInfo.SetBloodPos(m_MonsterData.HPRatio);
 
             if (m_MonsterData.HP <= 0)
             {
@@ -134,9 +136,10 @@ namespace Akari
         #endregion
 
         #region HUD
+        private HUDTitleInfo hudTitleInfo;
         private int m_TitleIns = 0;
-        public bool m_Main;
-        public HUDBloodType m_nBloodType = HUDBloodType.Blood_Red;
+        private bool m_Main;
+        private HUDBloodType m_nBloodType = HUDBloodType.Blood_Red;
         private void UpdateTitle()
         {
             if (m_TitleIns == 0)
@@ -144,23 +147,23 @@ namespace Akari
                 m_TitleIns = HUDTitleInfo.HUDTitleRender.Instance.RegisterTitle(transform, 1.8f, m_Main);
             }
 
-            HUDTitleInfo title = HUDTitleInfo.HUDTitleRender.Instance.GetTitle(m_TitleIns);
-            title.Clear();
+            hudTitleInfo = HUDTitleInfo.HUDTitleRender.Instance.GetTitle(m_TitleIns);
+            hudTitleInfo.Clear();
 
-            title.SetOffsetY(1.5f);
-            title.ShowTitle(true);
+            hudTitleInfo.SetOffsetY(1.5f);
+            hudTitleInfo.ShowTitle(true);
             // 血条
             HUDBloodType nBloodType = m_nBloodType;
             if (nBloodType != HUDBloodType.Blood_None)
             {
-                title.BeginTitle();
-                title.PushBlood(nBloodType, m_MonsterData.HPRatio);
-                title.EndTitle();
+                hudTitleInfo.BeginTitle();
+                hudTitleInfo.PushBlood(nBloodType, m_MonsterData.HPRatio);
+                hudTitleInfo.EndTitle();
             }
 
-            title.BeginTitle();
-            title.PushTitle("Lv.1", HUDTilteType.PlayerName, 0);
-            title.EndTitle();
+            hudTitleInfo.BeginTitle();
+            hudTitleInfo.PushTitle("Lv.1", HUDTilteType.PlayerName, 0);
+            hudTitleInfo.EndTitle();
         }
         #endregion
     }

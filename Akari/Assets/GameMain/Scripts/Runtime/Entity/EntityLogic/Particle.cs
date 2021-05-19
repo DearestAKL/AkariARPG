@@ -30,6 +30,8 @@ namespace Akari
                 return;
             }
 
+            transform.localScale = followerData.Scale;
+
             ps.Play(true);
         }
 

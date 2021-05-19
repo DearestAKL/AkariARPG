@@ -15,11 +15,11 @@ F:/GitHub/_MyGitHub/AkariARPG/Akari
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-57066
+51810
 Successfully changed project path to: F:/GitHub/_MyGitHub/AkariARPG/Akari
 F:/GitHub/_MyGitHub/AkariARPG/Akari
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 76.56 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 77.95 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.2f1c1 (5fdc1e83a2fd)
 [Subsystems] Discovering subsystems at path D:/GamePlay/Unity/Unity Editor/2020.3.2f1c1/Editor/Data/Resources/UnitySubsystems
@@ -36,226 +36,211 @@ Initialize mono
 Mono path[0] = 'D:/GamePlay/Unity/Unity Editor/2020.3.2f1c1/Editor/Data/Managed'
 Mono path[1] = 'D:/GamePlay/Unity/Unity Editor/2020.3.2f1c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'D:/GamePlay/Unity/Unity Editor/2020.3.2f1c1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56768
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56232
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/GamePlay/Unity/Unity Editor/2020.3.2f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.000999 seconds.
+Registered in 0.000898 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 78.74 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 78.02 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.999 seconds
+- Completed reload, in  0.987 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.005353 seconds.
+Registered in 0.004783 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 82.01 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 79.36 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.353 seconds
+- Completed reload, in  1.328 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.17 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.03 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 4663 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 191.1 MB.
-System memory in use after: 191.2 MB.
+System memory in use before: 190.8 MB.
+System memory in use after: 190.9 MB.
 
-Unloading 41 unused Assets to reduce memory usage. Loaded Objects now: 5168.
-Total: 21.345900 ms (FindLiveObjects: 0.495500 ms CreateObjectMapping: 0.121500 ms MarkObjects: 20.630400 ms  DeleteObjects: 0.096600 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Settings/SampleSceneProfile.asset
-  artifactKey: Guid(10fc4df2da32a41aaa32d77bc913491c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/SampleSceneProfile.asset using Guid(10fc4df2da32a41aaa32d77bc913491c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4c9c63ab52b634901bf03798e0344fd9') in 0.042436 seconds
-  Import took 0.050751 seconds .
+Unloading 41 unused Assets to reduce memory usage. Loaded Objects now: 5166.
+Total: 21.966100 ms (FindLiveObjects: 0.689800 ms CreateObjectMapping: 0.123800 ms MarkObjects: 21.031100 ms  DeleteObjects: 0.102600 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000238 seconds.
-  path: Assets/Settings/ForwardRenderer.asset
-  artifactKey: Guid(4a8e21d5c33334b11b34a596161b9360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/ForwardRenderer.asset using Guid(4a8e21d5c33334b11b34a596161b9360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30650d8d2c7ec5f218a580ae89758a9e') in 0.008601 seconds
-  Import took 0.015009 seconds .
+  path: Assets/Akari.inputactions
+  artifactKey: Guid(1c6b53f822ea49041b3b08b70dc0504f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Akari.inputactions using Guid(1c6b53f822ea49041b3b08b70dc0504f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '587f553295d392d45eb0a77471dfe6d5') in 0.043168 seconds
+  Import took 0.050489 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 29.787380 seconds.
-  path: Assets/GameMain/UI/UISprites/Button/UI_Img_Circle_164.png
-  artifactKey: Guid(877529cb4e1e814438236fa402ec35c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Button/UI_Img_Circle_164.png using Guid(877529cb4e1e814438236fa402ec35c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd37c51ad9fbb5a58a6d3d1caf451118a') in 0.043413 seconds
-  Import took 0.050545 seconds .
+  Time since last request: 0.000221 seconds.
+  path: Assets/New Terrain.asset
+  artifactKey: Guid(27eb9668bd6e4364b95180bd2f97e2e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/New Terrain.asset using Guid(27eb9668bd6e4364b95180bd2f97e2e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72fede158b8c4a6c720639798b267ece') in 0.022804 seconds
+  Import took 0.030506 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.516334 seconds.
-  path: Assets/GameMain/UI/UISprites/Button/UI_BtnFrame_W52_Shadow.png
-  artifactKey: Guid(6fd62d2f2dde933418c4e5dd4c90cd57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Button/UI_BtnFrame_W52_Shadow.png using Guid(6fd62d2f2dde933418c4e5dd4c90cd57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ee165b4713c805b5a72176c1a8ad475') in 0.014909 seconds
-  Import took 0.022616 seconds .
+  Time since last request: 4.188688 seconds.
+  path: Assets/GameFramework/Scripts/Runtime/WebRequest/WWWFormInfo.cs
+  artifactKey: Guid(88d3d7e0a6b8b374783b6dc413adfbd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameFramework/Scripts/Runtime/WebRequest/WWWFormInfo.cs using Guid(88d3d7e0a6b8b374783b6dc413adfbd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf97bf33efc5552693344e04b11fd274') in 0.007785 seconds
+  Import took 0.014786 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.351268 seconds.
-  path: Assets/GameMain/UI/UISprites/Button/UI_BtnFrame_W48_Shadow.png
-  artifactKey: Guid(c9f8076e6142ef54083008806201c673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Button/UI_BtnFrame_W48_Shadow.png using Guid(c9f8076e6142ef54083008806201c673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a86828dc5fa43765711aee5a46b7e1ae') in 0.014383 seconds
-  Import took 0.021426 seconds .
+  Time since last request: 28.173500 seconds.
+  path: Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs
+  artifactKey: Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs using Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '305cedac0de17a1c67504f976f05c3ec') in 0.014658 seconds
+  Import took 0.021693 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 8.744492 seconds.
-  path: Assets/GameMain/UI/UISprites/SkillIcon/Skill_A_01.png
-  artifactKey: Guid(eeb1f84b92883d94da6483c83b21b910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/SkillIcon/Skill_A_01.png using Guid(eeb1f84b92883d94da6483c83b21b910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a625a54e855163d779c21e48e104cea9') in 0.013797 seconds
-  Import took 0.020937 seconds .
+  Time since last request: 0.040444 seconds.
+  path: Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs
+  artifactKey: Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs using Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '305cedac0de17a1c67504f976f05c3ec') in 0.002126 seconds
+  Import took 0.009175 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.695317 seconds.
-  path: Assets/GameMain/UI/UISprites/SkillIcon/Skill_A_02.png
-  artifactKey: Guid(b9a13677343fff642b82fe16143a83bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/SkillIcon/Skill_A_02.png using Guid(b9a13677343fff642b82fe16143a83bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97c36a7991364221655087be46e2d46c') in 0.014307 seconds
-  Import took 0.021528 seconds .
+  Time since last request: 157.350222 seconds.
+  path: Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs
+  artifactKey: Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs using Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87a2795f48419d6242861f97c5738b15') in 0.020986 seconds
+  Import took 0.028778 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 3.371949 seconds.
-  path: Assets/GameMain/UI/UISprites/SkillIcon/UI_Talent_Combine_Skill_ExtraItem.png
-  artifactKey: Guid(cc5c8f54a31afb34499aa02665ccb94b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/SkillIcon/UI_Talent_Combine_Skill_ExtraItem.png using Guid(cc5c8f54a31afb34499aa02665ccb94b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '980871efc7eb45df362f6091036b04f4') in 0.016777 seconds
-  Import took 0.025519 seconds .
+  Time since last request: 0.041127 seconds.
+  path: Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs
+  artifactKey: Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Scripts/Runtime/Entity/EntityLogic/Monster.cs using Guid(2bf47c8f1719515419cf46786b0bbb1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87a2795f48419d6242861f97c5738b15') in 0.002632 seconds
+  Import took 0.010553 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006138 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.07 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+ForwardRenderer is missing RendererFeatures
+This could be due to missing scripts or compile error.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+UnityEngine.Rendering.Universal.ScriptableRendererData:ValidateRendererFeatures () (at Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs:135)
+UnityEngine.Rendering.Universal.ScriptableRendererData:OnValidate () (at Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs:59)
+
+(Filename: Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs Line: 135)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.230 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.46 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4494 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 181.7 MB.
+System memory in use after: 182.0 MB.
+
+Unloading 29 unused Assets to reduce memory usage. Loaded Objects now: 5176.
+Total: 23.379300 ms (FindLiveObjects: 1.063400 ms CreateObjectMapping: 0.161600 ms MarkObjects: 22.112500 ms  DeleteObjects: 0.039600 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.812132 seconds.
-  path: Assets/GameMain/UI/UISprites/SkillIcon/Skill_E_Xiao_01_HD.png
-  artifactKey: Guid(ea6ccc71669a2ea49b1873f781233d97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/SkillIcon/Skill_E_Xiao_01_HD.png using Guid(ea6ccc71669a2ea49b1873f781233d97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '909fec84a5477cd8ba39c8d9d7b5bee6') in 0.013422 seconds
-  Import took 0.020722 seconds .
+  Time since last request: 93.884145 seconds.
+  path: Assets/GameMain/Scenes/Init/Init.unity
+  artifactKey: Guid(15ae16ef2d80c2543ad03f6f94b5c171) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Scenes/Init/Init.unity using Guid(15ae16ef2d80c2543ad03f6f94b5c171) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20e27cf46a1d2d9a7742bed3ce1cd60d') in 0.019041 seconds
+  Import took 0.026294 seconds .
 
 ========================================================================
-Received Import Request.
-  Time since last request: 161.981937 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_52s.png
-  artifactKey: Guid(1a0c771bc42b55d43a06168ef4c33dda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_52s.png using Guid(1a0c771bc42b55d43a06168ef4c33dda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '82dfb782ae3e1cf5edadd66bf1a84d7c') in 0.010889 seconds
-  Import took 0.018667 seconds .
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005368 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.12 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+ForwardRenderer is missing RendererFeatures
+This could be due to missing scripts or compile error.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+UnityEngine.Rendering.Universal.ScriptableRendererData:ValidateRendererFeatures () (at Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs:135)
+UnityEngine.Rendering.Universal.ScriptableRendererData:OnValidate () (at Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs:59)
+
+(Filename: Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs Line: 135)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.198 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4488 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 181.3 MB.
+System memory in use after: 181.6 MB.
+
+Unloading 29 unused Assets to reduce memory usage. Loaded Objects now: 5180.
+Total: 22.613600 ms (FindLiveObjects: 0.526900 ms CreateObjectMapping: 0.123000 ms MarkObjects: 21.919900 ms  DeleteObjects: 0.042300 ms)
 
 ========================================================================
-Received Import Request.
-  Time since last request: 0.696402 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_64s.png
-  artifactKey: Guid(bf6a1759135d2284582b24d275871424) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_64s.png using Guid(bf6a1759135d2284582b24d275871424) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01f3c7a9c9f9c8c2c04c8a1f50c31b03') in 0.011647 seconds
-  Import took 0.018705 seconds .
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.007644 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.05 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+ForwardRenderer is missing RendererFeatures
+This could be due to missing scripts or compile error.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+UnityEngine.Rendering.Universal.ScriptableRendererData:ValidateRendererFeatures () (at Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs:135)
+UnityEngine.Rendering.Universal.ScriptableRendererData:OnValidate () (at Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs:59)
 
-========================================================================
-Received Import Request.
-  Time since last request: 0.981574 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_76.png
-  artifactKey: Guid(06a51b58322a4094ca8463c4310d032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_76.png using Guid(06a51b58322a4094ca8463c4310d032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdb0b5563ae45206db1eb8d4cddc7e61') in 0.012325 seconds
-  Import took 0.019538 seconds .
+(Filename: Library/PackageCache/com.unity.render-pipelines.universal@10.4.0/Runtime/ScriptableRendererData.cs Line: 135)
 
-========================================================================
-Received Import Request.
-  Time since last request: 5.894491 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_92s.png
-  artifactKey: Guid(d686fa3d679b32f4ca59c33ced7fb2df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_92s.png using Guid(d686fa3d679b32f4ca59c33ced7fb2df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f85da1b0c97b231139d9635f0107bf7') in 0.011257 seconds
-  Import took 0.018525 seconds .
+Mono: successfully reloaded assembly
+- Completed reload, in  1.192 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.06 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4488 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 181.4 MB.
+System memory in use after: 181.6 MB.
 
-========================================================================
-Received Import Request.
-  Time since last request: 0.615606 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_128.png
-  artifactKey: Guid(08a544a2a54f37c47a28c4d534977d88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_128.png using Guid(08a544a2a54f37c47a28c4d534977d88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a1c8c2e129d58c4fd64721a4d980e7c') in 0.011960 seconds
-  Import took 0.019304 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.563478 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_100s.png
-  artifactKey: Guid(1f4a225f362711f44932dc7771247b70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Main_SkillIconBg_100s.png using Guid(1f4a225f362711f44932dc7771247b70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7202f7839ba83308ce6faba85114fb9e') in 0.012393 seconds
-  Import took 0.019558 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.590486 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_Img_Mapexplore_Circle2.png
-  artifactKey: Guid(f153f0254be34e0408286527eeb24a3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_Img_Mapexplore_Circle2.png using Guid(f153f0254be34e0408286527eeb24a3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32fd5581f379a07c392859fb9738f083') in 0.013164 seconds
-  Import took 0.020064 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.661077 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Quest.png
-  artifactKey: Guid(9a993783d3ffb0a46b1137efd72d92ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Quest.png using Guid(9a993783d3ffb0a46b1137efd72d92ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec393cc9cecae02f5f83cbc942d2197c') in 0.012421 seconds
-  Import took 0.019398 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.493164 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_PlayerGirl.png
-  artifactKey: Guid(5c06697f5c3039244b56ab96fad6b427) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_PlayerGirl.png using Guid(5c06697f5c3039244b56ab96fad6b427) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4e218b819043b9fc93196aeefb3581e') in 0.010423 seconds
-  Import took 0.017486 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.294991 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Menu.png
-  artifactKey: Guid(2a0d7d27455a52e49ae06a4b020aa188) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Menu.png using Guid(2a0d7d27455a52e49ae06a4b020aa188) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dde2cfc8662b9d1f589efc36718eb641') in 0.010977 seconds
-  Import took 0.017923 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.323692 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Gacha.png
-  artifactKey: Guid(c600f837f6835d1488849931ad2bd829) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Gacha.png using Guid(c600f837f6835d1488849931ad2bd829) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cb85eb8d80f08a131985287a6fef5a9') in 0.012023 seconds
-  Import took 0.019330 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.664945 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Chat.png
-  artifactKey: Guid(0b80fa782ffdf6d40839357621421b8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/UI_BtnIcon_Chat.png using Guid(0b80fa782ffdf6d40839357621421b8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '331bceecca200d443c136c7db4b4ff86') in 0.010101 seconds
-  Import took 0.016990 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.340492 seconds.
-  path: Assets/GameMain/UI/UISprites/Main/MainGame.png
-  artifactKey: Guid(a6cbe5c8c2625f949b8aa869aa07b185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Main/MainGame.png using Guid(a6cbe5c8c2625f949b8aa869aa07b185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e669caa6b06111affa42c0b3906b8cbb') in 0.014131 seconds
-  Import took 0.021271 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.317324 seconds.
-  path: Assets/GameMain/UI/UISprites/Logos/unity-logo.png
-  artifactKey: Guid(7f5aee8da226edf4991598327cb32ce0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/GameMain/UI/UISprites/Logos/unity-logo.png using Guid(7f5aee8da226edf4991598327cb32ce0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d4183999da642906c6a0b0089a044fe') in 0.011108 seconds
-  Import took 0.018250 seconds .
+Unloading 29 unused Assets to reduce memory usage. Loaded Objects now: 5184.
+Total: 22.588100 ms (FindLiveObjects: 0.630400 ms CreateObjectMapping: 0.124700 ms MarkObjects: 21.794900 ms  DeleteObjects: 0.036100 ms)
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

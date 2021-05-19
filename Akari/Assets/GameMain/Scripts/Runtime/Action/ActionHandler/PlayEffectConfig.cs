@@ -9,8 +9,10 @@ using UnityEngine;
 public class PlayEffectConfig : HoldFrames
 {
     public EnumEntity effectType = EnumEntity.None;
-    public Vector3 Offset;
-    public Vector3 Angles;
+    public Vector3 Offset = Vector3.zero;
+    public Vector3 Angles = Vector3.zero;
+    public Vector3 Scale = Vector3.one;
+    public float lifeTime = 0f;
 }
 
 public class PlayEffect : IActionHandler
@@ -24,12 +26,9 @@ public class PlayEffect : IActionHandler
         PlayEffectConfig config = (PlayEffectConfig)node.config;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;
 
-        if (m_EffectSerialId == 0)
-        {
-            m_EffectSerialId = GameEntry.Entity.GenerateSerialId();
-        }
+        m_EffectSerialId = GameEntry.Entity.GenerateSerialId();
 
-        var data = new FollowerData(m_EffectSerialId, (int)config.effectType, controller.CachedTransform, config.Offset, config.Angles);
+        var data = new FollowerData(m_EffectSerialId, (int)config.effectType, controller.CachedTransform, config.Offset, config.Angles, config.Scale, config.lifeTime);
 
         GameEntry.Entity.ShowEntity<Particle>("Effect", Constant.AssetPriority.EffectAsset, data);
 

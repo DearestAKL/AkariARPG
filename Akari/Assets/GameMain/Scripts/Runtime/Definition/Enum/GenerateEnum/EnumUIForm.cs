@@ -1,52 +1,48 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
+﻿// 此文件由工具自动生成，请勿直接修改。
+// 生成时间：2021-05-19 16:14:38.485
 //------------------------------------------------------------
 
 namespace Akari
 {
-    /// <summary>
-    /// 界面编号。
-    /// </summary>
-    public enum UIFormId : byte
+    public enum EnumUIForm : int
     {
-        Undefined = 0,
+        /// <summary>
+        /// 无
+        /// </summary>
+        None = 0,
 
         /// <summary>
-        /// 主菜单。
+        /// 主菜单
         /// </summary>
         UIMainMenu = 100,
 
         /// <summary>
-        /// 设置。
+        /// 设置
         /// </summary>
         UISetting = 101,
 
         /// <summary>
-        /// 关于。
+        /// 关于
         /// </summary>
         UIAbout = 102,
 
         /// <summary>
-        /// 加载界面。
+        /// 加载界面
         /// </summary>
         UILoading = 103,
 
         /// <summary>
-        /// 弹出框。
+        /// 弹出框
         /// </summary>
         UIDialogForm = 104,
 
         /// <summary>
-        /// 主游戏界面。
+        /// 主游戏界面
         /// </summary>
         UIMainGame = 105,
 
-
         /// <summary>
-        /// 主游戏界面。
+        /// 血条画布
         /// </summary>
         UIHPBarCanvas = 106,
     }

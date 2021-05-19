@@ -33,7 +33,7 @@ namespace Akari
         }
         private void OnSetting() 
         {
-            GameEntry.UI.OpenUIForm(UIFormId.UISetting);
+            GameEntry.UI.OpenUIForm(EnumUIForm.UISetting);
         }
         private void OnAbout() 
         {

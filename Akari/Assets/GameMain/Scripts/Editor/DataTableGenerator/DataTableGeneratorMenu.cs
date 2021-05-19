@@ -13,7 +13,7 @@ namespace Akari.Editor.DataTableTools
 {
     public sealed class DataTableGeneratorMenu
     {
-        [MenuItem("Akari/Generate DataTables")]
+        [MenuItem("Game Framework/Akari/Generate DataTables", false,0)]
         private static void GenerateDataTables()
         {
             foreach (string dataTableName in ProcedurePreload.DataTableNames)

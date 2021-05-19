@@ -30,6 +30,16 @@ namespace Akari
             return (Entity)entity.Logic;
         }
 
+        public static void HideEntity(this EntityComponent entityComponent, int entityId)
+        {
+            var entity = entityComponent.GetGameEntity(entityId);
+            if (entity == null)
+            {
+                return;
+            }
+            entityComponent.HideEntity(entity);
+        }
+
         public static void HideEntity(this EntityComponent entityComponent, Entity entity)
         {
             entityComponent.HideEntity(entity.Entity);
@@ -38,6 +48,11 @@ namespace Akari
         public static void AttachEntity(this EntityComponent entityComponent, Entity entity, int ownerId, string parentTransformPath = null, object userData = null)
         {
             entityComponent.AttachEntity(entity.Entity, ownerId, parentTransformPath, userData);
+        }
+
+        public static void ShowEntity<T>(this EntityComponent entityComponent, string entityGroup, int priority, EntityData data)
+        {
+            entityComponent.ShowEntity(typeof(T), entityGroup,priority, data);
         }
 
         private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)

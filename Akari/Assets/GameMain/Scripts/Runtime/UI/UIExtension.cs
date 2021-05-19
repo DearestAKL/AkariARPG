@@ -54,7 +54,7 @@ namespace Akari
         /// <summary>
         /// 是否存在界面
         /// </summary>
-        public static bool HasUIForm(this UIComponent uiComponent, UIFormId uiFormId, string uiGroupName = null)
+        public static bool HasUIForm(this UIComponent uiComponent, EnumUIForm uiFormId, string uiGroupName = null)
         {
             return uiComponent.HasUIForm((int)uiFormId, uiGroupName);
         }
@@ -86,7 +86,7 @@ namespace Akari
         /// <summary>
         /// 获取界面
         /// </summary>
-        public static UGuiForm GetUIForm(this UIComponent uiComponent, UIFormId uiFormId, string uiGroupName = null)
+        public static UGuiForm GetUIForm(this UIComponent uiComponent, EnumUIForm uiFormId, string uiGroupName = null)
         {
             return uiComponent.GetUIForm((int)uiFormId, uiGroupName);
         }
@@ -139,7 +139,7 @@ namespace Akari
         /// <summary>
         /// 打开界面
         /// </summary>
-        public static int? OpenUIForm(this UIComponent uiComponent, UIFormId uiFormId, object userData = null)
+        public static int? OpenUIForm(this UIComponent uiComponent, EnumUIForm uiFormId, object userData = null)
         {
             return uiComponent.OpenUIForm((int)uiFormId, userData);
         }
@@ -179,7 +179,7 @@ namespace Akari
             }
             else
             {
-                uiComponent.OpenUIForm(UIFormId.UIDialogForm, dialogParams);
+                uiComponent.OpenUIForm(EnumUIForm.UIDialogForm, dialogParams);
             }
         }
 

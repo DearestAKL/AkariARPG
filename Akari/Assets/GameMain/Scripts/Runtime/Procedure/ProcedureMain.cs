@@ -42,7 +42,7 @@ namespace Akari
 
             GameEntry.Event.Subscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
 
-            GameEntry.UI.OpenUIForm(UIFormId.UIMainGame, this);
+            GameEntry.UI.OpenUIForm(EnumUIForm.UIMainGame, this);
 
             //GameEntry.UI.OpenUIForm(UIFormId.UIHPBarCanvas, this);
 

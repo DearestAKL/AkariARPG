@@ -33,7 +33,7 @@ namespace Akari
             GameEntry.Event.Subscribe(ChangeSceneEventArgs.EventId, OnChangeScene);
 
             m_StartGame = false;
-            GameEntry.UI.OpenUIForm(UIFormId.UIMainMenu, this);
+            GameEntry.UI.OpenUIForm(EnumUIForm.UIMainMenu, this);
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)

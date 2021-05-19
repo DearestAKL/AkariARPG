@@ -188,11 +188,11 @@ namespace Akari
 
             for (int i = 0; i < positions.Length; i++)
             {
-                var m_MonsterData = new MonsterData(100 + i, 2);
+                var m_MonsterData = new MonsterData(GameEntry.Entity.GenerateSerialId(), 2);
                 m_MonsterData.MaxHP = 100;
                 m_MonsterData.HP = 100;
                 m_MonsterData.Position = positions[i];
-                GameEntry.Entity.ShowEntity(m_MonsterData.Id, typeof(Monster), AssetUtility.GetEntityAsset("Monster"), "Monster", 1, m_MonsterData);
+                GameEntry.Entity.ShowEntity(m_MonsterData.Id, typeof(Monster), AssetUtility.GetEntityAsset("Monster"), "Monster", Constant.AssetPriority.MonsterAsset, m_MonsterData);
             }
         }
     }

@@ -62,7 +62,7 @@ namespace Akari
             //GameEntry.ObjectPool.CreateMultiSpawnObjectPool
             //----------------------------------------
 
-            m_HeroData = new HeroData(1, 1);
+            m_HeroData = new HeroData(GameEntry.Entity.GenerateSerialId(), 1);
 
             m_ActionMachine = new ActionMachine();
         }
@@ -216,7 +216,9 @@ namespace Akari
         /// </summary>
         public void CreatHero()
         {
-            GameEntry.Entity.ShowEntity(m_HeroData.Id, typeof(Hero), AssetUtility.GetEntityAsset("Hero"), "Hero", 1, m_HeroData);
+            GameEntry.Entity.ShowEntity(m_HeroData.Id, typeof(Hero), AssetUtility.GetEntityAsset("Hero"), "Hero", Constant.AssetPriority.PlayerAsset, m_HeroData);
+
+            //GameEntry.Entity.ShowEntity<Hero>(GameEntry.Entity.GenerateSerialId(), AssetUtility.GetEntityAsset("Hero"),)
         }
 
         /// <summary>

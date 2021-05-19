@@ -73,5 +73,10 @@ namespace Akari
         {
             return Utility.Text.Format("Assets/GameMain/UI/OtherSprite/{0}.png", assetName);
         }
+
+        public static string GetEffectAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/Effect/{0}.prefab", assetName);
+        }
     }
 }

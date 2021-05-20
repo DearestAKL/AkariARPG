@@ -100,7 +100,7 @@ Material:
     - _BumpScale: 1
     - _CullMode: 0
     - _Cutoff: 0.5
-    - _Depthpower: 1
+    - _Depthpower: 0
     - _DetailNormalMapScale: 1
     - _Distortionpower: 0.02
     - _DstBlend: 0
@@ -139,4 +139,3 @@ Material:
     - _SpeedMainTexUVNoiseUV: {r: 0.1, g: 1, b: 0, a: 0}
     - _SpeedMainTexUVNoiseZW: {r: 0, g: 1.5, b: 0, a: 0}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []

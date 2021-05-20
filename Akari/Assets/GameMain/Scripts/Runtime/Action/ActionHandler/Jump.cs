@@ -49,14 +49,11 @@ public class Jump : IActionHandler
 
         bool velocityChanged = false;
 
-        if (!GameEntry.Input.HasEvent(InputEvents.Jumping))
-        {
-            float ySpeed = MathUtility.JumpSpeed(Physics.gravity.y, config.minHeight);
-            if (velocity.y > ySpeed)
-            {//限制到最小速度
-                velocity.y = ySpeed;
-                velocityChanged = true;
-            }
+        float ySpeed = MathUtility.JumpSpeed(Physics.gravity.y, config.minHeight);
+        if (velocity.y > ySpeed)
+        {//限制到最小速度
+            velocity.y = ySpeed;
+            velocityChanged = true;
         }
 
         if (GameEntry.Input.HasEvent(InputEvents.Moving))

@@ -64,5 +64,14 @@ namespace Akari
                 child.ForeachChild(callback);
             }
         }
+
+        /// <summary>
+        /// 偏移 转 目标本地偏移
+        /// </summary>
+        /// <returns></returns>
+        public static Vector3 OffectToLocal(this Transform target, Vector3 offect)
+        {
+            return target.right * offect.x + offect.y * target.up + target.forward * offect.z;
+        }
     }
 }

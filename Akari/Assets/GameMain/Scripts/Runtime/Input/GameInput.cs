@@ -83,6 +83,14 @@ namespace Akari
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=1)""
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""150dc301-1d6a-4d1d-b79b-51acf04df1a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)""
                 }
             ],
             ""bindings"": [
@@ -369,6 +377,28 @@ namespace Akari
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Alt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7606093-9f7f-488c-9465-47493eaaefce"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d60696f-ca9e-4013-93fb-aebcf06f29be"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -954,6 +984,7 @@ namespace Akari
             m_Player_UltimateSkill = m_Player.FindAction("UltimateSkill", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Alt = m_Player.FindAction("Alt", throwIfNotFound: true);
+            m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1023,6 +1054,7 @@ namespace Akari
         private readonly InputAction m_Player_UltimateSkill;
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Alt;
+        private readonly InputAction m_Player_Dash;
         public struct PlayerActions
         {
             private @GameInput m_Wrapper;
@@ -1035,6 +1067,7 @@ namespace Akari
             public InputAction @UltimateSkill => m_Wrapper.m_Player_UltimateSkill;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputAction @Alt => m_Wrapper.m_Player_Alt;
+            public InputAction @Dash => m_Wrapper.m_Player_Dash;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1068,6 +1101,9 @@ namespace Akari
                     @Alt.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlt;
                     @Alt.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlt;
                     @Alt.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlt;
+                    @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                    @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                    @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1096,6 +1132,9 @@ namespace Akari
                     @Alt.started += instance.OnAlt;
                     @Alt.performed += instance.OnAlt;
                     @Alt.canceled += instance.OnAlt;
+                    @Dash.started += instance.OnDash;
+                    @Dash.performed += instance.OnDash;
+                    @Dash.canceled += instance.OnDash;
                 }
             }
         }
@@ -1260,6 +1299,7 @@ namespace Akari
             void OnUltimateSkill(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
             void OnAlt(InputAction.CallbackContext context);
+            void OnDash(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

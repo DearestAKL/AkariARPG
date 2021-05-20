@@ -44,8 +44,8 @@ namespace Akari
 
             if (followerData != null && followerData.Follow != null)
             {
-                transform.position = followerData.Follow.position + followerData.Offset;
-                transform.rotation = Quaternion.Euler(followerData.Follow.eulerAngles + followerData.Angles);
+                transform.position = followerData.Follow.position + followerData.Follow.OffectToLocal(followerData.Offset);
+                transform.rotation = followerData.Follow.rotation * Quaternion.Euler(followerData.Angles);
             }
 
             if(followerData.LifeTime > 0 && ps.time > followerData.LifeTime)

@@ -9,6 +9,7 @@ using DG.Tweening;
 public class VelocityConfig : HoldFrames
 {
     public Vector3 velocity;
+    public float duration;
 }
 
 public class Velocity : IActionHandler
@@ -21,7 +22,7 @@ public class Velocity : IActionHandler
         IActionMachine machine = node.actionMachine;
         TargetableObject controller = (TargetableObject)node.actionMachine.controller;
 
-        controller.CachedTransform.DOMove(controller.CachedTransform.position + controller.CachedTransform.rotation * config.velocity, 0.2f);
+        controller.CachedTransform.DOMove(controller.CachedTransform.position + controller.CachedTransform.rotation * config.velocity, config.duration);
     }
 
     public void Exit(ActionNode node)

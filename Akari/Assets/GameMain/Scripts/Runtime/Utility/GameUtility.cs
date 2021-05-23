@@ -11,6 +11,6 @@ namespace Akari
         /// <summary>
         /// 动画帧率
         /// </summary>
-        public const float ActionFrameRate = 1 / 30f;
+        public const float ActionFrameRate = 1 / 120f;
     }
 }

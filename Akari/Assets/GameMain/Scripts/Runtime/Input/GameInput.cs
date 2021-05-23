@@ -90,7 +90,7 @@ namespace Akari
                     ""id"": ""150dc301-1d6a-4d1d-b79b-51acf04df1a2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [

@@ -229,7 +229,8 @@ namespace Slate
             if ( time >= viewTimeMin && time <= viewTimeMax ) {
                 var xPos = TimeToPos(time);
                 var guideRect = new Rect(xPos + centerRect.x - 1, centerRect.y, 2, centerRect.height);
-                GUI.color = color;
+                //GUI.color = color;
+                GUI.color = Color.green;
                 GUI.DrawTexture(guideRect, whiteTexture);
                 GUI.color = Color.white;
             }
@@ -1871,7 +1872,9 @@ namespace Slate
                     //GRAPHICS
                     GUI.color = Color.black.WithAlpha(isProSkin ? 0.06f : 0.1f);
                     GUI.DrawTexture(trackPosRect, whiteTexture);
-                    Handles.color = ColorUtility.Grey(isProSkin ? 0.15f : 0.4f);
+                    //Handles.color = ColorUtility.Grey(isProSkin ? 0.15f : 0.4f);
+                    // =============== 轨道线
+                    Handles.color = Color.red;
                     Handles.DrawLine(new Vector2(TimeToPos(viewTimeMin), trackPosRect.y + 1), new Vector2(trackPosRect.xMax, trackPosRect.y + 1));
                     Handles.DrawLine(new Vector2(TimeToPos(viewTimeMin), trackPosRect.yMax), new Vector2(trackPosRect.xMax, trackPosRect.yMax));
                     if ( track.showCurves ) {
@@ -1882,7 +1885,7 @@ namespace Slate
                         GUI.Box(Rect.MinMaxRect(TimeToPos(viewTimeMin), trackPosRect.yMin, TimeToPos(0), trackPosRect.yMax), string.Empty);
                     }
                     if ( track.startTime > track.parent.startTime || track.endTime < track.parent.endTime ) {
-                        Handles.color = Color.white;
+                        Handles.color = Color.green;
                         GUI.color = Color.black.WithAlpha(0.2f);
                         if ( track.startTime > track.parent.startTime ) {
                             var tStart = TimeToPos(track.startTime);

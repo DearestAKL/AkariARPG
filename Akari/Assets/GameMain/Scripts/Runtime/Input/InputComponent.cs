@@ -7,11 +7,12 @@ namespace Akari
 {
     public enum InputEvents
     {
-        None = 0b0000,
-        Moving = 0b0001,
-        Attack = 0b0010,
-        Jump = 0b0100,
-        Dash = 0b1000,
+        None = 0b00000,
+        Moving = 0b00001,
+        Attack = 0b00010,
+        Jump = 0b00100,
+        Dash = 0b01000,
+        F = 0b10000,
     }
 
     public class InputComponent : GameFrameworkComponent

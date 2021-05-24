@@ -91,6 +91,14 @@ namespace Akari
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""F"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f05c6d7-7c00-4398-9bbc-880529165412"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -399,6 +407,17 @@ namespace Akari
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d30427c-9f89-4bcb-898a-8ae775379c79"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""F"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -985,6 +1004,7 @@ namespace Akari
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Alt = m_Player.FindAction("Alt", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+            m_Player_F = m_Player.FindAction("F", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1055,6 +1075,7 @@ namespace Akari
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Alt;
         private readonly InputAction m_Player_Dash;
+        private readonly InputAction m_Player_F;
         public struct PlayerActions
         {
             private @GameInput m_Wrapper;
@@ -1068,6 +1089,7 @@ namespace Akari
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputAction @Alt => m_Wrapper.m_Player_Alt;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
+            public InputAction @F => m_Wrapper.m_Player_F;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1104,6 +1126,9 @@ namespace Akari
                     @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                     @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                     @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                    @F.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF;
+                    @F.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF;
+                    @F.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1135,6 +1160,9 @@ namespace Akari
                     @Dash.started += instance.OnDash;
                     @Dash.performed += instance.OnDash;
                     @Dash.canceled += instance.OnDash;
+                    @F.started += instance.OnF;
+                    @F.performed += instance.OnF;
+                    @F.canceled += instance.OnF;
                 }
             }
         }
@@ -1300,6 +1328,7 @@ namespace Akari
             void OnSprint(InputAction.CallbackContext context);
             void OnAlt(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
+            void OnF(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

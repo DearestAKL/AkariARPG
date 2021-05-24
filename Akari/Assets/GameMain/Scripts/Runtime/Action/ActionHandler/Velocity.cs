@@ -28,8 +28,6 @@ public class Velocity : IActionHandler
     public void Exit(ActionNode node)
     {
         Debug.Log("Velocity Exit");
-        //TargetableObject controller = (TargetableObject)node.actionMachine.controller;
-        //controller.CachedRigidbody.velocity = controller.CachedTransform.forward;
     }
 
     public void Update(ActionNode node, float deltaTime)

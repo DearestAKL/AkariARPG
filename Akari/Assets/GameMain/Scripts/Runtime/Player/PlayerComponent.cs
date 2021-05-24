@@ -122,8 +122,7 @@ namespace Akari
 
             if(m_HeroAnimator != null)
             {
-                m_HeroAnimator.Update(deltaTime);
-                Debug.Log("Time: " + deltaTime);
+                //m_HeroAnimator.Update(deltaTime);
             }
         }
 

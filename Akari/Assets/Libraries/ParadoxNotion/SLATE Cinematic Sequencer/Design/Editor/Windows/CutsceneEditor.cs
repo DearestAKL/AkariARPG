@@ -229,8 +229,10 @@ namespace Slate
             if ( time >= viewTimeMin && time <= viewTimeMax ) {
                 var xPos = TimeToPos(time);
                 var guideRect = new Rect(xPos + centerRect.x - 1, centerRect.y, 2, centerRect.height);
+
+                // 时间线
                 //GUI.color = color;
-                GUI.color = Color.green;
+                GUI.color = Color.yellow;
                 GUI.DrawTexture(guideRect, whiteTexture);
                 GUI.color = Color.white;
             }

@@ -27,6 +27,7 @@ namespace Akari
             public const int EffectAsset = 80;
             public const int PlayerAsset = 80;
             public const int MonsterAsset = 80;
+            public const int CarAsset = 80;
         }
     }
 }

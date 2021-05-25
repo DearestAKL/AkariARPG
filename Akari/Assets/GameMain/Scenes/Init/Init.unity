@@ -1077,7 +1077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e428e55625a5bdf42819b0c6ad51cc6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RotationSpeed: 90
   configName: MachineConfig
   m_Hero: {fileID: 0}
   m_HeroData:
@@ -2881,6 +2880,11 @@ MonoBehaviour:
     m_InstanceExpireTime: 0
     m_InstancePriority: 0
   - m_Name: Effect
+    m_InstanceAutoReleaseInterval: 0
+    m_InstanceCapacity: 1
+    m_InstanceExpireTime: 0
+    m_InstancePriority: 0
+  - m_Name: Car
     m_InstanceAutoReleaseInterval: 0
     m_InstanceCapacity: 1
     m_InstanceExpireTime: 0

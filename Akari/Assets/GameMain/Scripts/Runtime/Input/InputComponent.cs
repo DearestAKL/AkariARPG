@@ -78,6 +78,11 @@ namespace Akari
             {
                 m_InputEvents |= InputEvents.Dash;
             }
+
+            if (player.F.triggered)
+            {
+                m_InputEvents |= InputEvents.F;
+            }
         }
 
         #region 外接口

@@ -27,6 +27,8 @@ namespace Akari
         private RangeBox m_AttackRange = null;
         //private RangeBox m_BodyRange = null;
 
+        private GameObject m_ModelObj = null;
+
         public bool IsDead
         {
             get
@@ -40,7 +42,9 @@ namespace Akari
             base.OnInit(userData);
             //查找组件
             m_Rigidbody = CachedTransform.GetComponent<Rigidbody>();
-            m_Animator = CachedTransform.Find("Model").GetComponent<Animator>();
+
+            m_ModelObj = CachedTransform.Find("Model").gameObject;
+            m_Animator = m_ModelObj.GetComponent<Animator>();
 
             m_AttackRange = CachedTransform.Find("AttackRange").GetComponent<RangeBox>();
             m_AttackRange.Init(this);
@@ -65,24 +69,10 @@ namespace Akari
             base.OnUpdate(elapseSeconds, realElapseSeconds);
         }
 
-        private void OnTriggerEnter(Collider other)
+
+        public GameObject ModelObj 
         {
-
-            //Entity entity = other.gameObject.GetComponent<Entity>();
-            //if (entity == null)
-            //{
-            //    return;
-            //}
-
-            //if (entity is TargetableObject && entity.Id >= Id)
-            //{
-            //    // 碰撞事件由 Id 小的一方处理，避免重复处理
-            //    return;
-            //}
-
-            //if(entity )
-
-            //AIUtility.PerformCollision(this, entity);
+            get { return m_ModelObj; }
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿// 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-05-16 12:05:33.212
+// 生成时间：2021-05-25 15:58:39.649
 //------------------------------------------------------------
 
 namespace Akari
@@ -8,6 +8,7 @@ namespace Akari
     {
 		//---UI---
 		protected UnityEngine.GameObject goHP = null;
+		protected UnityEngine.UI.Button Btn_Player = null;
 		
 		
 		public void InitUIData()
@@ -16,6 +17,7 @@ namespace Akari
             ReferenceCollector rc = rootGo.GetComponent<ReferenceCollector>();
 			
             goHP = rc.Get<UnityEngine.GameObject>("goHP");
+			Btn_Player = rc.Get<UnityEngine.UI.Button>("Btn_Player");
 			
         }
     }

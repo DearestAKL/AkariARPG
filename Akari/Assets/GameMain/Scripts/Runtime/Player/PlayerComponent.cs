@@ -18,11 +18,6 @@ namespace Akari
         //}
 
         //---
-        #region 运动参数
-        [SerializeField, Range(0F, 180F), Header("旋转速度")]
-        private float m_RotationSpeed = 90f;
-
-        #endregion
 
         #region 动画参数
 
@@ -62,7 +57,7 @@ namespace Akari
             //GameEntry.ObjectPool.CreateMultiSpawnObjectPool
             //----------------------------------------
 
-            m_HeroData = new HeroData(GameEntry.Entity.GenerateSerialId(), 1);
+            m_HeroData = new HeroData(GameEntry.Entity.GenerateSerialId(), (int)EnumEntity.Hero);
 
             m_ActionMachine = new ActionMachine();
         }
@@ -75,31 +70,10 @@ namespace Akari
                 return;
             }
 
-            UpdateRotation();
             UpdateAnimation();
 
             //帧更新
             LogicUpdate();
-        }
-
-        private void UpdateRotation()
-        {
-            Vector3 velocity;
-            if (GameEntry.Input.IsProhibitMove)
-            {
-                velocity = GameEntry.Input.GetCameraAxisValue().ToVector3();
-            }
-            else
-            {
-                velocity = m_HeroRigidbody.velocity;
-                velocity.y = 0f;
-            }
-
-            if (velocity.magnitude > 0.01f)
-            {
-                var rotation = m_Hero.CachedTransform.rotation;
-                m_Hero.CachedTransform.rotation = Quaternion.Slerp(rotation, Quaternion.LookRotation(velocity), m_RotationSpeed * Time.deltaTime);
-            }
         }
 
         private void UpdateAnimation()
@@ -216,9 +190,11 @@ namespace Akari
         /// </summary>
         public void CreatHero()
         {
-            GameEntry.Entity.ShowEntity(m_HeroData.Id, typeof(Hero), AssetUtility.GetEntityAsset("Hero"), "Hero", Constant.AssetPriority.PlayerAsset, m_HeroData);
+            GameEntry.Entity.ShowEntity<Hero>("Hero", Constant.AssetPriority.PlayerAsset, m_HeroData);
 
-            //GameEntry.Entity.ShowEntity<Hero>(GameEntry.Entity.GenerateSerialId(), AssetUtility.GetEntityAsset("Hero"),)
+            var carData = new CarData(GameEntry.Entity.GenerateSerialId(), (int)EnumEntity.Motorcycle,30f);
+            carData.Position = Vector3.forward;
+            GameEntry.Entity.ShowEntity<Car>("Car", Constant.AssetPriority.CarAsset, carData);
         }
 
         /// <summary>

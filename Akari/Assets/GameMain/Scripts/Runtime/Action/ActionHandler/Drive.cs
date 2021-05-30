@@ -37,13 +37,16 @@ namespace Akari
 
         public void Exit(ActionNode node)
         {
-            Hero controller = (Hero)node.actionMachine.controller;
-            controller.LeaveDrive();
+
         }
 
         public void Update(ActionNode node, float deltaTime)
         {
-
+            if (GameEntry.Input.HasEvent(InputEvents.F))
+            {
+                Hero controller = (Hero)node.actionMachine.controller;
+                controller.LeaveDrive();
+            }
         }
     }
 }

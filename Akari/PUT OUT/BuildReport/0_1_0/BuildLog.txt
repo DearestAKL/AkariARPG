@@ -1,3 +1,0 @@
-[14:34:59.792][INFO] Build Start Time: 2021-02-21 14:34:59.792
-[14:34:59.792][INFO] Start prepare resource collection...
-[14:34:59.792][ERROR] Can not parse 'ResourceCollection.xml', please use 'Resource Editor' tool first.
